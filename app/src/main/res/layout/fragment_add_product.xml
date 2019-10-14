@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fillViewport="true"
+    tools:context=".Tab_Fragments.AddProduct">
+    <LinearLayout
+        android:padding="20sp"
+
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+   <TextView
+       android:textSize="30sp"
+       android:textColor="@android:color/black"
+       android:text="Add Product Details"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"/>
+
+    <LinearLayout
+
+        android:padding="20sp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+
+    <TextView
+        android:layout_marginLeft="10sp"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="30sp"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        android:text="Product name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/productname"
+        android:background="@drawable/edittextbgm"
+        android:padding="10sp"
+        android:layout_margin="10sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_marginLeft="10sp"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="30sp"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        android:text="Product Category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/category"
+
+        android:background="@drawable/edittextbgm"
+        android:padding="10sp"
+        android:layout_margin="10sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_marginLeft="10sp"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="30sp"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        android:text="Product Code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/productcode"
+
+        android:background="@drawable/edittextbgm"
+        android:padding="10sp"
+        android:layout_margin="10sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_marginLeft="10sp"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="30sp"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        android:text="Price "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/price"
+
+        android:background="@drawable/edittextbgm"
+        android:padding="10sp"
+        android:layout_margin="10sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:padding="20sp"
+        android:layout_marginTop="30sp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/button"
+        android:id="@+id/add"
+        android:text="Add Product"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    </LinearLayout>
+    </LinearLayout>
+</ScrollView>

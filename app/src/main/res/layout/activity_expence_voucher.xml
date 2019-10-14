@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context=".UI.ExpenceVoucher">
+
+    <RelativeLayout
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+
+
+
+        <ScrollView
+            android:fillViewport="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+    <LinearLayout
+        android:gravity="center"
+
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+
+        <TextView
+            android:textColor="@android:color/black"
+
+            android:text="Description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/desc"
+            android:layout_marginTop="10sp"
+            android:padding="10sp"
+            android:background="@drawable/edittextbg"
+            android:layout_width="300sp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_marginTop="20sp"
+            android:textColor="@android:color/black"
+            android:text="Remarks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/remark"
+
+            android:layout_marginTop="10sp"
+            android:padding="10sp"
+            android:background="@drawable/edittextbg"
+            android:layout_width="300sp"
+            android:layout_height="wrap_content"/>
+
+
+                <TextView
+                    android:layout_marginTop="20sp"
+                    android:textColor="@android:color/black"
+                    android:text="Taxable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <EditText
+                    android:id="@+id/tax"
+
+                    android:layout_marginTop="10sp"
+                    android:padding="10sp"
+                    android:background="@drawable/edittextbg"
+                    android:layout_width="300sp"
+                    android:layout_height="wrap_content"/>
+
+
+
+
+                <TextView
+                    android:layout_marginTop="20sp"
+                    android:textColor="@android:color/black"
+                    android:text="V.A"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <EditText
+                    android:id="@+id/vat"
+                    android:layout_marginTop="10sp"
+                    android:padding="10sp"
+                    android:background="@drawable/edittextbg"
+                    android:layout_width="300sp"
+                    android:layout_height="wrap_content"/>
+
+
+
+
+        <TextView
+            android:layout_marginTop="20sp"
+            android:textColor="@android:color/black"
+            android:text="Total Amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <EditText
+            android:id="@+id/tot"
+            android:layout_marginTop="10sp"
+            android:padding="10sp"
+            android:background="@drawable/edittextbg"
+            android:layout_width="300sp"
+            android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/save"
+            android:padding="10sp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/gradienttoolbar"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:text="Save Voucher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        >
+        <LinearLayout
+            android:padding="10sp"
+            android:background="@android:color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:text="Description"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+
+            <TextView
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:text="Remarks"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:text="Taxable"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:text="VAT"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/voucher_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/home"
+        android:title="Home" />
+
+
+
+    <item
+
+        android:id="@+id/voucher"
+        android:title="Expense Voucher" />
+
+
+    <item
+        android:id="@+id/sales"
+        android:title="Sales" />
+
+
+
+
+
+    <item
+        android:id="@+id/logout"
+        android:title="Logout"
+        />
+
+
+
+
+
+</menu>

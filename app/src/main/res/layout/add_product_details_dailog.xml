@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".DialogFragments._AddProductDetailsDailog">
+    <ScrollView
+
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/title"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                android:text="Add Item"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_marginTop="10sp"
+                android:padding="10sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:focusable="true"
+                    android:id="@+id/qty"
+                    android:textSize="18sp"
+                    android:hint="Quantity"
+                    android:padding="10sp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+                <TextView
+                    android:focusable="true"
+                    android:textSize="18sp"
+                    android:id="@+id/rate"
+
+                    android:hint="Rate"
+                    android:padding="10sp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+                <TextView
+                    android:textSize="18sp"
+                    android:id="@+id/price"
+                    android:focusable="true"
+                    android:hint="Price"
+                    android:padding="10sp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+            </LinearLayout>
+
+            <EditText
+                android:layout_marginLeft="30sp"
+                android:layout_marginRight="30sp"
+                android:id="@+id/inputfield"
+                android:layout_marginTop="20sp"
+                android:background="@drawable/edittextbgm"
+                android:padding="10sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <include
+                android:id="@+id/keyboard"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                layout="@layout/custom_keyboard" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+
+<!--    <Button-->
+<!--        android:layout_margin="10dp"-->
+<!--        android:textColor="@android:color/white"-->
+<!--        android:background="@drawable/button"-->
+<!--        android:id="@+id/add"-->
+<!--        android:text="Add Item"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"/>-->
+
+</RelativeLayout>

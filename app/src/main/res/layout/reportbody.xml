@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+
+    android:layout_height="wrap_content">
+    <TextView
+        android:singleLine="true"
+        android:layout_margin="8dp"
+        android:layout_weight="1"
+        android:id="@+id/proName"
+        android:padding="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:singleLine="true"
+        android:layout_margin="8dp"
+        android:id="@+id/qty"
+        android:padding="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_weight="1"
+        android:textSize="20sp"
+
+
+        />
+
+    <TextView
+        android:id="@+id/price"
+        android:singleLine="true"
+        android:layout_margin="8dp"
+        android:padding="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+
+        />
+
+    <TextView
+        android:id="@+id/date"
+        android:singleLine="true"
+        android:layout_margin="8dp"
+        android:padding="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+
+        />
+
+
+
+</LinearLayout>
