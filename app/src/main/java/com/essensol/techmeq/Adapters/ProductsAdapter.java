@@ -16,7 +16,7 @@ import com.essensol.techmeq.Model.ProductRecyclerviewModel;
 import com.essensol.techmeq.R;
 import com.essensol.techmeq.Room.Databases.Products;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 
@@ -44,7 +44,7 @@ public  class ProductsAdapter extends  RecyclerView.Adapter<ProductsAdapter.view
 
 
 
-        holder.proName.setText(items.get(position).getProduct_Name());
+        holder.proName.setText(items.get(position).getProduct_Category());
 
         holder.category.setText(items.get(position).getProduct_Category());
 
@@ -59,7 +59,7 @@ public  class ProductsAdapter extends  RecyclerView.Adapter<ProductsAdapter.view
                 FragmentManager fm =((AppCompatActivity) mContext).getSupportFragmentManager();
 
 
-                final _AddProductDetailsDailog dialog= new _AddProductDetailsDailog(items.get(position).getProduct_Name()
+                final _AddProductDetailsDailog dialog= new _AddProductDetailsDailog(items.get(position).getProduct_Category()
                         ,items.get(position).getProduct_Id(),items.get(position).getProduct_Price());
 
                 dialog.show(fm,"TAG");
@@ -99,7 +99,7 @@ public  class ProductsAdapter extends  RecyclerView.Adapter<ProductsAdapter.view
 
             price=itemView.findViewById(R.id.Price);
 
-            code=itemView.findViewById(R.id.code);
+//            code=itemView.findViewById(R.id.code);
 
         }
     }

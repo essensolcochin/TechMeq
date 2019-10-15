@@ -38,7 +38,8 @@ public  class PurchaseListAdapter extends  RecyclerView.Adapter<PurchaseListAdap
 
         holder.name.setText(items.get(position).getName());
         holder.qty.setText(items.get(position).getQty());
-        holder.price.setText(items.get(position).getPrice());
+        holder.rate.setText(items.get(position).getRate());
+        holder.price.setText(items.get(position).getNetAmount());
 
     }
 
@@ -49,13 +50,14 @@ public  class PurchaseListAdapter extends  RecyclerView.Adapter<PurchaseListAdap
 
     public class viewHolder extends RecyclerView.ViewHolder{
 
-        TextView name,qty,price;
+        TextView name,qty,price,rate;
 
         private viewHolder(@NonNull View itemView) {
             super(itemView);
             name=itemView.findViewById(R.id.proName);
             qty=itemView.findViewById(R.id.qty);
             price=itemView.findViewById(R.id.price);
+            rate=itemView.findViewById(R.id.rate);
 
         }
     }

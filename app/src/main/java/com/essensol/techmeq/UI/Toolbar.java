@@ -94,7 +94,16 @@ public class Toolbar extends AppCompatActivity {
                         drawerLayout.closeDrawers();
                         break;
 
+                    case R.id.reports:
+                        intent = new Intent(Toolbar.this, Reports.class);
+                        startActivity(intent);
+                        drawerLayout.closeDrawers();
+                        break;
+
+
                     case R.id.logout:
+                        intent = new Intent(Toolbar.this, Login.class);
+                        startActivity(intent);
                         drawerLayout.closeDrawers();
 
                     default:

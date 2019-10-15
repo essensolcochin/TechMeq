@@ -26,6 +26,7 @@
                 >
 
                 <LinearLayout
+                    android:layout_marginTop="5dp"
                     android:background="#6C6D86"
                     android:padding="5dp"
                     android:orientation="horizontal"
@@ -127,7 +128,7 @@
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
 
 
 
@@ -280,7 +281,7 @@
 
                         </LinearLayout>
                         <LinearLayout
-
+                            android:id="@+id/pay"
                             android:layout_weight="1"
                             android:layout_margin="20dp"
                             android:gravity="center"

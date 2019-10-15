@@ -1,5 +1,6 @@
 package com.essensol.techmeq.UI;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
@@ -9,7 +10,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.essensol.techmeq.DialogFragments._AddProductDetailsDailog;
@@ -33,6 +36,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
     TabLayout tabLayout;
     ViewPager TabItem;
+    LinearLayout pay;
 
     TextView tot;
 
@@ -60,25 +64,38 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
         bottom =findViewById(R.id.frame);
 
+        pay =findViewById(R.id.pay);
+
+        tot=findViewById(R.id.tot);
 
         tabLayout.addTab(tabLayout.newTab().setText("Products"));
         tabLayout.addTab(tabLayout.newTab().setText("Add Item"));
-        tabLayout.addTab(tabLayout.newTab().setText("Report"));
+//        tabLayout.addTab(tabLayout.newTab().setText("Report"));
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
 
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+//        DisplayMetrics displaymetrics = new DisplayMetrics();
+//        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+//
+//
+//        int devicewidth = displaymetrics.widthPixels/2;
+//
+//        int deviceheight = displaymetrics.heightPixels /3;
+////        matchesAdapter_viewHolder.activityImage.getLayoutParams().width = devicewidth;
+//
+//        bottom.getLayoutParams().height = deviceheight;
 
 
-        int devicewidth = displaymetrics.widthPixels/2;
+        pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(MainActivity.this,BillPrint.class);
+                startActivity(intent);
+            }
+        });
 
-        int deviceheight = displaymetrics.heightPixels /3;
-//        matchesAdapter_viewHolder.activityImage.getLayoutParams().width = devicewidth;
-
-        bottom.getLayoutParams().height = deviceheight;
 
 
 
@@ -158,13 +175,59 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         //         percentage = (float)((scored / total_marks) * 100);
 
 
-        //        int total =0;
-//        for(int i=0;i<puchase.size();i++)
-//        {
-//            total = total+ Integer.parseInt(puchase.get(i).getPrice());
-//            tot.setText(Integer.toString(total));
-//        }
+        int total = 0;
+        for(int i=0;i<puchase.size();i++)
+        {
+            total = total+ Integer.parseInt(puchase.get(i).getNetAmount());
+            tot.setText(Integer.toString(total));
+        }
+
+
+
+
 
     }
+
+
+    private void CalculateItemPrice()
+    {
+        try
+        {
+            double amount = 0, netAmount = 0, taxAmt = 0, totalAmount = 0, itemQty = 0, itemPurRate = 0, discPerc = 0, discountAmt = 0, taxPerc = 0, margin = 0, itemWAmt = 0, itemamountWOT = 0, cost = 0;
+
+
+            //Amount
+            amount = itemQty * itemPurRate;
+            itemamountWOT = amount;
+            double _ItemAmt = amount;
+
+            //Tax Amt with net Amt
+            taxAmt = ((itemamountWOT * taxPerc) / 100);
+            itemWAmt = taxAmt;
+            double _ItemTaxAmt = taxAmt;
+
+            //Discount Amt
+            //discountAmt = ((amount * discPerc) / 100).TruncateDoublePlaces(3);
+            //_ItemDiscAmt = discountAmt;
+
+            //Net Amt
+            //netAmount = amount - discountAmt;
+            //_ItemNetAmount = netAmount;
+
+
+
+            //Total Amt
+            totalAmount = itemamountWOT + itemWAmt;
+
+
+
+        }
+        catch (Exception ex)
+        {
+
+        }
+    }
+
+
 }
 

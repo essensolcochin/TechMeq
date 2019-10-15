@@ -30,9 +30,9 @@ public class mTabAdapter extends FragmentStatePagerAdapter {
             case 1:
                 AddProduct tab2 = new AddProduct();
                 return tab2;
-            case 2:
-                ReportTab tab3 = new ReportTab();
-                return tab3;
+//            case 2:
+//                ReportTab tab3 = new ReportTab();
+//                return tab3;
 
 
 

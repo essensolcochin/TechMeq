@@ -19,6 +19,9 @@
         android:title="Sales" />
 
 
+    <item
+        android:id="@+id/reports"
+        android:title="Reports" />
 
 
 

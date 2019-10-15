@@ -45,6 +45,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
     String ItemName,Price;
     int ItemId;
 
+    boolean isFocused=false;
 
 
 
@@ -96,13 +97,13 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
         qty=RootView.findViewById(R.id.qty);
         mRate=RootView.findViewById(R.id.rate);
-        mPrice=RootView.findViewById(R.id.price);
+
         mPrice=RootView.findViewById(R.id.price);
         input=RootView.findViewById(R.id.inputfield);
         title=RootView.findViewById(R.id.title);
 
         title.setText(ItemName);
-        mRate.setHint(Price);
+
         add=RootView.findViewById(R.id.add);
 
 
@@ -129,19 +130,19 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
 
 
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Log.e("add","Clicked");
-
-//                ProductList list=new ProductList();
-//                list.setTargetFragment(list,1);
-//                sendResult(Activity.RESULT_OK, "Test");
-
-
-            }
-        });
+//        add.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Log.e("add","Clicked");
+//
+////                ProductList list=new ProductList();
+////                list.setTargetFragment(list,1);
+////                sendResult(Activity.RESULT_OK, "Test");
+//
+//
+//            }
+//        });
 
 
         mRate.addTextChangedListener(new TextWatcher() {
@@ -171,6 +172,8 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
             }
         });
 
+        mRate.setText(Price);
+
 
         input.setOnTouchListener(new View.OnTouchListener(){
 
@@ -184,6 +187,13 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
             }
         });
 
+        mRate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                isFocused=true;
+            }
+        });
 
 
         return RootView;
@@ -247,23 +257,35 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
         if(qty.getText().equals(""))
         {
-            Log.e("QTY","Focused");
             qty.setText(input.getText().toString());
             input.setText("");
+            input.setError(null);
+            if(!mRate.getText().equals("")) {
+                int Total = Integer.parseInt(mRate.getText().toString().trim()) + Integer.parseInt(qty.getText().toString().trim());
+                mPrice.setText(Integer.toString(Total));
+
+            }
 
         }
-        else if(mRate.getText().equals(""))
+        else if(isFocused)
         {
             Log.e("RATE","Focused");
             mRate.setText(input.getText().toString());
             input.setText("");
+            isFocused=false;
+            input.setError(null);
 
         }
         else if(!mRate.getText().equals("")&&!qty.getText().equals("")&&!mPrice.getText().toString().trim().equals(""))
         {
+            input.setError(null);
+
             assert mListner != null;
             mListner.getProductDetails(ItemName,qty.getText().toString(),mRate.getText().toString(),mPrice.getText().toString());
             getDialog().dismiss();
+        }
+        else {
+            input.setError("Check empty fields");
         }
     }
 
@@ -280,5 +302,11 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
         super.onResume();
 
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        isFocused=false;
     }
 }

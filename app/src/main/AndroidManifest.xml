@@ -10,33 +10,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".UI.BillPrint"></activity>
         <activity
-            android:screenOrientation="landscape"
-            android:name=".UI.SalesActivity"></activity>
+            android:name=".UI.Reports"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".UI.SalesActivity"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".UI.ExpenceVoucher"
             android:screenOrientation="landscape" />
         <activity
-            android:screenOrientation="landscape"
-            android:name=".UI.Registration" />
+            android:name=".UI.Registration"
+            android:screenOrientation="landscape" />
         <activity
-            android:screenOrientation="landscape"
-            android:name=".UI.Login" >
+            android:name=".UI.Login"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
-
         <activity android:name=".UI.Toolbar" />
         <activity
             android:name=".UI.MainActivity"
-            android:screenOrientation="landscape">
-
-        </activity>
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
