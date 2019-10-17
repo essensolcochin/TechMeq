@@ -8,7 +8,7 @@ import android.content.Context;
 
 import com.essensol.techmeq.Room.Databases.DAO.Product_DAO;
 
-@Database(entities = {Products.class},version = 1)
+@Database(entities = {Products.class,_dbExpenceVouchers.class},version = 1)
 public abstract class Product_DB extends RoomDatabase {
 
     private  static  Product_DB Instance;
@@ -26,32 +26,5 @@ public abstract class Product_DB extends RoomDatabase {
         return Instance;
     }
 
-//    private static RoomDatabase.Callback roomCallBack =new RoomDatabase.Callback()
-//    {
-//        @Override
-//        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-//            super.onCreate(db);
-//
-//            new PopulateAsyncTask(Instance).execute();
-//
-//
-//        }
-//    };
-//
-//    private   static class PopulateAsyncTask extends AsyncTask<Void,Void,Void>
-//    {
-//        Product_DAO product_dao;
-//
-//        private PopulateAsyncTask(Product_DB product_db) {
-//            this.product_dao = product_db.product_dao();
-//        }
-//
-//        @Override
-//        protected Void doInBackground(Void... voids) {
-//
-//            product_dao.AddProduct(new Products("Bread","food","100 AED","09-oct-2019"));
-//            return null;
-//        }
-//    }
 
 }

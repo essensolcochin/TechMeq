@@ -6,8 +6,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Tab_Fragments.ProductList">
 
+    <LinearLayout
+
+        android:layout_marginTop="10dp"
+        android:id="@+id/frame"
+        android:background="@drawable/background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.SearchView
+            app:queryHint="Search Product"
+            android:background="@android:color/white"
+            android:layout_margin="10sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
 
     <android.support.v7.widget.RecyclerView
+        android:background="@android:color/white"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/frame"
         android:id="@+id/products"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

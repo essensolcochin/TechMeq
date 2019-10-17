@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,8 +22,11 @@ import com.essensol.techmeq.Adapters.PurchaseListAdapter;
 import com.essensol.techmeq.Model.PurchaseModel;
 import com.essensol.techmeq.R;
 import com.essensol.techmeq.Adapters.mTabAdapter;
+import com.essensol.techmeq.Room.Databases.TaxModel;
+import com.essensol.techmeq.ViewModel.TaxViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends Toolbar implements _AddProductDetailsDailog.OnCompleteListener  {
 
@@ -38,7 +42,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
     ViewPager TabItem;
     LinearLayout pay;
 
-    TextView tot;
+    TextView tot,vat;
 
     ArrayList<PurchaseModel> puchase = new ArrayList<>();
 
@@ -65,6 +69,8 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         bottom =findViewById(R.id.frame);
 
         pay =findViewById(R.id.pay);
+
+        vat=findViewById(R.id.vat);
 
         tot=findViewById(R.id.tot);
 
@@ -129,28 +135,14 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         purchase.setLayoutManager(linearLayoutManager);
+        purchase.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
 
 
-
-
-//        for (int i = 0; i < 40; i++) {
-//            items.add("Item" + i);
-//        }
-
-//        adapter = new ProductsAdapter(items, MainActivity.this);
-//
-//        products.setAdapter(adapter);
 
 
     }
 
-//    @SuppressLint("SetTextI18n")
-//    @Override
-//    public void getProductDetails(String name, String Qty, String amnt) {
-//
-////        Log.e("getProductDetails()","Called"+name+" "+Qty+" "+amnt);
-//
-//    }
+
 
 
 
@@ -172,14 +164,31 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         purchaseListAdapter.notifyDataSetChanged();
 
 
-        //         percentage = (float)((scored / total_marks) * 100);
+
 
 
         int total = 0;
+        double netAmnt = 0;
+
         for(int i=0;i<puchase.size();i++)
         {
+
+            netAmnt=Double.parseDouble(puchase.get(i).getNetAmount());
+
+            Log.e("percentage()","percentage "+netAmnt);
+
+            double  percentage = (netAmnt/100.0f)*5 ;
+
+            vat.setText(String.valueOf(percentage));
+
+            Log.e("percentage()","percentage "+(netAmnt / 100));
+
+
+
             total = total+ Integer.parseInt(puchase.get(i).getNetAmount());
             tot.setText(Integer.toString(total));
+
+
         }
 
 
@@ -227,6 +236,8 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
         }
     }
+
+
 
 
 }

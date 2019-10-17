@@ -6,6 +6,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -44,6 +46,8 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
     String ItemName,Price;
     int ItemId;
+
+    LinearLayout rateclick;
 
     boolean isFocused=false;
 
@@ -106,6 +110,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
         add=RootView.findViewById(R.id.add);
 
+        rateclick=RootView.findViewById(R.id.rateclick);
 
 
         btn[0] = RootView.findViewById(R.id.l1);
@@ -163,7 +168,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
                 if(!mRate.getText().equals("")&&!qty.getText().equals(""))
                 {
                     Log.e("CAlC","Focused");
-                    int Total =Integer.parseInt(mRate.getText().toString().trim())+Integer.parseInt(qty.getText().toString().trim());
+                    int Total =Integer.parseInt(mRate.getText().toString().trim())*Integer.parseInt(qty.getText().toString().trim());
                     mPrice.setText(Integer.toString(Total));
                     input.setText("");
                 }
@@ -187,13 +192,15 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
             }
         });
 
-        mRate.setOnClickListener(new View.OnClickListener() {
+        rateclick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 isFocused=true;
             }
         });
+
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 
         return RootView;
@@ -261,7 +268,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
             input.setText("");
             input.setError(null);
             if(!mRate.getText().equals("")) {
-                int Total = Integer.parseInt(mRate.getText().toString().trim()) + Integer.parseInt(qty.getText().toString().trim());
+                int Total = Integer.parseInt(mRate.getText().toString().trim()) * Integer.parseInt(qty.getText().toString().trim());
                 mPrice.setText(Integer.toString(Total));
 
             }
