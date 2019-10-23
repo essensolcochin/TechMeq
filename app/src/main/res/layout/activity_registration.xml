@@ -91,17 +91,17 @@
             android:layout_height="wrap_content" />
 
         <android.support.design.widget.TextInputEditText
-            android:layout_marginTop="20sp"
+            android:id="@+id/mob"
 
+            android:layout_width="300sp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
             android:background="@drawable/edittextbgm"
+            android:hint="Mobile"
             android:imeOptions="actionNext"
             android:inputType="text"
-            android:textColor="@android:color/darker_gray"
-            android:hint="Mobile"
-            android:id="@+id/mob"
             android:padding="10dp"
-            android:layout_width="300sp"
-            android:layout_height="wrap_content" />
+            android:textColor="@android:color/darker_gray" />
 
         <android.support.design.widget.TextInputEditText
             android:layout_marginTop="20sp"

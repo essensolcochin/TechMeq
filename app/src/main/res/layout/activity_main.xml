@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#dadada"
     tools:context=".UI.MainActivity">
+
+    <LinearLayout
+        android:padding="30dp"
+        android:background="#6db993"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -12,22 +21,25 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
+            android:layout_margin="5dp"
             android:layout_weight=".8"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             >
 
             <LinearLayout
+                android:background="@android:color/transparent"
+                android:layout_marginTop="5dp"
+
                 android:layout_above="@+id/frame"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#e1e1e1"
                 android:orientation="vertical"
                 >
 
                 <LinearLayout
-                    android:layout_marginTop="5dp"
-                    android:background="#6C6D86"
+
+                    android:background="@drawable/background"
                     android:padding="5dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -44,11 +56,12 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Product Name"
-                        android:textColor="@android:color/white"
+                        android:textColor="@android:color/black"
                         android:textSize="15dp"
                         />
 
                     <TextView
+                        android:gravity="right"
                         android:singleLine="true"
                         android:layout_margin="8dp"
                         android:id="@+id/qty"
@@ -58,7 +71,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Quantity"
-                        android:textColor="@android:color/white"
+                        android:textColor="@android:color/black"
                         android:layout_weight="1"
                         android:textSize="15dp"
 
@@ -66,6 +79,7 @@
                         />
 
                     <TextView
+                        android:gravity="right"
                         android:singleLine="true"
                         android:layout_margin="8dp"
                         android:id="@+id/rate"
@@ -75,7 +89,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Rate"
-                        android:textColor="@android:color/white"
+                        android:textColor="@android:color/black"
                         android:layout_weight="1"
                         android:textSize="15dp"
 
@@ -83,6 +97,7 @@
                         />
 
                     <TextView
+                        android:gravity="start"
                         android:id="@+id/price"
                         android:singleLine="true"
                         android:layout_margin="8dp"
@@ -94,7 +109,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="15dp"
-                        android:textColor="@android:color/white"
+                        android:textColor="@android:color/black"
 
                         />
 
@@ -107,6 +122,7 @@
 
 
                 <android.support.v7.widget.RecyclerView
+                    android:background="@android:color/white"
                     android:id="@+id/purchase"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -201,7 +217,7 @@
                             android:layout_margin="8dp"
                             android:padding="8dp"
                             android:clickable="true"
-
+                            android:id="@+id/vat"
                             android:layout_marginTop="8dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -214,6 +230,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:background="#dadada"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -229,7 +246,7 @@
                             android:layout_height="wrap_content"
                             android:text="Grand Total"
                             android:textColor="@android:color/black"
-                            android:textSize="15dp"
+                            android:textSize="18sp"
                             />
 
 
@@ -246,7 +263,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textSize="18sp"
+                            android:textSize="20sp"
                             android:textColor="@android:color/holo_green_dark"
 
                             />
@@ -257,12 +274,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <LinearLayout
 
+                        <LinearLayout
+                            android:id="@+id/pay"
                             android:layout_weight="1"
-                            android:layout_margin="20dp"
+                            android:layout_margin="10dp"
                             android:gravity="center"
-                            android:background="@drawable/edittextbgm"
+                            android:background="@drawable/button"
                             android:padding="10dp"
                             android:orientation="horizontal"
                             android:layout_width="0dp"
@@ -272,18 +290,23 @@
 
                                 android:textStyle="bold"
                                 android:textSize="20dp"
-                                android:textColor="#ea6259"
-                                android:text="Credit Sale"
+                                android:textColor="@android:color/white"
+                                android:text="Pay Now"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
 
 
 
                         </LinearLayout>
+
+
+
+
                         <LinearLayout
-                            android:id="@+id/pay"
+
                             android:layout_weight="1"
-                            android:layout_margin="20dp"
+                            android:layout_margin="10dp"
+
                             android:gravity="center"
                             android:background="@drawable/credit"
                             android:padding="10dp"
@@ -296,7 +319,7 @@
                                 android:textStyle="bold"
                                 android:textSize="20dp"
                                 android:textColor="@android:color/white"
-                                android:text="Pay Now"
+                                android:text="Credit Sale"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
 
@@ -323,6 +346,9 @@
 
 
         <LinearLayout
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:background="@android:color/transparent"
             android:orientation="horizontal"
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -371,4 +397,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>

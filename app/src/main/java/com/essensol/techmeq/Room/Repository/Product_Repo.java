@@ -12,6 +12,7 @@ import java.util.List;
 
 public class Product_Repo {
 
+
     private Product_DAO product_dao;
     private LiveData<List<Products>>AllProducts;
 
@@ -27,6 +28,8 @@ public class Product_Repo {
     {
 
         new AddProductAsync(product_dao).execute(products);
+
+
     }
 
     public  void  UpdateProduct(Products products)
