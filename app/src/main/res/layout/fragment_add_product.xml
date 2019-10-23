@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical"
     android:fillViewport="true"
     tools:context=".Tab_Fragments.AddProduct">
@@ -40,24 +41,24 @@
 
 
 
-<!--    <TextView-->
-<!--        android:layout_marginLeft="10sp"-->
-<!--        android:layout_marginStart="10sp"-->
-<!--        android:layout_marginTop="30sp"-->
-<!--        android:textSize="20sp"-->
-<!--        android:textColor="@android:color/black"-->
-<!--        android:text="Product name"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"/>-->
+    <TextView
+        android:layout_marginLeft="10sp"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="30sp"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:text="Product name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
-<!--    <EditText-->
-<!--        android:imeOptions="flagNoExtractUi"-->
-<!--        android:id="@+id/productname"-->
-<!--        android:background="@drawable/edittextbgm"-->
-<!--        android:padding="10sp"-->
-<!--        android:layout_margin="10sp"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"/>-->
+    <EditText
+        android:imeOptions="flagNoExtractUi"
+        android:id="@+id/productname"
+        android:background="@drawable/edittextbgm"
+        android:padding="10sp"
+        android:layout_margin="10sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <TextView
         android:layout_marginLeft="10sp"
@@ -69,14 +70,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <EditText
-        android:id="@+id/category"
-        android:imeOptions="flagNoExtractUi"
-        android:background="@drawable/edittextbgm"
-        android:padding="10sp"
-        android:layout_margin="10sp"
-        android:layout_width="300sp"
-        android:layout_height="wrap_content"/>
+         <LinearLayout
+             android:background="@drawable/edittextbgm"
+             android:padding="10sp"
+             android:layout_margin="10sp"
+             android:layout_width="300dp"
+             android:layout_height="wrap_content">
+
+             <Spinner
+                 android:id="@+id/category"
+
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"/>
+
+
+         </LinearLayout>
+
+
 
     <TextView
         android:layout_marginLeft="10sp"
@@ -84,12 +94,12 @@
         android:layout_marginTop="30sp"
         android:textSize="16sp"
         android:textColor="@android:color/black"
-        android:text="Product Code"
+        android:text="Tax Percentage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <EditText
-        android:id="@+id/productcode"
+        android:id="@+id/tax"
         android:imeOptions="flagNoExtractUi"
         android:background="@drawable/edittextbgm"
         android:padding="10sp"
@@ -103,7 +113,7 @@
         android:layout_marginTop="30sp"
         android:textSize="16sp"
         android:textColor="@android:color/black"
-        android:text="Price "
+        android:text="Sales Price "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

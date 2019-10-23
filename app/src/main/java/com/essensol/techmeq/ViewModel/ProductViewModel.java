@@ -8,8 +8,8 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
 
-import com.essensol.techmeq.Room.Databases.Products;
-import com.essensol.techmeq.Room.Repository.Product_Repo;
+import com.essensol.techmeq.Room.Databases.Entity.Products;
+import com.essensol.techmeq.Room.Repository.mRepo;
 
 import java.util.List;
 
@@ -17,12 +17,12 @@ import java.util.List;
 
 public class ProductViewModel extends AndroidViewModel {
 
-    private Product_Repo product_repo;
+    private mRepo product_repo;
     private LiveData<List<Products>>allProducts;
 
     public ProductViewModel(@NonNull Application application) {
         super(application);
-        product_repo =new Product_Repo(application);
+        product_repo =new mRepo(application);
         allProducts =product_repo.getAllProducts();
 
     }

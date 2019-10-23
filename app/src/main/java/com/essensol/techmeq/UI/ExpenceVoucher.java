@@ -3,7 +3,6 @@ package com.essensol.techmeq.UI;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +16,7 @@ import android.widget.LinearLayout;
 
 import com.essensol.techmeq.Adapters.VoucherListAdapter;
 import com.essensol.techmeq.R;
-import com.essensol.techmeq.Room.Databases._dbExpenceVouchers;
+import com.essensol.techmeq.Room.Databases.Entity._dbExpenceVouchers;
 import com.essensol.techmeq.ViewModel.VoucherViewModel;
 
 import java.text.SimpleDateFormat;

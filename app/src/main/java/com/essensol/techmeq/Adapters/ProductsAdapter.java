@@ -12,9 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.essensol.techmeq.DialogFragments._AddProductDetailsDailog;
-import com.essensol.techmeq.Model.ProductRecyclerviewModel;
 import com.essensol.techmeq.R;
-import com.essensol.techmeq.Room.Databases.Products;
+import com.essensol.techmeq.Room.Databases.Entity.Products;
 
 
 import java.util.List;

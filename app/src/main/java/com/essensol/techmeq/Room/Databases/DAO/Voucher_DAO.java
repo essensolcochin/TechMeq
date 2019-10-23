@@ -7,7 +7,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.essensol.techmeq.Room.Databases._dbExpenceVouchers;
+import com.essensol.techmeq.Room.Databases.Entity._dbExpenceVouchers;
 
 import java.util.List;
 

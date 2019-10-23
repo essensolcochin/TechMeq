@@ -7,7 +7,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.essensol.techmeq.Room.Databases.Products;
+import com.essensol.techmeq.Room.Databases.Entity.Products;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public interface Product_DAO {
     void DeleteProduct(Products products);
 
 
-    @Query("SELECT * FROM Product_Master ORDER BY Created_On DESC")
+    @Query("SELECT * FROM Product_Master ORDER BY Product_Id DESC")
     LiveData<List<Products>> GetAllProduct();
 
 }

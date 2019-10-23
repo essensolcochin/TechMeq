@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 
 import com.essensol.techmeq.Room.Databases.DAO.Product_DAO;
 import com.essensol.techmeq.Room.Databases.Product_DB;
-import com.essensol.techmeq.Room.Databases.Products;
+import com.essensol.techmeq.Room.Databases.Entity.Products;
 
 import java.util.List;
 

@@ -1,7 +1,6 @@
 package com.essensol.techmeq.Tab_Fragments;
 
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -13,22 +12,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.essensol.techmeq.Adapters.ProductsAdapter;
 import com.essensol.techmeq.Adapters.PurchaseListAdapter;
-import com.essensol.techmeq.Model.ProductModel;
-import com.essensol.techmeq.Model.ProductRecyclerviewModel;
 import com.essensol.techmeq.Model.PurchaseModel;
 import com.essensol.techmeq.R;
-import com.essensol.techmeq.Room.Databases.Products;
+import com.essensol.techmeq.Room.Databases.Entity.Products;
 import com.essensol.techmeq.ViewModel.ProductViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 
 /**

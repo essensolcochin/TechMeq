@@ -1,4 +1,4 @@
-package com.essensol.techmeq.Room.Databases;
+package com.essensol.techmeq.Room.Databases.Entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;

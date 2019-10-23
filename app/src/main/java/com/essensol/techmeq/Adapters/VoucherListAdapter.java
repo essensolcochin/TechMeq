@@ -8,12 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.essensol.techmeq.Model.PurchaseModel;
-import com.essensol.techmeq.Model.VoucherModel;
 import com.essensol.techmeq.R;
-import com.essensol.techmeq.Room.Databases._dbExpenceVouchers;
+import com.essensol.techmeq.Room.Databases.Entity._dbExpenceVouchers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
