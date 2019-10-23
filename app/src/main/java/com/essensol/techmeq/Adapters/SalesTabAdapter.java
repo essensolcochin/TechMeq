@@ -5,11 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.essensol.techmeq.Tab_Fragments.AddProduct;
 import com.essensol.techmeq.Tab_Fragments.CashSales;
 import com.essensol.techmeq.Tab_Fragments.CreditSales;
-import com.essensol.techmeq.Tab_Fragments.ProductList;
-import com.essensol.techmeq.Tab_Fragments.ReportTab;
 
 public class SalesTabAdapter extends FragmentStatePagerAdapter {
 

@@ -18,6 +18,8 @@ public class Sales_Category {
 
     private  boolean Status;
 
+    public Sales_Category() {
+    }
 
     public Sales_Category(String productCategory, String image, boolean status) {
         ProductCategory = productCategory;

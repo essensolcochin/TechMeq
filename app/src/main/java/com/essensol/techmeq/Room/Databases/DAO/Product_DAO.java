@@ -8,6 +8,7 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
 import com.essensol.techmeq.Room.Databases.Entity.Products;
+import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
 
 import java.util.List;
 
@@ -26,5 +27,9 @@ public interface Product_DAO {
 
     @Query("SELECT * FROM Product_Master ORDER BY Product_Id DESC")
     LiveData<List<Products>> GetAllProduct();
+
+
+    @Query("SELECT * FROM Product_Master WHERE ProductCatId = :Id")
+    LiveData<List<Sales_Category>> GetProductCategoryByID(int Id);
 
 }

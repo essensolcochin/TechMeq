@@ -22,7 +22,7 @@ public class mRepo {
 
     private ProductCategory_DAO productCategory_dao;
     private LiveData<List<Sales_Category>> AllCategories;
-
+    private LiveData<List<Sales_Category>> AllProduct_By_Category;
 
     private Product_DAO product_dao;
     private LiveData<List<Products>>AllProducts;
@@ -34,6 +34,7 @@ public class mRepo {
         product_dao=db.product_dao();
         productCategory_dao=db.productCategory_dao();
 
+//        AllProduct_By_Category =product_dao.
         AllVouchers=voucher_dao.GetAllVouchers();
         AllProducts=product_dao.GetAllProduct();
         AllCategories=productCategory_dao.GetProductCategory();

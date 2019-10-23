@@ -44,7 +44,8 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
     TextView qty,mRate,mPrice,title;
 
-    String ItemName,Price;
+    String ItemName;
+    double Price;
     int ItemId;
 
     LinearLayout rateclick;
@@ -53,11 +54,12 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
 
 
+
+
     @SuppressLint("ValidFragment")
-    public _AddProductDetailsDailog(String itemName, int itemId, String price) {
+    public _AddProductDetailsDailog(String itemName, int itemId) {
         ItemName = itemName;
         ItemId = itemId;
-        Price = price;
     }
 
     public _AddProductDetailsDailog() {
@@ -129,9 +131,9 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
         qty.requestFocus();
 
-        for(int i =0;i<12;i++){
-            btn[i].setOnClickListener(this);
-        }
+//        for(int i =0;i<12;i++){
+//            btn[i].setOnClickListener(this);
+//        }
 
 
 
@@ -177,7 +179,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
             }
         });
 
-        mRate.setText(Price);
+//        mRate.setText(Price);
 
 
         input.setOnTouchListener(new View.OnTouchListener(){

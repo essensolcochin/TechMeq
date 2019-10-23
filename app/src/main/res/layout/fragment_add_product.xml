@@ -72,7 +72,6 @@
 
          <LinearLayout
              android:background="@drawable/edittextbgm"
-             android:padding="10sp"
              android:layout_margin="10sp"
              android:layout_width="300dp"
              android:layout_height="wrap_content">

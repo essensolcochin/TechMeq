@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 
 
 import com.essensol.techmeq.Room.Databases.Entity.Products;
+import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
 import com.essensol.techmeq.Room.Repository.mRepo;
 
 import java.util.List;
@@ -20,10 +21,15 @@ public class ProductViewModel extends AndroidViewModel {
     private mRepo product_repo;
     private LiveData<List<Products>>allProducts;
 
+    private LiveData<List<Sales_Category>> allCategories;
+
+
     public ProductViewModel(@NonNull Application application) {
         super(application);
         product_repo =new mRepo(application);
         allProducts =product_repo.getAllProducts();
+
+        allCategories =product_repo.getAllProductsCategory();
 
     }
 
@@ -47,6 +53,28 @@ public class ProductViewModel extends AndroidViewModel {
       return  allProducts;
     }
 
+
+
+
+    public void AddProductCategory(Sales_Category category)
+    {
+        product_repo.AddProductCategory(category);
+    }
+
+    public void UpdateProductCategory(Sales_Category category)
+    {
+        product_repo.UpdateProductCategory(category);
+    }
+
+    public void DeleteProductCategory(Sales_Category category)
+    {
+        product_repo.DeleteProductCategory(category);
+    }
+
+    public LiveData<List<Sales_Category>> GetAllProductCategory()
+    {
+        return  allCategories;
+    }
 
 
 }

@@ -76,19 +76,19 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
         tabLayout.addTab(tabLayout.newTab().setText("Products"));
         tabLayout.addTab(tabLayout.newTab().setText("Add Item"));
-//        tabLayout.addTab(tabLayout.newTab().setText("Report"));
+        tabLayout.addTab(tabLayout.newTab().setText("Add Category"));
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
 
-//        DisplayMetrics displaymetrics = new DisplayMetrics();
-//        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-//
-//
-//        int devicewidth = displaymetrics.widthPixels/2;
-//
-//        int deviceheight = displaymetrics.heightPixels /3;
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+
+
+        int devicewidth = displaymetrics.widthPixels/2;
+
+        int deviceheight = displaymetrics.heightPixels /4;
 ////        matchesAdapter_viewHolder.activityImage.getLayoutParams().width = devicewidth;
 //
 //        bottom.getLayoutParams().height = deviceheight;

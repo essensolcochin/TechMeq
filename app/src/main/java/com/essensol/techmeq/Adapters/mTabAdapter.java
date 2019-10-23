@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.essensol.techmeq.Tab_Fragments.AddProduct;
 import com.essensol.techmeq.Tab_Fragments.ProductList;
-import com.essensol.techmeq.Tab_Fragments.ReportTab;
+import com.essensol.techmeq.Tab_Fragments.AddCategory;
 
 public class mTabAdapter extends FragmentStatePagerAdapter {
 
@@ -30,9 +30,9 @@ public class mTabAdapter extends FragmentStatePagerAdapter {
             case 1:
                 AddProduct tab2 = new AddProduct();
                 return tab2;
-//            case 2:
-//                ReportTab tab3 = new ReportTab();
-//                return tab3;
+            case 2:
+                AddCategory tab3 = new AddCategory();
+                return tab3;
 
 
 

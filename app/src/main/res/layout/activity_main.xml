@@ -164,7 +164,7 @@
                             android:layout_height="wrap_content"
                             android:text="Taxable"
                             android:textColor="@android:color/black"
-                            android:textSize="15dp"
+                            android:textSize="12dp"
                             />
 
 
@@ -181,7 +181,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textSize="18sp"
+                            android:textSize="14sp"
                             android:textColor="@android:color/black"
 
                             />
@@ -204,7 +204,7 @@
                             android:layout_height="wrap_content"
                             android:text="VAT 5 %"
                             android:textColor="@android:color/black"
-                            android:textSize="15dp"
+                            android:textSize="12dp"
                             />
 
 
@@ -222,7 +222,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textSize="18sp"
+                            android:textSize="14sp"
                             android:textColor="@android:color/black"
 
                             />
@@ -238,7 +238,7 @@
 
                         <TextView
                             android:singleLine="true"
-                            android:layout_margin="8dp"
+                            android:layout_margin="5dp"
                             android:layout_weight="1.5"
                             android:padding="8dp"
                             android:layout_marginTop="8dp"
@@ -246,7 +246,7 @@
                             android:layout_height="wrap_content"
                             android:text="Grand Total"
                             android:textColor="@android:color/black"
-                            android:textSize="18sp"
+                            android:textSize="14sp"
                             />
 
 
@@ -257,7 +257,7 @@
                         <TextView
                             android:id="@+id/tot"
                             android:singleLine="true"
-                            android:layout_margin="8dp"
+                            android:layout_margin="5dp"
                             android:padding="8dp"
                             android:layout_marginTop="8dp"
                             android:layout_width="0dp"
@@ -289,7 +289,7 @@
                             <TextView
 
                                 android:textStyle="bold"
-                                android:textSize="20dp"
+                                android:textSize="16sp"
                                 android:textColor="@android:color/white"
                                 android:text="Pay Now"
                                 android:layout_width="wrap_content"
@@ -317,7 +317,7 @@
                             <TextView
 
                                 android:textStyle="bold"
-                                android:textSize="20dp"
+                                android:textSize="16sp"
                                 android:textColor="@android:color/white"
                                 android:text="Credit Sale"
                                 android:layout_width="wrap_content"

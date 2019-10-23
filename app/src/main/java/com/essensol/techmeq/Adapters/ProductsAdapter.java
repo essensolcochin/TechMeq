@@ -12,8 +12,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.essensol.techmeq.DialogFragments._AddProductDetailsDailog;
+import com.essensol.techmeq.Model.CategoryModel;
 import com.essensol.techmeq.R;
 import com.essensol.techmeq.Room.Databases.Entity.Products;
+import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
 
 
 import java.util.List;
@@ -21,10 +23,10 @@ import java.util.List;
 
 public  class ProductsAdapter extends  RecyclerView.Adapter<ProductsAdapter.viewHolder> {
 
-    private List<Products>items;
+    private List<CategoryModel>items;
     private Context mContext;
 
-    public ProductsAdapter(List<Products> items, Context mContext) {
+    public ProductsAdapter(List<CategoryModel> items, Context mContext) {
         this.items = items;
         this.mContext = mContext;
     }
@@ -43,11 +45,13 @@ public  class ProductsAdapter extends  RecyclerView.Adapter<ProductsAdapter.view
 
 
 
-        holder.proName.setText(items.get(position).getProduct_Category());
 
-        holder.category.setText(items.get(position).getProduct_Category());
 
-        holder.price.setText(items.get(position).getProduct_Price()+""+"AED");
+        holder.proName.setText(items.get(position).getProductCategory());
+
+//        holder.category.setText(items.get(position).getProduct_Category());
+
+
 
 
         holder.lay.setOnClickListener(new View.OnClickListener() {
@@ -58,10 +62,10 @@ public  class ProductsAdapter extends  RecyclerView.Adapter<ProductsAdapter.view
                 FragmentManager fm =((AppCompatActivity) mContext).getSupportFragmentManager();
 
 
-                final _AddProductDetailsDailog dialog= new _AddProductDetailsDailog(items.get(position).getProduct_Category()
-                        ,items.get(position).getProduct_Id(),items.get(position).getProduct_Price());
-
-                dialog.show(fm,"TAG");
+//                final _AddProductDetailsDailog dialog= new _AddProductDetailsDailog(items.get(position).getProductCategory()
+//                        ,items.get(position).getProduct_Id(),items.get(position).getSales_Price());
+//
+//                dialog.show(fm,"TAG");
 
 
 
@@ -70,7 +74,7 @@ public  class ProductsAdapter extends  RecyclerView.Adapter<ProductsAdapter.view
 
     }
 
-    public  void SetProducts(List<Products>products)
+    public  void SetProducts(List<CategoryModel>products)
     {
         this.items=products;
         notifyDataSetChanged();
@@ -94,9 +98,9 @@ public  class ProductsAdapter extends  RecyclerView.Adapter<ProductsAdapter.view
 
             proName=itemView.findViewById(R.id.name);
 
-            category=itemView.findViewById(R.id.category);
+//            category=itemView.findViewById(R.id.category);
 
-            price=itemView.findViewById(R.id.Price);
+//            price=itemView.findViewById(R.id.Price);
 
 //            code=itemView.findViewById(R.id.code);
 

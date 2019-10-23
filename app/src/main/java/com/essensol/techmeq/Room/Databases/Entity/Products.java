@@ -22,7 +22,10 @@ public class Products {
     private boolean Status;
 
 
-    public Products( int productCatId, double taxPercent, String productName, double sales_Price, boolean status) {
+    public Products() {
+    }
+
+    public Products(int productCatId, double taxPercent, String productName, double sales_Price, boolean status) {
         ProductCatId = productCatId;
         TaxPercent = taxPercent;
         ProductName = productName;

@@ -8,8 +8,9 @@ import android.content.Context;
 
 import com.essensol.techmeq.Room.Databases.DAO.Product_DAO;
 import com.essensol.techmeq.Room.Databases.Entity.Products;
+import com.essensol.techmeq.Room.Databases.Entity._dbExpenceVouchers;
 
-@Database(entities = {Products.class,_dbExpenceVouchers.class},version = 1)
+@Database(entities = {Products.class, _dbExpenceVouchers.class},version = 1)
 public abstract class Product_DB extends RoomDatabase {
 
     private  static  Product_DB Instance;

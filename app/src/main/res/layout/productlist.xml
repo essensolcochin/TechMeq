@@ -21,23 +21,20 @@
 
         <LinearLayout
             android:paddingTop="5dp"
-            android:paddingStart="10dp"
-            android:paddingLeft="10dp"
-            android:paddingEnd="0dp"
-            android:paddingRight="0dp"
+
+
             android:paddingBottom="20dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
-                android:singleLine="true"
-                android:id="@+id/name"
-                android:textSize="20sp"
-                android:text="Diet Coke"
-                android:textColor="@android:color/black"
-                android:textStyle="bold"
+
+
+
+            <ImageView
+                android:scaleType="fitXY"
+                android:src="@drawable/placeholder"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="100dp"/>
 
 
 <!--            <TextView-->
@@ -48,23 +45,32 @@
 <!--                android:layout_width="match_parent"-->
 <!--                android:layout_height="wrap_content" />-->
 
-            <TextView
-                android:textSize="20sp"
-                android:id="@+id/category"
-                android:layout_marginTop="3dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+<!--            <TextView-->
+<!--                android:textSize="20sp"-->
+<!--                android:id="@+id/category"-->
+<!--                android:layout_marginTop="3dp"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content" />-->
+
+<!--            <TextView-->
+<!--                android:textColor="@android:color/holo_green_dark"-->
+<!--                android:textSize="20sp"-->
+<!--                android:id="@+id/Price"-->
+<!--                android:layout_marginTop="3dp"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content" />-->
+
 
             <TextView
-                android:textColor="@android:color/holo_green_dark"
+                android:gravity="center"
+                android:singleLine="true"
+                android:id="@+id/name"
                 android:textSize="20sp"
-                android:id="@+id/Price"
-                android:layout_marginTop="3dp"
+                android:text="Diet Coke"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-
-
-
 
 
         </LinearLayout>
