@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:fillViewport="true"
+    tools:context=".DialogFragments.AddCategoryFragment">
+
+    <LinearLayout
+        android:gravity="center"
+
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:layout_marginLeft="10sp"
+                android:layout_marginStart="10sp"
+                android:layout_marginTop="30sp"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:text="Product Category name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:imeOptions="flagNoExtractUi"
+                android:id="@+id/category"
+                android:background="@drawable/edittextbgm"
+                android:padding="10sp"
+                android:layout_margin="10sp"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"/>
+
+
+            <TextView
+                android:layout_marginLeft="10sp"
+                android:layout_marginStart="10sp"
+                android:layout_marginTop="20sp"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:text="Image Path"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/imagepath"
+                android:background="@drawable/edittextbgm"
+                android:padding="10sp"
+                android:layout_margin="10sp"
+                android:layout_width="300dp"
+                android:textSize="18sp"
+                android:layout_height="wrap_content"/>
+
+
+            <Button
+                android:layout_gravity="center_horizontal"
+                android:padding="20sp"
+                android:layout_marginTop="30sp"
+                android:textColor="@android:color/white"
+                android:background="@drawable/button"
+                android:id="@+id/add"
+                android:text="Add Category"
+
+                android:layout_width="300sp"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+</ScrollView>

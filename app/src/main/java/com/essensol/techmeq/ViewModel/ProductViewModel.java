@@ -23,6 +23,8 @@ public class ProductViewModel extends AndroidViewModel {
 
     private LiveData<List<Sales_Category>> allCategories;
 
+//    private LiveData<List<Sales_Category>> all_Product_By_CatId;
+
 
     public ProductViewModel(@NonNull Application application) {
         super(application);
@@ -75,6 +77,16 @@ public class ProductViewModel extends AndroidViewModel {
     {
         return  allCategories;
     }
+
+    public LiveData<List<Products>> GetProduct_By_CategoryId(int Id)
+    {
+        return  product_repo.getAllProduct_By_Category(Id);
+    }
+
+//    public LiveData<List<Sales_Category>> GetProduct_By_CategoryId(int setId){
+//        return allFormSets = formDatabase.formSetDao().getAllFilledForms(setId);
+//    }
+
 
 
 }

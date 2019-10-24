@@ -16,13 +16,13 @@ import java.util.List;
 
 public class mRepo {
 
+    private int Id;
     private Voucher_DAO voucher_dao;
     private LiveData<List<_dbExpenceVouchers>> AllVouchers;
 
 
     private ProductCategory_DAO productCategory_dao;
     private LiveData<List<Sales_Category>> AllCategories;
-    private LiveData<List<Sales_Category>> AllProduct_By_Category;
 
     private Product_DAO product_dao;
     private LiveData<List<Products>>AllProducts;
@@ -34,7 +34,7 @@ public class mRepo {
         product_dao=db.product_dao();
         productCategory_dao=db.productCategory_dao();
 
-//        AllProduct_By_Category =product_dao.
+
         AllVouchers=voucher_dao.GetAllVouchers();
         AllProducts=product_dao.GetAllProduct();
         AllCategories=productCategory_dao.GetProductCategory();
@@ -65,10 +65,14 @@ public class mRepo {
     }
 
 
-    public  LiveData<List<_dbExpenceVouchers>>getAllVouchers()
+    public  LiveData<List<Products>>getAllProduct_By_Category(int Id)
     {
-        return AllVouchers;
+        return product_dao.GetProductCategoryByID(Id);
     }
+
+
+
+
 
 
     //For Product Table
@@ -93,6 +97,13 @@ public class mRepo {
     public  LiveData<List<Products>>getAllProducts()
     {
         return AllProducts;
+    }
+
+
+
+    public  LiveData<List<_dbExpenceVouchers>>getAllVouchers()
+    {
+        return AllVouchers;
     }
 
 

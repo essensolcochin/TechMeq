@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -175,7 +176,7 @@ public class AddCategory extends Fragment {
 
         if(grantResults.length>0&&grantResults[0]==PackageManager.PERMISSION_GRANTED)
         {
-            launchImagePicker();
+            Loadgallery();
         }
     }
 
@@ -193,7 +194,7 @@ public class AddCategory extends Fragment {
             if (requestCode == 1) {
 
 
-                String path=  data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
+                String path=  Environment.getExternalStorageDirectory().getAbsolutePath();
 
                 Log.e("Dataaaaaa"," "+path);
 //                // currImageURI is the global variable I'm using to hold the content:// URI of the image

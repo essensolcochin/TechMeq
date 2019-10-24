@@ -30,6 +30,6 @@ public interface Product_DAO {
 
 
     @Query("SELECT * FROM Product_Master WHERE ProductCatId = :Id")
-    LiveData<List<Sales_Category>> GetProductCategoryByID(int Id);
+    LiveData<List<Products>> GetProductCategoryByID(int Id);
 
 }

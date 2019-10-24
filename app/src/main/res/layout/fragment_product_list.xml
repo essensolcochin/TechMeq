@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Tab_Fragments.ProductList">
 
-    <LinearLayout
+    <RelativeLayout
 
         android:layout_marginTop="10dp"
         android:id="@+id/frame"
@@ -15,13 +15,24 @@
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.SearchView
+            android:layout_toLeftOf="@+id/Add"
+            android:layout_toStartOf="@+id/Add"
             app:queryHint="Search Product"
             android:background="@android:color/white"
             android:layout_margin="10sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-    </LinearLayout>
+        <ImageView
+            android:layout_centerVertical="true"
+            android:src="@drawable/plus"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/Add"
+            android:layout_width="80dp"
+            android:layout_height="50dp"/>
+
+    </RelativeLayout>
 
 
 

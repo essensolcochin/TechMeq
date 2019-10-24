@@ -55,7 +55,7 @@
                     <ImageView
 
 
-
+                        android:id="@+id/addItem"
                         android:src="@drawable/plus"
                         android:layout_width="30dp"
                         android:layout_height="30dp"/>

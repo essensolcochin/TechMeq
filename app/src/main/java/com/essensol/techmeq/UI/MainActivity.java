@@ -74,9 +74,8 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
         tot=findViewById(R.id.tot);
 
-        tabLayout.addTab(tabLayout.newTab().setText("Products"));
-        tabLayout.addTab(tabLayout.newTab().setText("Add Item"));
-        tabLayout.addTab(tabLayout.newTab().setText("Add Category"));
+        tabLayout.addTab(tabLayout.newTab().setText("Categories"));
+
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);

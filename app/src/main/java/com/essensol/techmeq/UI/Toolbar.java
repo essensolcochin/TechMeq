@@ -3,6 +3,7 @@ package com.essensol.techmeq.UI;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -11,8 +12,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.essensol.techmeq.DialogFragments.AddProduct_fragment;
 import com.essensol.techmeq.R;
 
 public class Toolbar extends AppCompatActivity {
@@ -24,6 +27,8 @@ public class Toolbar extends AppCompatActivity {
 
     private NavigationView navigationView;
 
+    ImageView addItem;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +36,8 @@ public class Toolbar extends AppCompatActivity {
         setContentView(R.layout.activity_toolbar);
 
         toolbar=findViewById(R.id.toolbar);
+
+        addItem=findViewById(R.id.addItem);
 
 
         setSupportActionBar(toolbar);
@@ -45,6 +52,20 @@ public class Toolbar extends AppCompatActivity {
         toggle.syncState();
 
 
+
+        addItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentManager fm =getSupportFragmentManager();
+
+
+                final AddProduct_fragment dialog= new AddProduct_fragment();
+
+                dialog.show(fm,"TAG");
+
+            }
+        });
 
 
 

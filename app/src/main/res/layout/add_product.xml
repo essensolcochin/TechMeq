@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:fillViewport="true"
+    tools:context=".DialogFragments.AddProduct_fragment">
+    <LinearLayout
+        android:padding="20sp"
+
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+        <TextView
+            android:layout_gravity="center_horizontal"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            android:text="Add Product Details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:gravity="center"
+            android:padding="20sp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:padding="10dp"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+
+
+
+                <TextView
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginStart="10sp"
+                    android:layout_marginTop="30sp"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:text="Product name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <EditText
+                    android:imeOptions="flagNoExtractUi"
+                    android:id="@+id/productname"
+                    android:background="@drawable/edittextbgm"
+                    android:padding="10sp"
+                    android:layout_margin="10sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginStart="10sp"
+                    android:layout_marginTop="30sp"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:text="Product Category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:background="@drawable/edittextbgm"
+                    android:layout_margin="10sp"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content">
+
+                    <Spinner
+                        android:id="@+id/category"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+
+                </LinearLayout>
+
+
+
+                <TextView
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginStart="10sp"
+                    android:layout_marginTop="30sp"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:text="Tax Percentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <EditText
+                    android:id="@+id/tax"
+                    android:imeOptions="flagNoExtractUi"
+                    android:background="@drawable/edittextbgm"
+                    android:padding="10sp"
+                    android:layout_margin="10sp"
+                    android:layout_width="300sp"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginStart="10sp"
+                    android:layout_marginTop="30sp"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:text="Sales Price "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <EditText
+                    android:id="@+id/price"
+                    android:imeOptions="flagNoExtractUi"
+                    android:background="@drawable/edittextbgm"
+                    android:padding="10sp"
+                    android:layout_margin="10sp"
+                    android:layout_width="300sp"
+                    android:layout_height="wrap_content"/>
+
+                <Button
+                    android:layout_gravity="center_horizontal"
+                    android:padding="20sp"
+                    android:layout_marginTop="30sp"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/button"
+                    android:id="@+id/add"
+                    android:text="Add Product"
+
+                    android:layout_width="300sp"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

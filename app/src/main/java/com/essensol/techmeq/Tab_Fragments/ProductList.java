@@ -6,15 +6,20 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.essensol.techmeq.Adapters.ProductsAdapter;
 import com.essensol.techmeq.Adapters.PurchaseListAdapter;
+import com.essensol.techmeq.DialogFragments.AddCategoryFragment;
+import com.essensol.techmeq.DialogFragments.AddProduct_fragment;
 import com.essensol.techmeq.Model.CategoryModel;
 import com.essensol.techmeq.Model.PurchaseModel;
 import com.essensol.techmeq.R;
@@ -42,6 +47,10 @@ public class ProductList extends Fragment  {
     RecyclerView purchase;
     Realm mRealm;
     private ProductViewModel model;
+
+    ImageView add;
+
+
     public ProductList() {
         // Required empty public constructor
     }
@@ -57,7 +66,22 @@ public class ProductList extends Fragment  {
 
 
         products = Rootview.findViewById(R.id.products);
-        layoutManager = new GridLayoutManager(getContext(), 5);
+
+        add = Rootview.findViewById(R.id.Add);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentManager fm =((AppCompatActivity) getActivity()).getSupportFragmentManager();
+
+
+                final AddCategoryFragment dialog= new AddCategoryFragment();
+
+                dialog.show(fm,"TAG");
+            }
+        });
+
+        layoutManager = new GridLayoutManager(getContext(), getActivity().getResources().getInteger(R.integer.number_of_grid_items));
         products.setLayoutManager(layoutManager);
         products.setItemViewCacheSize(6);
         products.setDrawingCacheEnabled(true);

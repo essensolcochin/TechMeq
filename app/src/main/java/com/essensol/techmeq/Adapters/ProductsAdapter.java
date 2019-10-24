@@ -26,6 +26,10 @@ public  class ProductsAdapter extends  RecyclerView.Adapter<ProductsAdapter.view
     private List<CategoryModel>items;
     private Context mContext;
 
+
+
+
+
     public ProductsAdapter(List<CategoryModel> items, Context mContext) {
         this.items = items;
         this.mContext = mContext;
@@ -62,10 +66,9 @@ public  class ProductsAdapter extends  RecyclerView.Adapter<ProductsAdapter.view
                 FragmentManager fm =((AppCompatActivity) mContext).getSupportFragmentManager();
 
 
-//                final _AddProductDetailsDailog dialog= new _AddProductDetailsDailog(items.get(position).getProductCategory()
-//                        ,items.get(position).getProduct_Id(),items.get(position).getSales_Price());
-//
-//                dialog.show(fm,"TAG");
+                final _AddProductDetailsDailog dialog= new _AddProductDetailsDailog(items.get(position).getProductCatId());
+
+                dialog.show(fm,"TAG");
 
 
 

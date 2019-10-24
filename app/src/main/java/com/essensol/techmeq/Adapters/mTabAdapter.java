@@ -23,22 +23,17 @@ public class mTabAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int i) {
 
-        switch (i) {
-            case 0:
-                ProductList tab1 = new ProductList();
-                return tab1;
-            case 1:
-                AddProduct tab2 = new AddProduct();
-                return tab2;
-            case 2:
-                AddCategory tab3 = new AddCategory();
-                return tab3;
-
-
-
-            default:
-                return null;
+        if (i == 0) {
+            ProductList tab1 = new ProductList();
+            return tab1;
+//            case 1:
+//                AddProduct tab2 = new AddProduct();
+//                return tab2;
+//            case 2:
+//                AddCategory tab3 = new AddCategory();
+//                return tab3;
         }
+        return null;
 
     }
 
