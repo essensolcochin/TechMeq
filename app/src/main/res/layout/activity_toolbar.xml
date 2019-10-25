@@ -31,6 +31,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:layout_centerVertical="true"
                 android:textStyle="bold"
                 android:text="TeqMec"
                 android:textColor="@android:color/white"
