@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -82,6 +83,7 @@ public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapte
                     }
                 }
                 else {
+
                     mListner.getProductDetails(newList);
 
                 }
@@ -116,6 +118,7 @@ public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapte
     public class viewHolder extends RecyclerView.ViewHolder{
 
         TextView name,qty,rate;
+        ImageView imageid;
 
         LinearLayout lay;
 
@@ -124,6 +127,7 @@ public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapte
             name=itemView.findViewById(R.id.proName);
             lay=itemView.findViewById(R.id.lay);
             rate=itemView.findViewById(R.id.rate);
+
 
         }
     }

@@ -52,81 +52,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <ImageView
+                    <TextView
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:text="Add Item"/>
 
+                    <ImageView
 
                         android:id="@+id/addItem"
                         android:src="@drawable/plus"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"/>
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                       />
 
                 </LinearLayout>
-
-
-
-                <LinearLayout
-                    android:id="@+id/add"
-                    android:background="#74bf94"
-
-                    android:padding="5dp"
-                    android:layout_toLeftOf="@+id/user"
-                    android:layout_toStartOf="@+id/user"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-
-                        android:layout_marginRight="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:tint="@android:color/white"
-
-                        android:src="@drawable/usersilhouette"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:padding="5dp"
-                    android:background="#74bf94"
-                    android:id="@+id/cart"
-                    android:layout_toLeftOf="@+id/add"
-                    android:layout_toStartOf="@+id/add"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-
-                    <ImageView
-
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginRight="10dp"
-                        android:tint="@android:color/white"
-
-                        android:src="@drawable/cart"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"/>
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:padding="5dp"
-                    android:background="#74bf94"
-                    android:layout_toLeftOf="@+id/cart"
-                    android:layout_toStartOf="@+id/cart"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-
-                        android:tint="@android:color/white"
-                        android:src="@drawable/calculator"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"/>
-
-                </LinearLayout>
-
 
 
 
@@ -137,11 +83,8 @@
         </RelativeLayout>
 
 
-
-
-
-
     </android.support.v7.widget.Toolbar>
+
     <FrameLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
