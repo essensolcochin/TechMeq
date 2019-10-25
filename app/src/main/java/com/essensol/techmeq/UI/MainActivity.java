@@ -2,6 +2,7 @@ package com.essensol.techmeq.UI;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
@@ -24,8 +25,10 @@ import com.essensol.techmeq.Model.PurchaseModel;
 import com.essensol.techmeq.Model.mProductModel;
 import com.essensol.techmeq.R;
 import com.essensol.techmeq.Adapters.mTabAdapter;
+import com.essensol.techmeq.Room.Databases.DAO.Sale_Item_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Sales_Header_DAO;
 import com.essensol.techmeq.Room.Databases.Entity.SalesHeader;
+import com.essensol.techmeq.Room.Databases.Entity.SalesItem;
 import com.essensol.techmeq.Room.Databases.OfflineDb;
 import com.essensol.techmeq.Room.Databases.TaxModel;
 import com.essensol.techmeq.ViewModel.TaxViewModel;
@@ -50,10 +53,12 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
     ViewPager TabItem;
     LinearLayout pay;
 
-    TextView tot,vat;
+    private   int SaleId;
 
-    ArrayList<PurchaseModel> puchase = new ArrayList<>();
-    List<mProductModel> newlist =new ArrayList<>();
+    TextView tot,vat,taxable;
+
+     ArrayList<PurchaseModel> puchase = new ArrayList<>();
+    List<SalesItem> addSaleList =new ArrayList<>();
 
 //    UltimateTabLayout tabLayout;
     HomeTabAdapter_ adapter_;
@@ -81,6 +86,9 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         vat=findViewById(R.id.vat);
 
         tot=findViewById(R.id.tot);
+
+        taxable=findViewById(R.id.taxable);
+
 
         tabLayout.addTab(tabLayout.newTab().setText("Categories"));
 
@@ -196,13 +204,92 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
     }
 
 
+
+
+
+
+//    @Override
+//    public void getProductDetails(List<mProductModel> list) {
+//
+//
+//
+//
+//
+//
+//
+//    }
+
+
+    private  void AddSaleItem()
+    {
+
+        for (int i=0;i<puchase.size();i++)
+        {
+
+//            SaleId = saleId;
+//            ProductId = productId;
+//            Qty = qty;
+//            Price = price;
+//            Total = total;
+//            TaxPercent = taxPercent;
+//            TaxAmt = taxAmt;
+//            LineTotal = lineTotal;
+            PurchaseModel items =puchase.get(i);
+
+            SalesItem model=new SalesItem(SaleId,items.getProductId(),items.getQty(),items.getRate(),Double.parseDouble(tot.getText().toString())
+                                            ,5.0,Double.parseDouble(vat.getText().toString()),items.getLinetot());
+
+            addSaleList.add(model);
+
+        }
+
+        new AddSaleItemAsync(OfflineDb.getInstance(this).sale_item_dao()).execute(addSaleList);
+
+    }
+
+
+
+
+    private  void AddSale()
+    {
+
+        Date c = Calendar.getInstance().getTime();
+        System.out.println("Current time => " + c);
+
+
+        SalesHeader header =new SalesHeader(1,1,"09#001",c,0
+                ,Double.parseDouble(tot.getText().toString())
+                ,Double.parseDouble(vat.getText().toString()),0,Double.parseDouble(tot.getText().toString()),0);
+
+      new  AddProductAsync(OfflineDb.getInstance(this).sales_header_dao()).execute(header);
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                AddSaleItem();
+
+            }
+        }, 1000);
+
+
+    }
+
+
+
+
     @Override
-    public void getProductDetails(List<mProductModel> list) {
+    public void getProductListItem(int Qty, int Product_Id, int ProductCatId, double TaxPercent, String ProductName, double Sales_Price, double rate) {
 
 
-        newlist=list;
+        double lineTot=((Sales_Price/100.0f)*5)+Qty;
 
-        purchaseListAdapter = new PurchaseListAdapter(newlist, this);
+       PurchaseModel model =new PurchaseModel(ProductName,Product_Id,Qty,rate,rate,lineTot);
+
+       puchase.add(model);
+
+        purchaseListAdapter = new PurchaseListAdapter(puchase, this);
 
         purchase.setAdapter(purchaseListAdapter);
         purchaseListAdapter.notifyDataSetChanged();
@@ -211,64 +298,39 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
 
-        int total = 0;
+        double  total = 0;
         double netAmnt = 0;
+        double  percentage=0;
+        double  _taxable =0;
 
         for(int i=0;i<puchase.size();i++)
         {
 
-            netAmnt=Double.parseDouble(puchase.get(i).getNetAmount());
+            netAmnt=puchase.get(i).getNetAmount();
 
-            Log.e("percentage()","percentage "+netAmnt);
+            _taxable =_taxable+netAmnt;
 
-            double  percentage = (netAmnt/100.0f)*5 ;
+            taxable.setText(Double.toString(_taxable));
+
+            percentage = percentage+(netAmnt/100.0f)*5 ;
 
             vat.setText(String.valueOf(percentage));
 
-            Log.e("percentage()","percentage "+(netAmnt / 100));
+            Log.e("percentage()","percentage "+percentage);
 
 
 
-            total = total+ Integer.parseInt(puchase.get(i).getNetAmount());
-            tot.setText(Integer.toString(total));
+            total = total+ puchase.get(i).getNetAmount()+percentage;
+            tot.setText(Double.toString(total));
 
 
         }
 
 
-
-
     }
 
 
-    private  void AddSale()
-    {
-
-
-
-//        CompId = compId;
-//        FinYearId = finYearId;
-//        SaleNo = saleNo;
-//        SaleDate = saleDate;
-//        CustId = custId;
-//        SubTotal = subTotal;
-//        TaxAmt = taxAmt;
-//        Discount = discount;
-//        GrandTotal = grandTotal;
-//        PaidAmt = paidAmt;
-
-
-      new  AddProductAsync(OfflineDb.getInstance(this).sales_header_dao()).execute();
-
-
-
-
-
-    }
-
-
-
-    private  static class AddProductAsync extends AsyncTask<Void,Void,Void> {
+    private  static class AddProductAsync extends AsyncTask<SalesHeader,Void,Void> {
 
         private Sales_Header_DAO header_dao;
 
@@ -277,23 +339,57 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
+        protected Void doInBackground(SalesHeader... salesHeaders) {
 
-            Date c = Calendar.getInstance().getTime();
-            System.out.println("Current time => " + c);
 
 //            SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
 //            String formattedDate = df.format(c);
 
-            SalesHeader salesHeader =new SalesHeader(1,2,"ww",c,2,100.80,5.0,20.0,150.0,100);
 
 
-            header_dao.AddSalesHeader(salesHeader);
-
+            header_dao.AddSalesHeader(salesHeaders[0]);
 
            int Id = header_dao.getId();
 
             Log.e("LastAdded","Id _--> "+Id );
+
+
+
+
+
+
+
+            return null;
+        }
+    }
+
+
+    private  static class AddSaleItemAsync extends AsyncTask<List<SalesItem>,Void,Void> {
+
+        private Sale_Item_DAO item_dao;
+
+        public AddSaleItemAsync(Sale_Item_DAO Saleitemdao) {
+            this.item_dao = Saleitemdao;
+        }
+
+        @Override
+        protected Void doInBackground(List<SalesItem>... items) {
+
+
+
+
+           item_dao.AddSalesItem(items[0]);
+
+
+
+            Log.e("GetAllSales","Id _--> "+item_dao.GetAllSales().size() );
+
+
+
+
+
+
+
 
 
             return null;

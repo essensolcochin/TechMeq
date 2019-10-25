@@ -15,7 +15,7 @@ import java.util.List;
 public interface Sale_Item_DAO {
 
     @Insert
-    long  AddSalesItem(SalesItem item);
+    void   AddSalesItem(List<SalesItem>item);
 
     @Update
     void UpdateSalesItem(SalesItem item);
@@ -25,6 +25,6 @@ public interface Sale_Item_DAO {
 
 
     @Query("SELECT * FROM sales_item ORDER BY SaleItemId DESC")
-    LiveData<List<SalesItem> >GetAllSales();
+    List<SalesItem>GetAllSales();
 
 }

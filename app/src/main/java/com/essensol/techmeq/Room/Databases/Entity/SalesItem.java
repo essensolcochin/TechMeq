@@ -3,15 +3,13 @@ package com.essensol.techmeq.Room.Databases.Entity;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.Index;
+
 import android.arch.persistence.room.PrimaryKey;
 
-@Entity(tableName="Sales_Item",
-        indices = @Index(value = {"ProductId", "SaleId"}),
-foreignKeys = {@ForeignKey(entity = Products.class, parentColumns = "Product_Id", childColumns = "ProductId"),
-@ForeignKey(entity = SalesHeader.class, parentColumns = "SaleId", childColumns = "SaleId")}
-
+@Entity(tableName="Sales_Item"
+//, indices = @Index(value = {"ProductId", "SaleId"}),
+//foreignKeys = {@ForeignKey(entity = Products.class, parentColumns = "Product_Id", childColumns = "ProductId"),
+//@ForeignKey(entity = SalesHeader.class, parentColumns = "SaleId", childColumns = "SaleId")
 )
 
 public class SalesItem {
@@ -27,20 +25,20 @@ public class SalesItem {
 
     private int Qty;
 
-    private int Price;
+    private double Price;
 
-    private int Total;
+    private double Total;
 
-    private int TaxPercent;
+    private double TaxPercent;
 
-    private int TaxAmt;
+    private double TaxAmt;
 
-    private int LineTotal;
+    private double LineTotal;
 
     public SalesItem() {
     }
 
-    public SalesItem(int saleId, int productId, int qty, int price, int total, int taxPercent, int taxAmt, int lineTotal) {
+    public SalesItem(int saleId, int productId, int qty, double price, double total, double taxPercent, double taxAmt, double lineTotal) {
         SaleId = saleId;
         ProductId = productId;
         Qty = qty;
@@ -84,43 +82,43 @@ public class SalesItem {
         Qty = qty;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return Price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         Price = price;
     }
 
-    public int getTotal() {
+    public double getTotal() {
         return Total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(double total) {
         Total = total;
     }
 
-    public int getTaxPercent() {
+    public double getTaxPercent() {
         return TaxPercent;
     }
 
-    public void setTaxPercent(int taxPercent) {
+    public void setTaxPercent(double taxPercent) {
         TaxPercent = taxPercent;
     }
 
-    public int getTaxAmt() {
+    public double getTaxAmt() {
         return TaxAmt;
     }
 
-    public void setTaxAmt(int taxAmt) {
+    public void setTaxAmt(double taxAmt) {
         TaxAmt = taxAmt;
     }
 
-    public int getLineTotal() {
+    public double getLineTotal() {
         return LineTotal;
     }
 
-    public void setLineTotal(int lineTotal) {
+    public void setLineTotal(double lineTotal) {
         LineTotal = lineTotal;
     }
 }

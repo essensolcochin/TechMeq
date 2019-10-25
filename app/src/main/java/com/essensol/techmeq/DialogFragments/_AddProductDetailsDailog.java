@@ -64,7 +64,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
 
     public  interface OnCompleteListener {
-        void getProductDetails(List<mProductModel>list);
+        void getProductListItem(int Qty,int Product_Id,int ProductCatId,double TaxPercent,String ProductName,double Sales_Price,double rate);
     }
     private OnCompleteListener mListner;
 
@@ -100,6 +100,12 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
     SelectedListAdapter mAdapter;
 
 
+    int Product_Id;
+    int ProductCatId;
+    double TaxPercent;
+    String ProductName;
+    double Sales_Price;
+    boolean Status;
 
 
 
@@ -177,7 +183,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
         mProductCategory=RootView.findViewById(R.id.category);
 
 
-        title=RootView.findViewById(R.id.title);
+        title=RootView.findViewById(R.id.productname);
 
         input=RootView.findViewById(R.id.input);
 
@@ -298,32 +304,32 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 //        });
 
 
-        mRate.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-//                if(!mRate.getText().equals("")&&!qty.getText().equals(""))
-//                {
-//                    Log.e("CAlC","Focused");
-//                    int Total =Integer.parseInt(mRate.getText().toString().trim())*Integer.parseInt(qty.getText().toString().trim());
-//                    mPrice.setText(Integer.toString(Total));
-//                    input.setText("");
-//                }
-
-
-            }
-        });
+//        mRate.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+////                if(!mRate.getText().equals("")&&!qty.getText().equals(""))
+////                {
+////                    Log.e("CAlC","Focused");
+////                    int Total =Integer.parseInt(mRate.getText().toString().trim())*Integer.parseInt(qty.getText().toString().trim());
+////                    mPrice.setText(Integer.toString(Total));
+////                    input.setText("");
+////                }
+//
+//
+//            }
+//        });
 
 //        mRate.setText(Price);
 
@@ -413,9 +419,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
 
                 Input();
-//                assert mListner != null;
-//            mListner.getProductDetails(newlist);
-//            getDialog().dismiss();
+
                 break;
 
         }
@@ -461,7 +465,11 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
         else if(!mRate.getText().equals("")&&!qty.getText().equals("")&&!mPrice.getText().toString().trim().equals(""))
         {
             input.setError(null);
+            double rate= Sales_Price*Integer.parseInt(qty.getText().toString());
 
+            assert mListner != null;
+            mListner.getProductListItem(Integer.parseInt(qty.getText().toString()),Product_Id,ProductCatId,TaxPercent,title.getText().toString(),Sales_Price,rate);
+            getDialog().dismiss();
 
         }
 
@@ -571,6 +579,16 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
     @Override
     public void getProductDetails(int Product_Id, int ProductCatId, double TaxPercent, String ProductName, double Sales_Price, boolean Status) {
+
+        title.setText(ProductName);
+
+      this.Product_Id=Product_Id;
+      this.ProductCatId=ProductCatId;
+      this.TaxPercent=TaxPercent;
+      this.ProductName=ProductName;
+      this.Sales_Price=Sales_Price;
+      this.Status=Status;
+
 
 
         qty.setText("1");

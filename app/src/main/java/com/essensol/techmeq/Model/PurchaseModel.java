@@ -2,13 +2,17 @@ package com.essensol.techmeq.Model;
 
 public class PurchaseModel {
 
-    private String name,qty,rate,netAmount;
+    private String name;
+    private int qty,ProductId;
+    private double rate,netAmount,linetot;
 
-    public PurchaseModel(String name, String qty, String rate, String netAmount) {
+    public PurchaseModel(String name, int ProductId,int qty, double rate, double netAmount,double linetot) {
         this.name = name;
         this.qty = qty;
         this.rate = rate;
         this.netAmount = netAmount;
+        this.ProductId = ProductId;
+        this.linetot = linetot;
     }
 
     public String getName() {
@@ -19,27 +23,43 @@ public class PurchaseModel {
         this.name = name;
     }
 
-    public String getQty() {
+    public int getQty() {
         return qty;
     }
 
-    public void setQty(String qty) {
+    public void setQty(int qty) {
         this.qty = qty;
     }
 
-    public String getRate() {
+    public double getRate() {
         return rate;
     }
 
-    public void setRate(String rate) {
+    public void setRate(double rate) {
         this.rate = rate;
     }
 
-    public String getNetAmount() {
+    public double getNetAmount() {
         return netAmount;
     }
 
-    public void setNetAmount(String netAmount) {
+    public void setNetAmount(double netAmount) {
         this.netAmount = netAmount;
+    }
+
+    public int getProductId() {
+        return ProductId;
+    }
+
+    public void setProductId(int productId) {
+        ProductId = productId;
+    }
+
+    public double getLinetot() {
+        return linetot;
+    }
+
+    public void setLinetot(double linetot) {
+        this.linetot = linetot;
     }
 }

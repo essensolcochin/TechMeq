@@ -18,10 +18,10 @@ import java.util.List;
 
 public  class PurchaseListAdapter extends  RecyclerView.Adapter<PurchaseListAdapter.viewHolder> {
 
-    private List<mProductModel> items;
+    private List<PurchaseModel> items;
     private Context mContext;
 
-    public PurchaseListAdapter(List<mProductModel> items, Context mContext) {
+    public PurchaseListAdapter(List<PurchaseModel> items, Context mContext) {
         this.items = items;
         this.mContext = mContext;
     }
@@ -38,10 +38,10 @@ public  class PurchaseListAdapter extends  RecyclerView.Adapter<PurchaseListAdap
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
 
-        holder.name.setText(items.get(position).getProductName());
-        holder.qty.setText(Integer.toString(items.get(position).getProductCatId()));
-//        holder.rate.setText(items.get(position).getRate());
-        holder.price.setText(Double.toString(items.get(position).getSales_Price()));
+        holder.name.setText(items.get(position).getName());
+        holder.qty.setText(Integer.toString(items.get(position).getQty()));
+        holder.rate.setText(Double.toString(items.get(position).getRate()));
+        holder.price.setText(Double.toString(items.get(position).getNetAmount()));
 
     }
 

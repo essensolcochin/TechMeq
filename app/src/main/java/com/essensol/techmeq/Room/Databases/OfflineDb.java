@@ -23,7 +23,13 @@ import com.essensol.techmeq.Room.DateTypeConverter;
 
 @Database
 (
-        entities = {_dbExpenceVouchers.class, Products.class, Sales_Category.class, SalesHeader.class, SalesItem.class}
+        entities = {
+                _dbExpenceVouchers.class
+                , Products.class
+                , Sales_Category.class
+                , SalesHeader.class
+                , SalesItem.class
+        }
         ,version = 1
 )
 @TypeConverters(DateTypeConverter.class)
