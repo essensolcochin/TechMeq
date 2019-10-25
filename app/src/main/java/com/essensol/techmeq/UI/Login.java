@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.essensol.techmeq.R;
 
 public class Login extends AppCompatActivity {
@@ -14,6 +16,8 @@ public class Login extends AppCompatActivity {
     TextView reg;
 
     LinearLayout login;
+
+    ImageView logoimage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,14 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+        int logo=R.drawable.teqmeclogo;
+
+        Glide
+                .with(Login.this)
+                .load(logo)
+                .into(logoimage);
 
 
     }
