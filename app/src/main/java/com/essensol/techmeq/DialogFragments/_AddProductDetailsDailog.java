@@ -409,9 +409,13 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
                 break;
             case R.id.done:
-                assert mListner != null;
-            mListner.getProductDetails(newlist);
-            getDialog().dismiss();
+
+
+
+                Input();
+//                assert mListner != null;
+//            mListner.getProductDetails(newlist);
+//            getDialog().dismiss();
                 break;
 
         }
@@ -425,6 +429,46 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
     /*  qnty,rate,total */
 
+    private void Input()
+    {
+        Log.e("Input()","Called"+qty.getHint());
+
+
+        if(qty.getText().equals(""))
+        {
+            qty.setText(input.getText().toString());
+            input.setText("");
+            input.setError(null);
+            input.getText().clear();
+            if(!mRate.getText().equals("")) {
+                int Total = Integer.parseInt(mRate.getText().toString().trim()) * Integer.parseInt(qty.getText().toString().trim());
+                mPrice.setText(Integer.toString(Total));
+
+            }
+
+        }
+
+//        else if(isFocused)
+//        {
+//            Log.e("RATE","Focused");
+//            mRate.setText(input.getText().toString());
+//            input.setText("");
+//            isFocused=false;
+//            input.setError(null);
+//
+//        }
+
+        else if(!mRate.getText().equals("")&&!qty.getText().equals("")&&!mPrice.getText().toString().trim().equals(""))
+        {
+            input.setError(null);
+
+
+        }
+
+        else {
+            input.setError("Check empty fields");
+        }
+    }
 //    private void Input()
 //    {
 //        Log.e("Input()","Called"+qty.getHint());
