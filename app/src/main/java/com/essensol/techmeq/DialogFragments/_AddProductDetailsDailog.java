@@ -159,7 +159,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
 
 
-    EditText input;
+   //// EditText input;
     Button add;
 
 
@@ -278,43 +278,41 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 //
 //                Log.e("add","Clicked");
 //
-////                ProductList list=new ProductList();
-////                list.setTargetFragment(list,1);
-////                sendResult(Activity.RESULT_OK, "Test");
+////
 //
 //
 //            }
 //        });
 
 
-//        mRate.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//                if(!mRate.getText().equals("")&&!qty.getText().equals(""))
-//                {
-//                    Log.e("CAlC","Focused");
-//                    int Total =Integer.parseInt(mRate.getText().toString().trim())*Integer.parseInt(qty.getText().toString().trim());
-//                    mPrice.setText(Integer.toString(Total));
+        mRate.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if(!mRate.getText().equals("")&&!qty.getText().equals(""))
+                {
+                    Log.e("CAlC","Focused");
+                    int Total =Integer.parseInt(mRate.getText().toString().trim())*Integer.parseInt(qty.getText().toString().trim());
+                    mPrice.setText(Integer.toString(Total));
 //                    input.setText("");
-//                }
-//
-//
-//            }
-//        });
+                }
 
-//        mRate.setText(Price);
+
+            }
+        });
+
+        mRate.setText(Double.toString(Price));
 
 
 //        input.setOnTouchListener(new View.OnTouchListener(){
@@ -398,9 +396,8 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
                 break;
             case R.id.done:
-                assert mListner != null;
-            mListner.getProductDetails(newlist);
-            getDialog().dismiss();
+                Input();
+//            getDialog().dismiss();
                 break;
 
         }
@@ -408,22 +405,17 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
     private void addtoarray(String numbers){
         //register TextBox
 
-        input.append(numbers);
-    }
+//        input.append(numbers);
 
 
-    /*  qnty,rate,total */
 
-    private void Input()
-    {
         Log.e("Input()","Called"+qty.getHint());
 
 
         if(qty.getText().equals(""))
         {
-            qty.setText(input.getText().toString());
-            input.setText("");
-            input.setError(null);
+            qty.append(numbers);
+
             if(!mRate.getText().equals("")) {
                 int Total = Integer.parseInt(mRate.getText().toString().trim()) * Integer.parseInt(qty.getText().toString().trim());
                 mPrice.setText(Integer.toString(Total));
@@ -434,21 +426,31 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
         else if(isFocused)
         {
             Log.e("RATE","Focused");
-            mRate.setText(input.getText().toString());
-            input.setText("");
+            mRate.append(numbers);
+
             isFocused=false;
-            input.setError(null);
+
 
         }
         else if(!mRate.getText().equals("")&&!qty.getText().equals("")&&!mPrice.getText().toString().trim().equals(""))
         {
-            input.setError(null);
 
+            assert mListner != null;
+            mListner.getProductDetails(newlist);
 
         }
         else {
-            input.setError("Check empty fields");
+//            input.setError("Check empty fields");
         }
+
+    }
+
+
+    /*  qnty,rate,total */
+
+    private void Input()
+    {
+
     }
 
 
