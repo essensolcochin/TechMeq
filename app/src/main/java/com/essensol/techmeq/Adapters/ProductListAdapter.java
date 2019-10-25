@@ -64,29 +64,21 @@ public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapte
             @Override
             public void onClick(View v) {
 
-                mProductModel model=new mProductModel(products.getProduct_Id(),products.getProductCatId()
-                                                        ,products.getTaxPercent(),products.getProductName()
-                                                        ,products.getSales_Price(),products.isStatus());
-
-                newList.add(model);
+//                mProductModel model=new mProductModel(products.getProduct_Id(),products.getProductCatId()
+//                                                        ,products.getTaxPercent(),products.getProductName()
+//                                                        ,products.getSales_Price(),products.isStatus());
+//
+//                newList.add(model);
 
                 Log.e("newList","size "+newList.size());
 
-                if(mListner==null)
+                if(mListner!=null)
                 {
-                    try {
-
-                        _AddProductDetailsDailog log=new _AddProductDetailsDailog();
-                        mListner = ((OnSelectedListener) log.getContext());
-                    } catch (ClassCastException e) {
-                        e.printStackTrace();
-                    }
+                    mListner.getProductDetails(products.getProduct_Id(),products.getProductCatId()
+                            ,products.getTaxPercent(),products.getProductName()
+                            ,products.getSales_Price(),products.isStatus());
                 }
-                else {
 
-                    mListner.getProductDetails(newList);
-
-                }
 
             }
         });
