@@ -98,15 +98,16 @@
 
 
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:padding="10dp"
+                    android:background="@android:color/white"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
-                  <TextView
-                      android:id="@+id/productname"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/productname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -114,27 +115,79 @@
 
 
                         <TextView
-                            android:layout_weight="1"
-                            android:id="@+id/qty"
+
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:text="Quantity"
+                            android:layout_weight="1" />
 
 
                         <TextView
-                            android:layout_weight="1"
-                            android:id="@+id/rate"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginLeft="5dp"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"/>
+                            android:gravity="start"
+                            android:text="Rate"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
 
 
                         <TextView
-                            android:layout_weight="1"
-                            android:id="@+id/total"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginLeft="5dp"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"/>
+                            android:gravity="start"
+                            android:text="Total"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:padding="5dp"
+                            android:background="@drawable/edittextbgm"
+                            android:id="@+id/qty"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:hint="0"
+                            android:layout_weight="1" />
+
+
+                        <TextView
+                            android:layout_marginStart="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:padding="5dp"
+                            android:background="@drawable/edittextbgm"
+                            android:id="@+id/rate"
+                            android:layout_width="0dp"
+                            android:gravity="center"
+                            android:hint="0"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            />
+
+
+                        <TextView
+                            android:layout_marginStart="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:padding="5dp"
+                            android:background="@drawable/edittextbgm"
+                            android:id="@+id/total"
+                            android:layout_width="0dp"
+                            android:gravity="center"
+                            android:hint="0"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                    </LinearLayout>
 
 
 

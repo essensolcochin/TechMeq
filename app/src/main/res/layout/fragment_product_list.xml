@@ -18,7 +18,7 @@
             android:layout_toLeftOf="@+id/Add"
             android:layout_toStartOf="@+id/Add"
             app:queryHint="Search Product"
-            android:background="@android:color/white"
+            android:background="@drawable/editbgm"
             android:layout_margin="10sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

@@ -32,12 +32,13 @@
              android:layout_height="wrap_content"/>
 
          <EditText
-             android:imeOptions="flagNoExtractUi"
+             android:imeOptions="actionNext"
              android:id="@+id/category"
              android:background="@drawable/edittextbgm"
              android:padding="10sp"
              android:layout_margin="10sp"
              android:layout_width="300dp"
+
              android:layout_height="wrap_content"/>
 
 
@@ -69,7 +70,6 @@
              android:background="@drawable/button"
              android:id="@+id/add"
              android:text="Add Category"
-
              android:layout_width="300sp"
              android:layout_height="wrap_content"/>
 
