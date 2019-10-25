@@ -174,13 +174,13 @@
             </LinearLayout>
 
             <android.support.v7.widget.CardView
-
+                android:layout_marginTop="1dp"
                 app:cardElevation="10dp"
-                app:cardCornerRadius="10dp"
                 android:id="@+id/frame"
                 android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
@@ -196,7 +196,7 @@
 
                         <TextView
                             android:singleLine="true"
-                            android:layout_margin="8dp"
+
                             android:layout_weight="1.5"
                             android:padding="5dp"
                             android:layout_marginTop="5dp"
@@ -235,29 +235,101 @@
 
                         <TextView
                             android:singleLine="true"
-                            android:layout_margin="8dp"
+
                             android:layout_weight="1.5"
-                            android:padding="8dp"
-                            android:layout_marginTop="8dp"
+                            android:padding="5dp"
+                            android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="VAT 5 %"
+                            android:text="Discount"
                             android:textColor="@android:color/black"
                             android:textSize="10dp"
                             />
 
 
 
+                        <TextView
+                            android:singleLine="true"
+
+                            android:padding="5dp"
+                            android:clickable="true"
+                            android:id="@+id/discount"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textSize="12sp"
+                            android:textColor="@android:color/black"
+
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:singleLine="true"
+
+                            android:layout_weight="1.5"
+                            android:padding="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Tax(5%) Amt"
+                            android:textColor="@android:color/black"
+                            android:textSize="10dp"
+                            />
 
 
 
                         <TextView
                             android:singleLine="true"
-                            android:layout_margin="8dp"
-                            android:padding="8dp"
+
+                            android:padding="5dp"
                             android:clickable="true"
                             android:id="@+id/vat"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textSize="12sp"
+                            android:textColor="@android:color/black"
+
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:singleLine="true"
+
+                            android:layout_weight="1.5"
+                            android:padding="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Round Off"
+                            android:textColor="@android:color/black"
+                            android:textSize="10dp"
+                            />
+
+
+
+                        <TextView
+                            android:singleLine="true"
+                            android:padding="5dp"
+                            android:clickable="true"
+                            android:id="@+id/round_off"
+                            android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -283,8 +355,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Grand Total"
+                            android:textStyle="bold"
                             android:textColor="@android:color/black"
-                            android:textSize="12sp"
+                            android:textSize="15dp"
                             />
 
 
@@ -293,14 +366,17 @@
 
 
                         <TextView
+
+
                             android:id="@+id/tot"
                             android:singleLine="true"
                             android:layout_margin="5dp"
-                            android:padding="8dp"
+                            android:padding="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textSize="20sp"
                             android:textColor="@android:color/holo_green_dark"
 
                             />
