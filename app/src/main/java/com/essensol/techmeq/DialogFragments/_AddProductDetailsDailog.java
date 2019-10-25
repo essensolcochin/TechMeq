@@ -159,7 +159,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
 
 
-   //// EditText input;
+    EditText input;
     Button add;
 
 
@@ -181,7 +181,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
         title=RootView.findViewById(R.id.title);
 
-//        title.setText(ItemName);
+        input=RootView.findViewById(R.id.input);
 
         add=RootView.findViewById(R.id.add);
 
@@ -278,7 +278,9 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 //
 //                Log.e("add","Clicked");
 //
-////
+////                ProductList list=new ProductList();
+////                list.setTargetFragment(list,1);
+////                sendResult(Activity.RESULT_OK, "Test");
 //
 //
 //            }
@@ -305,35 +307,35 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
                     Log.e("CAlC","Focused");
                     int Total =Integer.parseInt(mRate.getText().toString().trim())*Integer.parseInt(qty.getText().toString().trim());
                     mPrice.setText(Integer.toString(Total));
-//                    input.setText("");
+                    input.setText("");
                 }
 
 
             }
         });
 
-        mRate.setText(Double.toString(Price));
+//        mRate.setText(Price);
 
 
-//        input.setOnTouchListener(new View.OnTouchListener(){
-//
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                int inType = input.getInputType(); // backup the input type
-//                input.setInputType(InputType.TYPE_NULL); // disable soft input
-//                input.onTouchEvent(event); // call native handler
-//                input.setInputType(inType); // restore input type
-//                return true; // consume touch even
-//            }
-//        });
-//
-//        rateclick.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                isFocused=true;
-//            }
-//        });
+        input.setOnTouchListener(new View.OnTouchListener(){
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int inType = input.getInputType(); // backup the input type
+                input.setInputType(InputType.TYPE_NULL); // disable soft input
+                input.onTouchEvent(event); // call native handler
+                input.setInputType(inType); // restore input type
+                return true; // consume touch even
+            }
+        });
+
+        rateclick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                isFocused=true;
+            }
+        });
 
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -396,8 +398,9 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
                 break;
             case R.id.done:
-                Input();
-//            getDialog().dismiss();
+                assert mListner != null;
+            mListner.getProductDetails(newlist);
+            getDialog().dismiss();
                 break;
 
         }
@@ -405,17 +408,22 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
     private void addtoarray(String numbers){
         //register TextBox
 
-//        input.append(numbers);
+        input.append(numbers);
+    }
 
 
+    /*  qnty,rate,total */
 
+    private void Input()
+    {
         Log.e("Input()","Called"+qty.getHint());
 
 
         if(qty.getText().equals(""))
         {
-            qty.append(numbers);
-
+            qty.setText(input.getText().toString());
+            input.setText("");
+            input.setError(null);
             if(!mRate.getText().equals("")) {
                 int Total = Integer.parseInt(mRate.getText().toString().trim()) * Integer.parseInt(qty.getText().toString().trim());
                 mPrice.setText(Integer.toString(Total));
@@ -426,31 +434,21 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
         else if(isFocused)
         {
             Log.e("RATE","Focused");
-            mRate.append(numbers);
-
+            mRate.setText(input.getText().toString());
+            input.setText("");
             isFocused=false;
-
+            input.setError(null);
 
         }
         else if(!mRate.getText().equals("")&&!qty.getText().equals("")&&!mPrice.getText().toString().trim().equals(""))
         {
+            input.setError(null);
 
-            assert mListner != null;
-            mListner.getProductDetails(newlist);
 
         }
         else {
-//            input.setError("Check empty fields");
+            input.setError("Check empty fields");
         }
-
-    }
-
-
-    /*  qnty,rate,total */
-
-    private void Input()
-    {
-
     }
 
 

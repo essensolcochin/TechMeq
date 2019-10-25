@@ -4,14 +4,14 @@
     android:layout_gravity="center"
     android:layout_marginTop="10sp"
 
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:gravity="center"
         android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
         <LinearLayout
@@ -24,7 +24,7 @@
                 android:background="#e1e1e1"
 
                 android:id="@+id/l1"
-                android:layout_margin="1dp"
+                android:layout_margin="5dp"
                 android:clickable="true"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -51,7 +51,7 @@
 
 
             <LinearLayout
-                android:layout_margin="1dp"
+                android:layout_margin="5dp"
                 android:padding="20dp"
                 android:id="@+id/l2"
 
@@ -78,7 +78,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_margin="1dp"
+                android:layout_margin="5dp"
                 android:padding="20dp"
                 android:id="@+id/l3"
 
@@ -116,7 +116,7 @@
             <LinearLayout
                 android:padding="20dp"
                 android:background="#e1e1e1"
-                android:layout_margin="1dp"
+                android:layout_margin="5dp"
                 android:clickable="true"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -143,7 +143,7 @@
 
             <LinearLayout
                 android:background="#e1e1e1"
-                android:layout_margin="1dp"
+                android:layout_margin="5dp"
                 android:clickable="true"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -169,7 +169,7 @@
 
             </LinearLayout>
             <LinearLayout
-                android:layout_margin="1dp"
+                android:layout_margin="5dp"
                 android:padding="20dp"
                 android:id="@+id/l6"
 
@@ -206,7 +206,7 @@
 
             <LinearLayout
                 android:background="#e1e1e1"
-                android:layout_margin="1dp"
+                android:layout_margin="5dp"
                 android:clickable="true"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -235,7 +235,7 @@
             <LinearLayout
                 android:id="@+id/l8"
 
-                android:layout_margin="1dp"
+                android:layout_margin="5dp"
                 android:clickable="true"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -260,7 +260,7 @@
 
             </LinearLayout>
             <LinearLayout
-                android:layout_margin="1dp"
+                android:layout_margin="5dp"
                 android:padding="20dp"
                 android:id="@+id/l9"
 
@@ -296,11 +296,11 @@
 
                 <LinearLayout
                     android:id="@+id/back"
-
+                    android:background="@android:color/white"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="10dp"
-                    android:layout_margin="1dp"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
@@ -319,7 +319,7 @@
 
 
             <LinearLayout
-                android:layout_margin="1dp"
+                android:layout_margin="5dp"
                 android:padding="20dp"
                 android:id="@+id/l0"
 
@@ -346,8 +346,9 @@
             </LinearLayout>
 
             <LinearLayout
+                android:background="@android:color/holo_red_light"
                 android:id="@+id/done"
-                android:layout_margin="1dp"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
@@ -358,11 +359,13 @@
                 android:layout_height="match_parent">
 
 
-                <ImageView
-                    android:tint="@android:color/holo_green_light"
-                    android:src="@drawable/ok"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                <TextView
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:textSize="30sp"
+                    android:text="OK"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
 
 

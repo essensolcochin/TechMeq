@@ -194,11 +194,22 @@
                 </LinearLayout>
 
 
+                <EditText
+                    android:id="@+id/input"
+                    android:padding="5dp"
+                    android:background="@drawable/editbgm"
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+
+
                 <include
                     android:id="@+id/keyboard"
                     android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="wrap_content"
+                    android:layout_margin="30dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     layout="@layout/custom_keyboard" />
 
