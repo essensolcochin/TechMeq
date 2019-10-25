@@ -191,10 +191,10 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
 
 
-        LinearLayoutManager selected = new LinearLayoutManager(getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
-        selectedItems.setLayoutManager(selected);
+//        LinearLayoutManager selected = new LinearLayoutManager(getContext());
+//        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//
+//        selectedItems.setLayoutManager(selected);
 
 
 

@@ -9,13 +9,21 @@ import android.os.AsyncTask;
 
 import com.essensol.techmeq.Room.Databases.DAO.ProductCategory_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Product_DAO;
+import com.essensol.techmeq.Room.Databases.DAO.Sale_Item_DAO;
+import com.essensol.techmeq.Room.Databases.DAO.Sales_Header_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Voucher_DAO;
 import com.essensol.techmeq.Room.Databases.Entity.Products;
+import com.essensol.techmeq.Room.Databases.Entity.SalesHeader;
+import com.essensol.techmeq.Room.Databases.Entity.SalesItem;
 import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
 import com.essensol.techmeq.Room.Databases.Entity._dbExpenceVouchers;
 
 
-@Database(entities = {_dbExpenceVouchers.class, Products.class, Sales_Category.class},version = 1)
+@Database
+(
+        entities = {_dbExpenceVouchers.class, Products.class, Sales_Category.class, SalesHeader.class, SalesItem.class}
+        ,version = 1
+)
 
 
 public abstract class OfflineDb extends RoomDatabase {
@@ -27,6 +35,10 @@ public abstract class OfflineDb extends RoomDatabase {
     public abstract Product_DAO product_dao();
 
     public abstract ProductCategory_DAO productCategory_dao();
+
+    public abstract Sales_Header_DAO sales_header_dao();
+
+    public  abstract Sale_Item_DAO sale_item_dao();
 
 
 

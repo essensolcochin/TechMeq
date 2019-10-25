@@ -1,6 +1,7 @@
 package com.essensol.techmeq.UI;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
@@ -23,6 +24,9 @@ import com.essensol.techmeq.Model.PurchaseModel;
 import com.essensol.techmeq.Model.mProductModel;
 import com.essensol.techmeq.R;
 import com.essensol.techmeq.Adapters.mTabAdapter;
+import com.essensol.techmeq.Room.Databases.DAO.Sales_Header_DAO;
+import com.essensol.techmeq.Room.Databases.Entity.SalesHeader;
+import com.essensol.techmeq.Room.Databases.OfflineDb;
 import com.essensol.techmeq.Room.Databases.TaxModel;
 import com.essensol.techmeq.ViewModel.TaxViewModel;
 
@@ -97,8 +101,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(MainActivity.this,BillPrint.class);
-                startActivity(intent);
+              AddSale();
             }
         });
 
@@ -230,6 +233,64 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         }
 
 
+
+
     }
+
+
+    private  void AddSale()
+    {
+
+
+
+//        CompId = compId;
+//        FinYearId = finYearId;
+//        SaleNo = saleNo;
+//        SaleDate = saleDate;
+//        CustId = custId;
+//        SubTotal = subTotal;
+//        TaxAmt = taxAmt;
+//        Discount = discount;
+//        GrandTotal = grandTotal;
+//        PaidAmt = paidAmt;
+
+
+      new  AddProductAsync(OfflineDb.getInstance(this).sales_header_dao()).execute();
+
+
+
+
+
+    }
+
+
+
+    private  static class AddProductAsync extends AsyncTask<Void,Void,Void> {
+
+        private Sales_Header_DAO header_dao;
+
+        public AddProductAsync(Sales_Header_DAO header_dao) {
+            this.header_dao = header_dao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            SalesHeader salesHeader =new SalesHeader(1,2,"ww",2,2,100.80,5.0,20.0,150.0,100);
+
+
+            header_dao.AddSalesHeader(salesHeader);
+
+
+           int Id = header_dao.getId();
+
+            Log.e("LastAdded","Id _--> "+Id );
+
+
+            return null;
+        }
+    }
+
+
 }
 
