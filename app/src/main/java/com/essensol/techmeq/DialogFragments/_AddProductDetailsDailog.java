@@ -62,7 +62,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
 
     public  interface OnCompleteListener {
-        void getProductDetails(String name,String Qty,String rate,String amnt);
+        void getProductDetails(List<mProductModel>list);
     }
     private OnCompleteListener mListner;
 
@@ -91,6 +91,8 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
     Spinner mProductCategory;
 
 
+    Context mContext;
+
     ProductListAdapter adapter;
 
     SelectedListAdapter mAdapter;
@@ -101,6 +103,9 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
     public void getProductDetails(List<mProductModel> items) {
 
         Log.e("CallbackList","items "+items.size());
+
+        newlist=items;
+
         mAdapter =new SelectedListAdapter(items,getContext());
         selectedItems.setAdapter(mAdapter);
         adapter.notifyDataSetChanged();
@@ -111,14 +116,15 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
 
     @SuppressLint("ValidFragment")
-    public _AddProductDetailsDailog( int CategoryId) {
+    public _AddProductDetailsDailog( int CategoryId,Context context) {
         this.CategoryId = CategoryId;
-
+        this.mContext =context;
 
     }
 
     public _AddProductDetailsDailog() {
-        // Required empty public constructor
+
+
     }
 
 
@@ -133,6 +139,8 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
+
         try {
             mListner=(OnCompleteListener) context;
         } catch (ClassCastException e) {
@@ -161,7 +169,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
         mPrice=RootView.findViewById(R.id.price);
 
-
+        selectedItems=RootView.findViewById(R.id.selected);
         mProductCategory=RootView.findViewById(R.id.category);
 
 
@@ -173,7 +181,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
         products=RootView.findViewById(R.id.products);
 
-        selectedItems=RootView.findViewById(R.id.selected);
+
 
 
 
@@ -195,7 +203,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
 
 
-        adapter=new ProductListAdapter(mproducts,getContext());
+        adapter=new ProductListAdapter(mproducts,mContext,_AddProductDetailsDailog.this);
         products.setAdapter(adapter);
 
         model= ViewModelProviders.of(this).get(ProductViewModel.class);
@@ -252,9 +260,9 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
 //        qty.requestFocus();
 
-//        for(int i =0;i<12;i++){
-//            btn[i].setOnClickListener(this);
-//        }
+        for(int i =0;i<12;i++){
+            btn[i].setOnClickListener(this);
+        }
 
 
 
@@ -384,8 +392,9 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
                 break;
             case R.id.done:
-//                Input();
-
+                assert mListner != null;
+            mListner.getProductDetails(newlist);
+            getDialog().dismiss();
                 break;
 
         }
@@ -426,9 +435,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 //        {
 //            input.setError(null);
 //
-//            assert mListner != null;
-//            mListner.getProductDetails(ItemName,qty.getText().toString(),mRate.getText().toString(),mPrice.getText().toString());
-//            getDialog().dismiss();
+//
 //        }
 //        else {
 //            input.setError("Check empty fields");
@@ -473,6 +480,10 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
     }
 
 
+    public void addData(List<mProductModel>list)
+    {
+
+    }
 
 
 

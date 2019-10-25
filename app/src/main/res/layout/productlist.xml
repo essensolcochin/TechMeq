@@ -65,7 +65,7 @@
                 android:gravity="center"
                 android:singleLine="true"
                 android:id="@+id/name"
-                android:textSize="20sp"
+                android:textSize="14sp"
                 android:text="Diet Coke"
                 android:textColor="@android:color/black"
                 android:textStyle="bold"

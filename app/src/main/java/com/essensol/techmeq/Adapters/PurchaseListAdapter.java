@@ -9,17 +9,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.essensol.techmeq.Model.PurchaseModel;
+import com.essensol.techmeq.Model.mProductModel;
 import com.essensol.techmeq.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public  class PurchaseListAdapter extends  RecyclerView.Adapter<PurchaseListAdapter.viewHolder> {
 
-    private ArrayList<PurchaseModel>items;
+    private List<mProductModel> items;
     private Context mContext;
 
-    public PurchaseListAdapter(ArrayList<PurchaseModel> items, Context mContext) {
+    public PurchaseListAdapter(List<mProductModel> items, Context mContext) {
         this.items = items;
         this.mContext = mContext;
     }
@@ -36,10 +38,10 @@ public  class PurchaseListAdapter extends  RecyclerView.Adapter<PurchaseListAdap
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
 
-        holder.name.setText(items.get(position).getName());
-        holder.qty.setText(items.get(position).getQty());
-        holder.rate.setText(items.get(position).getRate());
-        holder.price.setText(items.get(position).getNetAmount());
+        holder.name.setText(items.get(position).getProductName());
+        holder.qty.setText(Integer.toString(items.get(position).getProductCatId()));
+//        holder.rate.setText(items.get(position).getRate());
+        holder.price.setText(Double.toString(items.get(position).getSales_Price()));
 
     }
 

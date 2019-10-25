@@ -20,6 +20,7 @@ import com.essensol.techmeq.DialogFragments._AddProductDetailsDailog;
 import com.essensol.techmeq.Adapters.HomeTabAdapter_;
 import com.essensol.techmeq.Adapters.PurchaseListAdapter;
 import com.essensol.techmeq.Model.PurchaseModel;
+import com.essensol.techmeq.Model.mProductModel;
 import com.essensol.techmeq.R;
 import com.essensol.techmeq.Adapters.mTabAdapter;
 import com.essensol.techmeq.Room.Databases.TaxModel;
@@ -45,7 +46,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
     TextView tot,vat;
 
     ArrayList<PurchaseModel> puchase = new ArrayList<>();
-
+    List<mProductModel> newlist =new ArrayList<>();
 
 //    UltimateTabLayout tabLayout;
     HomeTabAdapter_ adapter_;
@@ -147,54 +148,6 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
 
-    @Override
-    public void getProductDetails(String name, String Qty, String rate, String amnt) {
-
-
-        Log.e("getProductDetails()","Called");
-
-
-        PurchaseModel model=new PurchaseModel(name,Qty,rate,amnt);
-        puchase.add(model);
-
-        purchaseListAdapter = new PurchaseListAdapter(puchase, this);
-
-        purchase.setAdapter(purchaseListAdapter);
-        purchaseListAdapter.notifyDataSetChanged();
-
-
-
-
-
-        int total = 0;
-        double netAmnt = 0;
-
-        for(int i=0;i<puchase.size();i++)
-        {
-
-            netAmnt=Double.parseDouble(puchase.get(i).getNetAmount());
-
-            Log.e("percentage()","percentage "+netAmnt);
-
-            double  percentage = (netAmnt/100.0f)*5 ;
-
-            vat.setText(String.valueOf(percentage));
-
-            Log.e("percentage()","percentage "+(netAmnt / 100));
-
-
-
-            total = total+ Integer.parseInt(puchase.get(i).getNetAmount());
-            tot.setText(Integer.toString(total));
-
-
-        }
-
-
-
-
-
-    }
 
 
     private void CalculateItemPrice()
@@ -237,7 +190,46 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
     }
 
 
+    @Override
+    public void getProductDetails(List<mProductModel> list) {
 
 
+        newlist=list;
+
+        purchaseListAdapter = new PurchaseListAdapter(newlist, this);
+
+        purchase.setAdapter(purchaseListAdapter);
+        purchaseListAdapter.notifyDataSetChanged();
+
+
+
+
+
+        int total = 0;
+        double netAmnt = 0;
+
+        for(int i=0;i<puchase.size();i++)
+        {
+
+            netAmnt=Double.parseDouble(puchase.get(i).getNetAmount());
+
+            Log.e("percentage()","percentage "+netAmnt);
+
+            double  percentage = (netAmnt/100.0f)*5 ;
+
+            vat.setText(String.valueOf(percentage));
+
+            Log.e("percentage()","percentage "+(netAmnt / 100));
+
+
+
+            total = total+ Integer.parseInt(puchase.get(i).getNetAmount());
+            tot.setText(Integer.toString(total));
+
+
+        }
+
+
+    }
 }
 

@@ -66,7 +66,7 @@ public  class ProductsAdapter extends  RecyclerView.Adapter<ProductsAdapter.view
                 FragmentManager fm =((AppCompatActivity) mContext).getSupportFragmentManager();
 
 
-                final _AddProductDetailsDailog dialog= new _AddProductDetailsDailog(items.get(position).getProductCatId());
+                final _AddProductDetailsDailog dialog= new _AddProductDetailsDailog(items.get(position).getProductCatId(),mContext);
 
                 dialog.show(fm,"TAG");
 

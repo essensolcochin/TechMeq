@@ -35,17 +35,17 @@ public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapte
 
     private OnSelectedListener mListner;
 
-    public ProductListAdapter(List<Products> items, Context mContext) {
+    public ProductListAdapter(List<Products> items, Context mContext, OnSelectedListener mListner) {
         this.items = items;
         this.mContext = mContext;
+        this.mListner = mListner;
+
     }
 
     @NonNull
     @Override
     public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.products, parent, false);
-
-
 
 
         return new viewHolder(view);
@@ -75,8 +75,8 @@ public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapte
                 {
                     try {
 
-                        mListner = ((OnSelectedListener) mContext);
-
+                        _AddProductDetailsDailog log=new _AddProductDetailsDailog();
+                        mListner = ((OnSelectedListener) log.getContext());
                     } catch (ClassCastException e) {
                         e.printStackTrace();
                     }
