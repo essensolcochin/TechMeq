@@ -177,8 +177,7 @@
 
             <android.support.v7.widget.CardView
 
-                app:cardElevation="10dp"
-                app:cardCornerRadius="10dp"
+                android:layout_marginTop="1dp"
                 android:id="@+id/frame"
                 android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
@@ -198,33 +197,67 @@
 
                         <TextView
                             android:singleLine="true"
-                            android:layout_margin="8dp"
+
                             android:layout_weight="1.5"
-                            android:padding="8dp"
-                            android:layout_marginTop="8dp"
+                            android:padding="5dp"
+                            android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Taxable"
                             android:textColor="@android:color/black"
-                            android:textSize="12dp"
+                            android:textSize="10dp"
                             />
 
 
 
+                        <TextView
+                            android:singleLine="true"
+                            android:padding="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textSize="12sp"
+                            android:textColor="@android:color/black"
+
+                            />
+
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:singleLine="true"
+
+                            android:layout_weight="1.5"
+                            android:padding="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Discount"
+                            android:textColor="@android:color/black"
+                            android:textSize="10dp"
+                            />
 
 
 
                         <TextView
                             android:id="@+id/taxable"
                             android:singleLine="true"
-                            android:layout_margin="8dp"
-                            android:padding="8dp"
+                            android:padding="5dp"
                             android:clickable="true"
-                            android:layout_marginTop="8dp"
+                            android:id="@+id/discount"
+                            android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             android:textColor="@android:color/black"
 
                             />
@@ -239,33 +272,67 @@
 
                         <TextView
                             android:singleLine="true"
-                            android:layout_margin="8dp"
+
                             android:layout_weight="1.5"
-                            android:padding="8dp"
-                            android:layout_marginTop="8dp"
+                            android:padding="5dp"
+                            android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="VAT 5 %"
+                            android:text="Tax(5%) Amt"
                             android:textColor="@android:color/black"
-                            android:textSize="12dp"
+                            android:textSize="10dp"
                             />
-
-
-
 
 
 
                         <TextView
                             android:singleLine="true"
-                            android:layout_margin="8dp"
-                            android:padding="8dp"
+
+                            android:padding="5dp"
                             android:clickable="true"
                             android:id="@+id/vat"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
+                            android:textColor="@android:color/black"
+
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:singleLine="true"
+
+                            android:layout_weight="1.5"
+                            android:padding="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Round Off"
+                            android:textColor="@android:color/black"
+                            android:textSize="10dp"
+                            />
+
+
+
+                        <TextView
+                            android:singleLine="true"
+                            android:padding="5dp"
+                            android:clickable="true"
+                            android:id="@+id/round_off"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textSize="12sp"
                             android:textColor="@android:color/black"
 
                             />

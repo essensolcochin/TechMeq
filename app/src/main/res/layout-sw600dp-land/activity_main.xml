@@ -209,9 +209,6 @@
 
 
 
-
-
-
                         <TextView
                             android:id="@+id/taxable"
                             android:singleLine="true"
@@ -224,6 +221,8 @@
                             android:textColor="@android:color/black"
 
                             />
+
+
 
                     </LinearLayout>
 
@@ -250,7 +249,6 @@
 
                         <TextView
                             android:singleLine="true"
-
                             android:padding="5dp"
                             android:clickable="true"
                             android:id="@+id/discount"
@@ -382,6 +380,7 @@
                             />
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
