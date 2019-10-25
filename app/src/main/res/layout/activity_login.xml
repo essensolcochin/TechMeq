@@ -38,14 +38,19 @@
 
 </LinearLayout>
 
+    <ScrollView
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+
     <LinearLayout
 
         android:padding="20dp"
         android:gravity="center"
         android:orientation="vertical"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
 
         <ImageView
@@ -137,6 +142,8 @@
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
+
+    </ScrollView>
 
 
 </LinearLayout>
