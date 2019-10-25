@@ -33,6 +33,9 @@ public class SalesItem {
 
     private int LineTotal;
 
+    public SalesItem() {
+    }
+
     public SalesItem(int saleId, int productId, int qty, int price, int total, int taxPercent, int taxAmt, int lineTotal) {
         SaleId = saleId;
         ProductId = productId;

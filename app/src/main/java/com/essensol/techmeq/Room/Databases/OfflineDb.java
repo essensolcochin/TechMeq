@@ -4,6 +4,7 @@ import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.os.AsyncTask;
 
@@ -17,6 +18,7 @@ import com.essensol.techmeq.Room.Databases.Entity.SalesHeader;
 import com.essensol.techmeq.Room.Databases.Entity.SalesItem;
 import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
 import com.essensol.techmeq.Room.Databases.Entity._dbExpenceVouchers;
+import com.essensol.techmeq.Room.DateTypeConverter;
 
 
 @Database
@@ -24,7 +26,7 @@ import com.essensol.techmeq.Room.Databases.Entity._dbExpenceVouchers;
         entities = {_dbExpenceVouchers.class, Products.class, Sales_Category.class, SalesHeader.class, SalesItem.class}
         ,version = 1
 )
-
+@TypeConverters(DateTypeConverter.class)
 
 public abstract class OfflineDb extends RoomDatabase {
 

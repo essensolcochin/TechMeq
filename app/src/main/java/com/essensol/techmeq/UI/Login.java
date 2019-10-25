@@ -19,6 +19,8 @@ public class Login extends AppCompatActivity {
 
     ImageView logoimage;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +29,9 @@ public class Login extends AppCompatActivity {
         reg=findViewById(R.id.reg);
 
         login=findViewById(R.id.login);
+
+        logoimage=findViewById(R.id.logoimage);
+
 
         reg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,11 +51,10 @@ public class Login extends AppCompatActivity {
         });
 
 
-        int logo=R.drawable.teqmeclogo;
 
         Glide
-                .with(Login.this)
-                .load(logo)
+                .with(this)
+                .load(R.drawable.teqmeclogo)
                 .into(logoimage);
 
 

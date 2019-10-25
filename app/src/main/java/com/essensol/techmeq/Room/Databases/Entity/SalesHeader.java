@@ -2,6 +2,11 @@ package com.essensol.techmeq.Room.Databases.Entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
+
+import com.essensol.techmeq.Room.DateTypeConverter;
+
+import java.util.Date;
 
 @Entity(tableName = "Sales_Header")
 
@@ -17,7 +22,9 @@ public class SalesHeader {
 
     private String SaleNo;
 
-    private int SaleDate;
+
+    @TypeConverters({DateTypeConverter.class})
+    private Date SaleDate;
 
     private int CustId;
 
@@ -35,7 +42,7 @@ public class SalesHeader {
     public SalesHeader() {
     }
 
-    public SalesHeader(int compId, int finYearId, String saleNo, int saleDate, int custId, double subTotal, double taxAmt, double discount, double grandTotal, double paidAmt) {
+    public SalesHeader(int compId, int finYearId, String saleNo, Date saleDate, int custId, double subTotal, double taxAmt, double discount, double grandTotal, double paidAmt) {
         CompId = compId;
         FinYearId = finYearId;
         SaleNo = saleNo;
@@ -83,11 +90,11 @@ public class SalesHeader {
         SaleNo = saleNo;
     }
 
-    public int getSaleDate() {
+    public Date getSaleDate() {
         return SaleDate;
     }
 
-    public void setSaleDate(int saleDate) {
+    public void setSaleDate(Date saleDate) {
         SaleDate = saleDate;
     }
 

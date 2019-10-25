@@ -30,7 +30,10 @@ import com.essensol.techmeq.Room.Databases.OfflineDb;
 import com.essensol.techmeq.Room.Databases.TaxModel;
 import com.essensol.techmeq.ViewModel.TaxViewModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends Toolbar implements _AddProductDetailsDailog.OnCompleteListener  {
@@ -276,7 +279,13 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         @Override
         protected Void doInBackground(Void... voids) {
 
-            SalesHeader salesHeader =new SalesHeader(1,2,"ww",2,2,100.80,5.0,20.0,150.0,100);
+            Date c = Calendar.getInstance().getTime();
+            System.out.println("Current time => " + c);
+
+//            SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+//            String formattedDate = df.format(c);
+
+            SalesHeader salesHeader =new SalesHeader(1,2,"ww",c,2,100.80,5.0,20.0,150.0,100);
 
 
             header_dao.AddSalesHeader(salesHeader);
