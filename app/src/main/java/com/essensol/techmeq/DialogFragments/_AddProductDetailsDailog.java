@@ -328,14 +328,14 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
                 return true; // consume touch even
             }
         });
-
-        rateclick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                isFocused=true;
-            }
-        });
+//
+//        rateclick.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                isFocused=true;
+//            }
+//        });
 
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -398,9 +398,13 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
                 break;
             case R.id.done:
-                assert mListner != null;
-            mListner.getProductDetails(newlist);
-            getDialog().dismiss();
+
+
+
+                Input();
+//                assert mListner != null;
+//            mListner.getProductDetails(newlist);
+//            getDialog().dismiss();
                 break;
 
         }
@@ -409,6 +413,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
         //register TextBox
 
         input.append(numbers);
+
     }
 
 
@@ -424,6 +429,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
             qty.setText(input.getText().toString());
             input.setText("");
             input.setError(null);
+            input.getText().clear();
             if(!mRate.getText().equals("")) {
                 int Total = Integer.parseInt(mRate.getText().toString().trim()) * Integer.parseInt(qty.getText().toString().trim());
                 mPrice.setText(Integer.toString(Total));
@@ -431,21 +437,24 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
             }
 
         }
-        else if(isFocused)
-        {
-            Log.e("RATE","Focused");
-            mRate.setText(input.getText().toString());
-            input.setText("");
-            isFocused=false;
-            input.setError(null);
 
-        }
+//        else if(isFocused)
+//        {
+//            Log.e("RATE","Focused");
+//            mRate.setText(input.getText().toString());
+//            input.setText("");
+//            isFocused=false;
+//            input.setError(null);
+//
+//        }
+
         else if(!mRate.getText().equals("")&&!qty.getText().equals("")&&!mPrice.getText().toString().trim().equals(""))
         {
             input.setError(null);
 
 
         }
+
         else {
             input.setError("Check empty fields");
         }

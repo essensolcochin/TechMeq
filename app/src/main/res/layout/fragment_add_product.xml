@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"/>
 
     <EditText
-        android:imeOptions="flagNoExtractUi"
+        android:imeOptions="actionNext"
         android:id="@+id/productname"
         android:background="@drawable/edittextbgm"
         android:padding="10sp"
@@ -98,8 +98,9 @@
         android:layout_height="wrap_content"/>
 
     <EditText
+
         android:id="@+id/tax"
-        android:imeOptions="flagNoExtractUi"
+        android:imeOptions="actionNext"
         android:background="@drawable/edittextbgm"
         android:padding="10sp"
         android:layout_margin="10sp"
@@ -118,7 +119,7 @@
 
     <EditText
         android:id="@+id/price"
-        android:imeOptions="flagNoExtractUi"
+        android:imeOptions="actionNext"
         android:background="@drawable/edittextbgm"
         android:padding="10sp"
         android:layout_margin="10sp"

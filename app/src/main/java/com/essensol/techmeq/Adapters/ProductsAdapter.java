@@ -56,7 +56,7 @@ public  class ProductsAdapter extends  RecyclerView.Adapter<ProductsAdapter.view
 
         int devicewidth = displaymetrics.widthPixels/2;
 
-        int deviceheight = displaymetrics.heightPixels /6;
+        int deviceheight = displaymetrics.heightPixels /7;
 
         holder.imageid.getLayoutParams().height = deviceheight;
 
