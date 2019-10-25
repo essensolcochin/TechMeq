@@ -44,6 +44,8 @@ import com.essensol.techmeq.Room.Databases.Entity.Products;
 import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
 import com.essensol.techmeq.ViewModel.ProductViewModel;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +59,9 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
     ProductViewModel model;
 
     List<mProductModel>newlist=new ArrayList<>();
+
+
+
 
 
 
@@ -99,16 +104,17 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
 
 
+
     @Override
     public void getProductDetails(List<mProductModel> items) {
 
         Log.e("CallbackList","items "+items.size());
 
-        newlist=items;
-
-        mAdapter =new SelectedListAdapter(items,getContext());
-        selectedItems.setAdapter(mAdapter);
-        adapter.notifyDataSetChanged();
+      //  newlist=items;
+//
+//        mAdapter =new SelectedListAdapter(items,getContext());
+//        selectedItems.setAdapter(mAdapter);
+//        adapter.notifyDataSetChanged();
 
     }
 
@@ -405,42 +411,45 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
         input.append(numbers);
     }
 
-//    private void Input()
-//    {
-//        Log.e("Input()","Called"+qty.getHint());
-//
-//
-//        if(qty.getText().equals(""))
-//        {
-//            qty.setText(input.getText().toString());
-//            input.setText("");
-//            input.setError(null);
-//            if(!mRate.getText().equals("")) {
-//                int Total = Integer.parseInt(mRate.getText().toString().trim()) * Integer.parseInt(qty.getText().toString().trim());
-//                mPrice.setText(Integer.toString(Total));
-//
-//            }
-//
-//        }
-//        else if(isFocused)
-//        {
-//            Log.e("RATE","Focused");
-//            mRate.setText(input.getText().toString());
-//            input.setText("");
-//            isFocused=false;
-//            input.setError(null);
-//
-//        }
-//        else if(!mRate.getText().equals("")&&!qty.getText().equals("")&&!mPrice.getText().toString().trim().equals(""))
-//        {
-//            input.setError(null);
-//
-//
-//        }
-//        else {
-//            input.setError("Check empty fields");
-//        }
-//    }
+
+    /*  qnty,rate,total */
+
+    private void Input()
+    {
+        Log.e("Input()","Called"+qty.getHint());
+
+
+        if(qty.getText().equals(""))
+        {
+            qty.setText(input.getText().toString());
+            input.setText("");
+            input.setError(null);
+            if(!mRate.getText().equals("")) {
+                int Total = Integer.parseInt(mRate.getText().toString().trim()) * Integer.parseInt(qty.getText().toString().trim());
+                mPrice.setText(Integer.toString(Total));
+
+            }
+
+        }
+        else if(isFocused)
+        {
+            Log.e("RATE","Focused");
+            mRate.setText(input.getText().toString());
+            input.setText("");
+            isFocused=false;
+            input.setError(null);
+
+        }
+        else if(!mRate.getText().equals("")&&!qty.getText().equals("")&&!mPrice.getText().toString().trim().equals(""))
+        {
+            input.setError(null);
+
+
+        }
+        else {
+            input.setError("Check empty fields");
+        }
+    }
 
 
 

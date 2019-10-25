@@ -32,7 +32,7 @@
 
             <TextView
                 android:textStyle="bold"
-                android:text="TecMeq"
+                android:text="TeqMec"
                 android:textColor="@android:color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -121,7 +121,6 @@
                     <ImageView
 
                         android:tint="@android:color/white"
-
                         android:src="@drawable/calculator"
                         android:layout_width="30dp"
                         android:layout_height="30dp"/>
