@@ -1,13 +1,16 @@
 package com.essensol.techmeq.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -48,8 +51,14 @@ public  class ProductsAdapter extends  RecyclerView.Adapter<ProductsAdapter.view
     public void onBindViewHolder(@NonNull viewHolder holder, final int position) {
 
 
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        ((Activity) mContext).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
 
+        int devicewidth = displaymetrics.widthPixels/2;
 
+        int deviceheight = displaymetrics.heightPixels /3;
+
+        holder.imageid.getLayoutParams().height = deviceheight;
 
         holder.proName.setText(items.get(position).getProductCategory());
 
@@ -93,6 +102,7 @@ public  class ProductsAdapter extends  RecyclerView.Adapter<ProductsAdapter.view
         LinearLayout lay;
 
         TextView proName,category,price,code;
+        ImageView imageid;
 
         private viewHolder(@NonNull View itemView) {
             super(itemView);
@@ -101,7 +111,7 @@ public  class ProductsAdapter extends  RecyclerView.Adapter<ProductsAdapter.view
 
             proName=itemView.findViewById(R.id.name);
 
-//            category=itemView.findViewById(R.id.category);
+            imageid=itemView.findViewById(R.id.imageid);
 
 //            price=itemView.findViewById(R.id.Price);
 
