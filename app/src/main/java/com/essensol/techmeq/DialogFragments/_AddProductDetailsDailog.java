@@ -185,7 +185,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
         title=RootView.findViewById(R.id.productname);
 
-        input=RootView.findViewById(R.id.input);
+//        input=RootView.findViewById(R.id.input);
 
         add=RootView.findViewById(R.id.add);
 
@@ -208,7 +208,12 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
 
 
-
+            qty.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    isFocused=true;
+                }
+            });
 
 
 
@@ -277,7 +282,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
         btn[7] = RootView.findViewById(R.id.l8);
         btn[8] = RootView.findViewById(R.id.l9);
         btn[9] = RootView.findViewById(R.id.l0);
-        btn[10] = RootView.findViewById(R.id.back);
+        btn[10] = RootView.findViewById(R.id.clear);
         btn[11] = RootView.findViewById(R.id.done);
 
 
@@ -304,47 +309,47 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 //        });
 
 
-//        mRate.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-////                if(!mRate.getText().equals("")&&!qty.getText().equals(""))
-////                {
-////                    Log.e("CAlC","Focused");
-////                    int Total =Integer.parseInt(mRate.getText().toString().trim())*Integer.parseInt(qty.getText().toString().trim());
-////                    mPrice.setText(Integer.toString(Total));
-////                    input.setText("");
-////                }
-//
-//
-//            }
-//        });
+        qty.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if(!mRate.getText().equals("")&&!qty.getText().equals(""))
+                {
+                    Log.e("CAlC","Focused");
+                    int Total =Integer.parseInt(mRate.getText().toString().trim())*Integer.parseInt(qty.getText().toString().trim());
+                    mPrice.setText(Integer.toString(Total));
+//                    input.setText("");
+                }
+
+
+            }
+        });
 
 //        mRate.setText(Price);
 
 
-        input.setOnTouchListener(new View.OnTouchListener(){
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int inType = input.getInputType(); // backup the input type
-                input.setInputType(InputType.TYPE_NULL); // disable soft input
-                input.onTouchEvent(event); // call native handler
-                input.setInputType(inType); // restore input type
-                return true; // consume touch even
-            }
-        });
+//        input.setOnTouchListener(new View.OnTouchListener(){
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                int inType = input.getInputType(); // backup the input type
+//                input.setInputType(InputType.TYPE_NULL); // disable soft input
+//                input.onTouchEvent(event); // call native handler
+//                input.setInputType(inType); // restore input type
+//                return true; // consume touch even
+//            }
+//        });
 
 //        rateclick.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -354,7 +359,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 //            }
 //        });
 
-        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 
 
         return RootView;
@@ -411,7 +416,11 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
             case R.id.l0:
                 addtoarray("0");
                 break;
-            case R.id.back:
+            case R.id.clear:
+                if(isFocused)
+                {
+                    qty.setText("0");
+                }
 
                 break;
             case R.id.done:
@@ -427,11 +436,11 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
     private void addtoarray(String numbers){
         //register TextBox
 
-        input.append(numbers);
+        qty.append(numbers);
     }
 
 
-    /*  qnty,rate,total */
+
 
     private void Input()
     {
@@ -464,7 +473,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
         else if(!mRate.getText().equals("")&&!qty.getText().equals("")&&!mPrice.getText().toString().trim().equals(""))
         {
-            input.setError(null);
+//            input.setError(null);
             double rate= Sales_Price*Integer.parseInt(qty.getText().toString());
 
             assert mListner != null;
@@ -474,7 +483,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
         }
 
         else {
-            input.setError("Check empty fields");
+//            input.setError("Check empty fields");
         }
     }
 //    private void Input()
@@ -552,10 +561,6 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
     }
 
 
-    public void addData(List<mProductModel>list)
-    {
-
-    }
 
 
 

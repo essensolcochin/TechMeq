@@ -7,11 +7,11 @@
         android:endColor="#363636"
         android:startColor="#363636"
         />
-    <corners
-        android:bottomLeftRadius="20dp"
-        android:topLeftRadius="20dp"
-        android:bottomRightRadius="20dp"
-        android:topRightRadius="20dp"/>
+<!--    <corners-->
+<!--        android:bottomLeftRadius="20dp"-->
+<!--        android:topLeftRadius="20dp"-->
+<!--        android:bottomRightRadius="20dp"-->
+<!--        android:topRightRadius="20dp"/>-->
 
 
 </shape>

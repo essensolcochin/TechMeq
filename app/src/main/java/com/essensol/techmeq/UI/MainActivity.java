@@ -1,5 +1,8 @@
 package com.essensol.techmeq.UI;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -17,6 +20,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.essensol.techmeq.DialogFragments._AddProductDetailsDailog;
 import com.essensol.techmeq.Adapters.HomeTabAdapter_;
@@ -25,6 +29,7 @@ import com.essensol.techmeq.Model.PurchaseModel;
 import com.essensol.techmeq.Model.mProductModel;
 import com.essensol.techmeq.R;
 import com.essensol.techmeq.Adapters.mTabAdapter;
+import com.essensol.techmeq.Room.Databases.DAO.FinancialYear_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Sale_Item_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Sales_Header_DAO;
 import com.essensol.techmeq.Room.Databases.Entity.SalesHeader;
@@ -38,8 +43,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends Toolbar implements _AddProductDetailsDailog.OnCompleteListener  {
+
 
     GridLayoutManager layoutManager;
     RecyclerView products,purchase;
@@ -53,7 +60,9 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
     ViewPager TabItem;
     LinearLayout pay;
 
-    private   int SaleId;
+    private  static int FinYearId;
+
+    private static   int SaleId;
 
     TextView tot,vat,taxable;
 
@@ -64,6 +73,8 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
     HomeTabAdapter_ adapter_;
 //    ViewPager TabItem;
     String mName,mQty,mPrice;
+
+    private  ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +101,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         taxable=findViewById(R.id.taxable);
 
 
+
         tabLayout.addTab(tabLayout.newTab().setText("Categories"));
 
 
@@ -104,6 +116,8 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         int devicewidth = displaymetrics.widthPixels/2;
 
         int deviceheight = displaymetrics.heightPixels /4;
+
+
 ////        matchesAdapter_viewHolder.activityImage.getLayoutParams().width = devicewidth;
 //
 //        bottom.getLayoutParams().height = deviceheight;
@@ -112,7 +126,12 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              AddSale();
+
+                if(puchase.size()>0)
+                {
+                    AddSale();
+                }
+
             }
         });
 
@@ -149,7 +168,6 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         purchase.setLayoutManager(linearLayoutManager);
-        purchase.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
 
 
 
@@ -164,8 +182,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
 
-    private void CalculateItemPrice()
-    {
+    private void CalculateItemPrice() {
         try
         {
             double amount = 0, netAmount = 0, taxAmt = 0, totalAmount = 0, itemQty = 0, itemPurRate = 0, discPerc = 0, discountAmt = 0, taxPerc = 0, margin = 0, itemWAmt = 0, itemamountWOT = 0, cost = 0;
@@ -208,60 +225,29 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
 
-//    @Override
-//    public void getProductDetails(List<mProductModel> list) {
-//
-//
-//
-//
-//
-//
-//
-//    }
-
-
-    private  void AddSaleItem()
-    {
-
-        for (int i=0;i<puchase.size();i++)
-        {
-
-//            SaleId = saleId;
-//            ProductId = productId;
-//            Qty = qty;
-//            Price = price;
-//            Total = total;
-//            TaxPercent = taxPercent;
-//            TaxAmt = taxAmt;
-//            LineTotal = lineTotal;
-            PurchaseModel items =puchase.get(i);
-
-            SalesItem model=new SalesItem(SaleId,items.getProductId(),items.getQty(),items.getRate(),Double.parseDouble(tot.getText().toString())
-                                            ,5.0,Double.parseDouble(vat.getText().toString()),items.getLinetot());
-
-            addSaleList.add(model);
-
-        }
-
-        new AddSaleItemAsync(OfflineDb.getInstance(this).sale_item_dao()).execute(addSaleList);
-
-    }
 
 
 
+    private  void AddSale() {
 
-    private  void AddSale()
-    {
+
+        dialog =new ProgressDialog(this);
+        dialog.setTitle("Adding Sale Record.");
+        dialog.setMessage("Saving....");
+        dialog.setCancelable(false);
+        dialog.show();
+
 
         Date c = Calendar.getInstance().getTime();
         System.out.println("Current time => " + c);
 
+        new GetFinancialAsync(OfflineDb.getInstance(this).financialYear_dao()).execute();
 
-        SalesHeader header =new SalesHeader(1,1,"09#001",c,0
+        SalesHeader header =new SalesHeader(1,FinYearId,"09#001",c,0
                 ,Double.parseDouble(tot.getText().toString())
                 ,Double.parseDouble(vat.getText().toString()),0,Double.parseDouble(tot.getText().toString()),0);
 
-      new  AddProductAsync(OfflineDb.getInstance(this).sales_header_dao()).execute(header);
+        new  AddProductAsync(OfflineDb.getInstance(this).sales_header_dao()).execute(header);
 
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -275,6 +261,62 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
     }
+
+
+
+
+    private  void AddSaleItem() {
+
+        for (int i=0;i<puchase.size();i++)
+        {
+
+//            SaleId = saleId;
+//            ProductId = productId;
+//            Qty = qty;
+//            Price = price;
+//            Total = total;
+//            TaxPercent = taxPercent;
+//            TaxAmt = taxAmt;
+//            LineTotal = lineTotal;
+
+
+
+            PurchaseModel items =puchase.get(i);
+
+            Log.e("Mainnnn"," "+items.getProductId());
+
+            SalesItem model=new SalesItem(SaleId,items.getProductId(),items.getQty(),items.getRate(),Double.parseDouble(tot.getText().toString())
+                                            ,5.0,Double.parseDouble(vat.getText().toString()),items.getLinetot());
+
+            addSaleList.add(model);
+
+        }
+
+        try {
+            String result = new AddSaleItemAsync(OfflineDb.getInstance(this).sale_item_dao()).execute(addSaleList).get();
+
+            if(result.equalsIgnoreCase("Completed"))
+            {
+                dialog.dismiss();
+                Toast.makeText(MainActivity.this,"Saved",Toast.LENGTH_SHORT).show();
+                puchase.clear();
+                purchaseListAdapter.notifyDataSetChanged();
+                taxable.setText("");
+                vat.setText("");
+                tot.setText("");
+            }
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
+
 
 
 
@@ -334,6 +376,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
         private Sales_Header_DAO header_dao;
 
+
         public AddProductAsync(Sales_Header_DAO header_dao) {
             this.header_dao = header_dao;
         }
@@ -349,9 +392,9 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
             header_dao.AddSalesHeader(salesHeaders[0]);
 
-           int Id = header_dao.getId();
+            SaleId = header_dao.getId();
 
-            Log.e("LastAdded","Id _--> "+Id );
+            Log.e("LastAdded","Id _--> "+SaleId );
 
 
 
@@ -364,7 +407,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
     }
 
 
-    private  static class AddSaleItemAsync extends AsyncTask<List<SalesItem>,Void,Void> {
+    private  static class AddSaleItemAsync extends AsyncTask<List<SalesItem>,Void,String> {
 
         private Sale_Item_DAO item_dao;
 
@@ -373,7 +416,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         }
 
         @Override
-        protected Void doInBackground(List<SalesItem>... items) {
+        protected String doInBackground(List<SalesItem>... items) {
 
 
 
@@ -390,10 +433,41 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
 
+            String result="Completed";
 
+            return result;
+        }
+    }
+
+
+
+    private  static  class GetFinancialAsync extends AsyncTask<Void,Void,Void> {
+
+        private FinancialYear_DAO dao;
+
+
+
+        public GetFinancialAsync(FinancialYear_DAO dao) {
+            this.dao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            FinYearId=dao.GetMaxFinId();
+
+            Log.e("GetFinancialAsync","Id _--> "+FinYearId);
 
             return null;
         }
+
+
+        @Override
+        protected void onPostExecute(Void result) {
+            //do stuff
+
+        }
+
     }
 
 

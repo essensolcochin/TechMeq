@@ -48,7 +48,7 @@
                     android:id="@+id/tabMode"
                     android:layout_alignParentBottom="true"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="35dp"/>
 
 
             </RelativeLayout>
@@ -69,7 +69,9 @@
 
 
         <RelativeLayout
-            android:layout_margin="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
             android:layout_weight=".8"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -95,7 +97,7 @@
 
                     <TextView
                         android:singleLine="true"
-                        android:layout_margin="8dp"
+                        android:layout_margin="5dp"
                         android:layout_weight="1.5"
                         android:id="@+id/proName"
                         android:layout_width="0dp"
@@ -108,7 +110,7 @@
                     <TextView
                         android:gravity="right"
                         android:singleLine="true"
-                        android:layout_margin="8dp"
+                        android:layout_margin="5dp"
                         android:id="@+id/qty"
                         android:clickable="true"
                         android:layout_width="0dp"
@@ -122,9 +124,9 @@
                         />
 
                     <TextView
-                        android:gravity="right"
+                        android:gravity="center"
                         android:singleLine="true"
-                        android:layout_margin="8dp"
+                        android:layout_margin="5dp"
                         android:id="@+id/rate"
                         android:clickable="true"
                         android:layout_marginTop="8dp"
@@ -142,9 +144,9 @@
                         android:gravity="start"
                         android:id="@+id/price"
                         android:singleLine="true"
-                        android:layout_margin="8dp"
+                        android:layout_margin="5dp"
                         android:clickable="true"
-                        android:text="Net amnt"
+                        android:text="Net Amount"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -156,7 +158,7 @@
                     <LinearLayout
                         android:layout_margin="5dp"
                         android:layout_width="25dp"
-                        android:layout_height="25dp"/>
+                        android:layout_height="20dp"/>
 
                 </LinearLayout>
 
@@ -237,7 +239,6 @@
 
                             android:layout_weight="1.5"
                             android:padding="5dp"
-                            android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Discount"
@@ -252,7 +253,6 @@
                             android:padding="5dp"
                             android:clickable="true"
                             android:id="@+id/discount"
-                            android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -274,7 +274,6 @@
 
                             android:layout_weight="1.5"
                             android:padding="5dp"
-                            android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Tax(5%) Amt"
@@ -290,7 +289,6 @@
                             android:padding="5dp"
                             android:clickable="true"
                             android:id="@+id/vat"
-                            android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -312,7 +310,6 @@
 
                             android:layout_weight="1.5"
                             android:padding="5dp"
-                            android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Round Off"
@@ -327,7 +324,6 @@
                             android:padding="5dp"
                             android:clickable="true"
                             android:id="@+id/round_off"
-                            android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -339,6 +335,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:gravity="center"
                         android:background="#dadada"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
@@ -347,7 +344,6 @@
 
                         <TextView
                             android:singleLine="true"
-                            android:layout_margin="5dp"
                             android:layout_weight="1.5"
                             android:padding="5dp"
                             android:layout_width="0dp"
@@ -355,7 +351,7 @@
                             android:text="Grand Total"
                             android:textStyle="bold"
                             android:textColor="@android:color/black"
-                            android:textSize="15dp"
+                            android:textSize="14dp"
                             />
 
 
@@ -368,7 +364,6 @@
 
                             android:id="@+id/tot"
                             android:singleLine="true"
-                            android:layout_margin="5dp"
                             android:padding="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"

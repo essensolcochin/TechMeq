@@ -18,7 +18,7 @@ public class SalesHeader {
     private int FinYearId;
 
     @PrimaryKey(autoGenerate = true)
-    private int SaleId = 0;
+    private int SaleId;
 
     private String SaleNo;
 

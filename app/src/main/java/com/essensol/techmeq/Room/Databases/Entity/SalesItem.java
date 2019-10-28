@@ -4,18 +4,20 @@ package com.essensol.techmeq.Room.Databases.Entity;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName="Sales_Item"
-//, indices = @Index(value = {"ProductId", "SaleId"}),
-//foreignKeys = {@ForeignKey(entity = Products.class, parentColumns = "Product_Id", childColumns = "ProductId"),
-//@ForeignKey(entity = SalesHeader.class, parentColumns = "SaleId", childColumns = "SaleId")
+, indices = @Index(value = {"ProductId", "SaleId"}),
+foreignKeys = {@ForeignKey(entity = Products.class, parentColumns = "Product_Id", childColumns = "ProductId"),
+@ForeignKey(entity = SalesHeader.class, parentColumns = "SaleId", childColumns = "SaleId")}
 )
 
 public class SalesItem {
 
     @PrimaryKey(autoGenerate = true)
-    private int SaleItemId=0;
+    private int SaleItemId;
 
     @ColumnInfo(name = "SaleId")
     private int SaleId;

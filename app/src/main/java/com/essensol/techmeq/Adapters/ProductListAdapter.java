@@ -84,11 +84,19 @@ public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapte
         });
 
 
+        if(items.size()==1)
+        {
+            if(mListner!=null)
+            {
+                mListner.getProductDetails(products.getProduct_Id(),products.getProductCatId()
+                        ,products.getTaxPercent(),products.getProductName()
+                        ,products.getSales_Price(),products.isStatus());
+            }
+        }
+
+
     }
 
-    public void setListener(OnSelectedListener listener) {
-        this.mListner = listener;
-    }
 
 
 

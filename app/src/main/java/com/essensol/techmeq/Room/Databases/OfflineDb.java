@@ -7,18 +7,25 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
+import com.essensol.techmeq.Room.Databases.DAO.FinancialYear_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.ProductCategory_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Product_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Sale_Item_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Sales_Header_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Voucher_DAO;
+import com.essensol.techmeq.Room.Databases.Entity.FinancialYear;
 import com.essensol.techmeq.Room.Databases.Entity.Products;
 import com.essensol.techmeq.Room.Databases.Entity.SalesHeader;
 import com.essensol.techmeq.Room.Databases.Entity.SalesItem;
 import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
 import com.essensol.techmeq.Room.Databases.Entity._dbExpenceVouchers;
 import com.essensol.techmeq.Room.DateTypeConverter;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 @Database
@@ -29,6 +36,7 @@ import com.essensol.techmeq.Room.DateTypeConverter;
                 , Sales_Category.class
                 , SalesHeader.class
                 , SalesItem.class
+                , FinancialYear.class
         }
         ,version = 1
 )
@@ -48,6 +56,7 @@ public abstract class OfflineDb extends RoomDatabase {
 
     public  abstract Sale_Item_DAO sale_item_dao();
 
+    public  abstract FinancialYear_DAO financialYear_dao();
 
 
     public  static  synchronized OfflineDb getInstance(Context context)
@@ -83,8 +92,11 @@ public abstract class OfflineDb extends RoomDatabase {
     {
         private ProductCategory_DAO dao;
 
+        private FinancialYear_DAO financialYear_dao;
+
         public PopulateAsync(OfflineDb db) {
             this.dao = db.productCategory_dao();
+            this.financialYear_dao=db.financialYear_dao();
         }
 
 
@@ -96,9 +108,36 @@ public abstract class OfflineDb extends RoomDatabase {
             Sales_Category model =new Sales_Category("Select","null",false);
 
             dao.AddProductCategory(model);
+
+            Date start=null,end=null;
+            String dtStart = "2019-01-01T09:27:37Z";
+            String dtEnd = "2019-12-31T09:27:37Z";
+
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            try {
+                start = format.parse(dtStart);
+                end=format.parse(dtEnd);
+
+                Log.e("FInStart"," "+start);
+
+                Log.e("FInEnd"," "+end);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            if(start!=null&&end!=null)
+            {
+                FinancialYear year = new FinancialYear("2019",start,end,true,true);
+
+                financialYear_dao.AddFinancialYear(year);
+
+            }
+                    //startDate -1st Jan
+            //endDate -31 dec
+
             return null;
         }
     }
+
 
 
 }

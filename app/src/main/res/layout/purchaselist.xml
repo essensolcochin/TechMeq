@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     app:cardElevation="10dp"
-    app:cardCornerRadius="10sp"
+    app:cardCornerRadius="8dp"
     android:layout_marginTop="5dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -20,10 +20,9 @@
 
         <TextView
             android:singleLine="true"
-            android:layout_margin="8dp"
+            android:layout_margin="5dp"
             android:id="@+id/proName"
             android:padding="8dp"
-            android:layout_marginTop="8dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
@@ -32,13 +31,13 @@
             />
 
         <TextView
-            android:gravity="center"
+            android:gravity="right"
             android:singleLine="true"
-            android:layout_margin="8dp"
             android:id="@+id/qty"
+
             android:padding="8dp"
             android:clickable="true"
-            android:layout_marginTop="8dp"
+            android:layout_margin="5dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
@@ -51,13 +50,12 @@
 
 
         <TextView
-            android:gravity="right"
+            android:gravity="center"
             android:singleLine="true"
-            android:layout_margin="8dp"
             android:id="@+id/rate"
             android:padding="8dp"
             android:clickable="true"
-            android:layout_marginTop="8dp"
+            android:layout_margin="5dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
@@ -72,10 +70,9 @@
             android:gravity="right"
             android:id="@+id/price"
             android:singleLine="true"
-            android:layout_margin="8dp"
+            android:layout_margin="5dp"
             android:padding="8dp"
             android:clickable="true"
-            android:layout_marginTop="8dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="12dp"
@@ -86,11 +83,11 @@
 
         <ImageView
             android:scaleType="fitXY"
-            android:layout_margin="8dp"
+            android:layout_margin="5dp"
             android:tint="@android:color/holo_red_light"
             android:src="@drawable/less"
-            android:layout_width="40sp"
-            android:layout_height="40sp"/>
+            android:layout_width="25dp"
+            android:layout_height="25dp"/>
 
     </LinearLayout>
 

@@ -27,4 +27,12 @@ public interface Sale_Item_DAO {
     @Query("SELECT * FROM sales_item ORDER BY SaleItemId DESC")
     List<SalesItem>GetAllSales();
 
+
+    @Query("SELECT * FROM sales_item " +
+            "INNER JOIN sales_header " +
+            "ON sales_header.SaleId=sales_item.SaleId " +
+            "WHERE sales_item.SaleItemId=:SaleItemId")
+    List<SalesItem> getPlaylistsForSong(final int SaleItemId);
+
+
 }

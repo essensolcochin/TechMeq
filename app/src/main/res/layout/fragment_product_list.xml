@@ -19,9 +19,9 @@
             android:layout_toStartOf="@+id/Add"
             app:queryHint="Search Product"
             android:background="@drawable/editbgm"
-            android:layout_margin="10sp"
+            android:layout_margin="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="30dp"/>
 
         <ImageView
             android:layout_centerVertical="true"
@@ -29,8 +29,8 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:id="@+id/Add"
-            android:layout_width="80dp"
-            android:layout_height="50dp"/>
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
 
     </RelativeLayout>
 
@@ -39,7 +39,6 @@
     <android.support.v7.widget.RecyclerView
         android:background="@android:color/white"
         android:padding="10dp"
-        android:layout_marginTop="10dp"
         android:layout_below="@+id/frame"
         android:id="@+id/products"
         android:layout_width="match_parent"
