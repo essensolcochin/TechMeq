@@ -284,11 +284,12 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
         btn[9] = RootView.findViewById(R.id.l0);
         btn[10] = RootView.findViewById(R.id.clear);
         btn[11] = RootView.findViewById(R.id.done);
+        btn[12] = RootView.findViewById(R.id.dot);
 
 
 //        qty.requestFocus();
 
-        for(int i =0;i<12;i++){
+        for(int i =0;i<13;i++){
             btn[i].setOnClickListener(this);
         }
 
@@ -355,28 +356,9 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
 
 
-//        mRate.setText(Price);
 
 
-//        input.setOnTouchListener(new View.OnTouchListener(){
-//
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                int inType = input.getInputType(); // backup the input type
-//                input.setInputType(InputType.TYPE_NULL); // disable soft input
-//                input.onTouchEvent(event); // call native handler
-//                input.setInputType(inType); // restore input type
-//                return true; // consume touch even
-//            }
-//        });
 
-//        rateclick.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                isFocused=true;
-//            }
-//        });
 
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 
@@ -435,6 +417,9 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
             case R.id.l0:
                 addtoarray("0");
                 break;
+            case R.id.dot:
+                addtoarray(".");
+                break;
             case R.id.clear:
                 if(isFocused&&!qty.getText().toString().equalsIgnoreCase(""))
                 {
@@ -454,9 +439,11 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
         }
     }
     private void addtoarray(String numbers){
-        //register TextBox
+        if(isFocused)
+        {
+            qty.append(numbers);
+        }
 
-        qty.append(numbers);
     }
 
 
