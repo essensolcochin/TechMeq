@@ -108,7 +108,7 @@
                             android:textSize="10dp" />
 
 
-                        <EditText
+                        <TextView
                             android:id="@+id/invoiceNo"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -137,7 +137,7 @@
                             android:textSize="10dp" />
 
 
-                        <EditText
+                        <TextView
                             android:id="@+id/invoiceDate"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -434,6 +434,8 @@
 
 
                         <TextView
+                            android:background="@drawable/background_edittext"
+
                             android:id="@+id/taxable"
                             android:singleLine="true"
                             android:padding="5dp"
@@ -462,7 +464,9 @@
 
 
 
-                        <TextView
+                        <EditText
+                            android:inputType="number"
+                            android:background="@drawable/background_edittext"
                             android:singleLine="true"
                             android:padding="5dp"
                             android:clickable="true"
@@ -512,6 +516,7 @@
 
                         <TextView
                             android:singleLine="true"
+                            android:background="@drawable/background_edittext"
 
                             android:padding="5dp"
                             android:clickable="true"
@@ -539,7 +544,9 @@
 
 
 
-                        <TextView
+                        <EditText
+                            android:inputType="number"
+                            android:background="@drawable/background_edittext"
                             android:singleLine="true"
                             android:padding="5dp"
                             android:clickable="true"
@@ -602,13 +609,6 @@
 
                             />
 
-                    </LinearLayout>
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-
                         <LinearLayout
                             android:id="@+id/pay"
                             android:layout_weight="1"
@@ -625,16 +625,13 @@
                                 android:textStyle="bold"
                                 android:textSize="16sp"
                                 android:textColor="@android:color/white"
-                                android:text="Pay Now"
+                                android:text="Pay"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
 
 
 
                         </LinearLayout>
-
-
-
 
                         <LinearLayout
 
@@ -653,7 +650,7 @@
                                 android:textStyle="bold"
                                 android:textSize="16sp"
                                 android:textColor="@android:color/white"
-                                android:text="Credit Sale"
+                                android:text="Credit"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
 
@@ -661,7 +658,70 @@
 
                         </LinearLayout>
 
+
+
                     </LinearLayout>
+
+
+                    <!--<LinearLayout-->
+                        <!--android:orientation="horizontal"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content">-->
+
+
+                        <!--<LinearLayout-->
+                            <!--android:id="@+id/pay"-->
+                            <!--android:layout_weight="1"-->
+                            <!--android:layout_margin="10dp"-->
+                            <!--android:gravity="center"-->
+                            <!--android:background="@drawable/button"-->
+                            <!--android:padding="5dp"-->
+                            <!--android:orientation="horizontal"-->
+                            <!--android:layout_width="0dp"-->
+                            <!--android:layout_height="wrap_content">-->
+
+                            <!--<TextView-->
+
+                                <!--android:textStyle="bold"-->
+                                <!--android:textSize="16sp"-->
+                                <!--android:textColor="@android:color/white"-->
+                                <!--android:text="Pay"-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"/>-->
+
+
+
+                        <!--</LinearLayout>-->
+
+
+
+
+                        <!--<LinearLayout-->
+
+                            <!--android:layout_weight="1"-->
+                            <!--android:layout_margin="10dp"-->
+
+                            <!--android:gravity="center"-->
+                            <!--android:background="@drawable/credit"-->
+                            <!--android:padding="5dp"-->
+                            <!--android:orientation="horizontal"-->
+                            <!--android:layout_width="0dp"-->
+                            <!--android:layout_height="wrap_content">-->
+
+                            <!--<TextView-->
+
+                                <!--android:textStyle="bold"-->
+                                <!--android:textSize="16sp"-->
+                                <!--android:textColor="@android:color/white"-->
+                                <!--android:text="Credit"-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"/>-->
+
+
+
+                        <!--</LinearLayout>-->
+
+                    <!--</LinearLayout>-->
 
 
 

@@ -68,7 +68,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
     }
     private OnCompleteListener mListner;
 
-    LinearLayout[] btn = new LinearLayout[12];
+    LinearLayout[] btn = new LinearLayout[13];
 
     TextView qty,mRate,mPrice,title;
 

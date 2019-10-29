@@ -16,6 +16,16 @@
         <item name="boxStrokeWidth">5dp</item>
     </style>
 
+    <style name="TextLabel" parent="TextAppearance.AppCompat">
+        <item name="android:textColorHint">@android:color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="colorAccent">#ea6259</item>
+        <item name="colorControlNormal">#ea6259</item>
+        <item name="colorControlActivated">#ea6259</item>
+
+    </style>
+
+
 
     <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
