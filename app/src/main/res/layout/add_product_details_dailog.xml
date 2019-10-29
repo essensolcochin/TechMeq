@@ -162,7 +162,6 @@
                             android:layout_weight="1"
                             android:background="@drawable/selector"
                             android:gravity="center"
-                            android:hint="0"
                             android:padding="5dp" />
 
 

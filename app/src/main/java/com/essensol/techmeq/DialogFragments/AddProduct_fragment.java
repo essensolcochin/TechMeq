@@ -25,6 +25,7 @@ import com.essensol.techmeq.Room.Databases.Entity.Products;
 import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
 import com.essensol.techmeq.ViewModel.ProductViewModel;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -162,10 +163,11 @@ public class AddProduct_fragment extends DialogFragment {
 
     private  void _AddProduct() {
 
+        double _tax =roundTwoDecimals(Double.parseDouble(tax.getText().toString().trim()));
+        double _salesPrice =roundTwoDecimals(Double.parseDouble(mPrice.getText().toString().trim()));
 
-
-        Products products =new Products(catId,Double.parseDouble(tax.getText().toString()),mProduct_name.getText().toString()
-                ,Double.parseDouble(mPrice.getText().toString())
+        Products products =new Products(catId,_tax,mProduct_name.getText().toString().trim()
+                ,_salesPrice
                 ,true);
 
         productViewModel.AddProduct(products);
@@ -186,6 +188,12 @@ public class AddProduct_fragment extends DialogFragment {
             int height = ViewGroup.LayoutParams.MATCH_PARENT;
             dialog.getWindow().setLayout(width, height);
         }
+    }
+
+    double roundTwoDecimals(double d)
+    {
+        DecimalFormat twoDForm = new DecimalFormat("#.##");
+        return Double.valueOf(twoDForm.format(d));
     }
 
 

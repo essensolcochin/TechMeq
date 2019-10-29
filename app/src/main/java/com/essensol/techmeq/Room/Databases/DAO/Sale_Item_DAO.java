@@ -28,11 +28,12 @@ public interface Sale_Item_DAO {
     List<SalesItem>GetAllSales();
 
 
-    @Query("SELECT * FROM sales_item " +
-            "INNER JOIN sales_header " +
-            "ON sales_header.SaleId=sales_item.SaleId " +
-            "WHERE sales_item.SaleItemId=:SaleItemId")
-    List<SalesItem> getPlaylistsForSong(final int SaleItemId);
+//    @Query("SELECT  sales_header.SaleId , sales_header.SaleNo,PM.ProductName FROM sales_item " +
+//            "INNER JOIN sales_header " +
+//            "ON sales_header.SaleId=sales_item.SaleId "+
+//            "INNER JOIN product_master AS PM " +
+//            "ON PM.Product_Id=sales_item.ProductId")
+//    LiveData<List<SalesItem>> getSalesitem();
 
 
 }
