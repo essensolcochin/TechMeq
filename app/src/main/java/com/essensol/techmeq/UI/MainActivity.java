@@ -140,7 +140,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 //        tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
 
-
+        Log.e("DbPath"," "+getDatabasePath("offline db.db").getAbsolutePath());
 
 
 
