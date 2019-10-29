@@ -46,7 +46,7 @@ public class mRepo {
 
     }
 
-    /*
+    /**
 
       Expense Voucher Table
 
@@ -112,7 +112,7 @@ public class mRepo {
     }
 
 
-      /*
+      /**
 
       Sales_Category Table
 
