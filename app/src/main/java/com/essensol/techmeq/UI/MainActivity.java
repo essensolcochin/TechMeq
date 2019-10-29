@@ -2,13 +2,18 @@ package com.essensol.techmeq.UI;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
@@ -18,13 +23,17 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.essensol.techmeq.Adapters.ProductsAdapter;
+import com.essensol.techmeq.DialogFragments.AddCategoryFragment;
 import com.essensol.techmeq.DialogFragments._AddProductDetailsDailog;
 import com.essensol.techmeq.Adapters.HomeTabAdapter_;
 import com.essensol.techmeq.Adapters.PurchaseListAdapter;
+import com.essensol.techmeq.Model.CategoryModel;
 import com.essensol.techmeq.Model.PurchaseModel;
 import com.essensol.techmeq.Model.mProductModel;
 import com.essensol.techmeq.R;
@@ -34,8 +43,10 @@ import com.essensol.techmeq.Room.Databases.DAO.Sale_Item_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Sales_Header_DAO;
 import com.essensol.techmeq.Room.Databases.Entity.SalesHeader;
 import com.essensol.techmeq.Room.Databases.Entity.SalesItem;
+import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
 import com.essensol.techmeq.Room.Databases.OfflineDb;
 import com.essensol.techmeq.Room.Databases.TaxModel;
+import com.essensol.techmeq.ViewModel.ProductViewModel;
 import com.essensol.techmeq.ViewModel.TaxViewModel;
 
 import java.text.SimpleDateFormat;
@@ -45,19 +56,39 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import io.realm.Realm;
+
 public class MainActivity extends Toolbar implements _AddProductDetailsDailog.OnCompleteListener  {
+
+
+    //from tab
+
+
+
+    ProductsAdapter adapter;
+    List<CategoryModel> items = new ArrayList<>();
+//    RecyclerView purchase;
+    Realm mRealm;
+    private ProductViewModel model;
+
+    ImageView add;
+
+
+
+
+
 
 
     GridLayoutManager layoutManager;
     RecyclerView products,purchase;
 
     PurchaseListAdapter purchaseListAdapter;
-    ArrayList<String> items = new ArrayList<>();
+//    ArrayList<String> items = new ArrayList<>();
 
     CardView bottom;
 
-    TabLayout tabLayout;
-    ViewPager TabItem;
+//    TabLayout tabLayout;
+//    ViewPager TabItem;
     LinearLayout pay;
 
     private  static int FinYearId;
@@ -86,9 +117,9 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         purchase =  findViewById(R.id.purchase);
 
 
-        TabItem= findViewById(R.id.mPager);
-
-        tabLayout = (TabLayout) findViewById(R.id.tabMode);
+//        TabItem= findViewById(R.id.mPager);
+//
+//        tabLayout = (TabLayout) findViewById(R.id.tabMode);
 
         bottom =findViewById(R.id.frame);
 
@@ -102,12 +133,83 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
 
-        tabLayout.addTab(tabLayout.newTab().setText("Categories"));
+//        tabLayout.addTab(tabLayout.newTab().setText("Categories"));
+//
+//
+//        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+//        tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
 
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
+
+
+
+////from tab
+        products = findViewById(R.id.products);
+
+        add = findViewById(R.id.Add);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentManager fm =getSupportFragmentManager();
+
+
+                final AddCategoryFragment dialog= new AddCategoryFragment();
+
+                dialog.show(fm,"TAG");
+            }
+        });
+
+        layoutManager = new GridLayoutManager(this, getResources().getInteger(R.integer.number_of_grid_items));
+        products.setLayoutManager(layoutManager);
+        products.setItemViewCacheSize(6);
+        products.setDrawingCacheEnabled(true);
+        products.setHasFixedSize(true);
+        products.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+
+
+//
+
+        adapter = new ProductsAdapter(items,this);
+
+        products.setAdapter(adapter);
+
+
+
+
+        model = ViewModelProviders.of(this).get(ProductViewModel.class);
+
+        model.GetAllProductCategory().observe(this, new Observer<List<Sales_Category>>() {
+            @Override
+            public void onChanged(@Nullable List<Sales_Category> sales_categories) {
+                if(sales_categories !=null) {
+                    items.clear();
+                    for (int i=0;i<sales_categories.size();i++)
+                    {
+                        if(sales_categories.get(i).isStatus())
+                        {
+
+                            CategoryModel item =new CategoryModel(sales_categories.get(i).getProductCatId(),
+                                    sales_categories.get(i).getProductCategory(),
+                                    sales_categories.get(i).getImage(),
+                                    sales_categories.get(i).isStatus());
+
+                            items.add(item);
+                        }
+                    }
+
+
+                    adapter.SetProducts(items);
+                }
+
+            }
+        });
+
+
+
+
+//////////////////
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
@@ -137,30 +239,30 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
 
-
-        final mTabAdapter mAdapter = new mTabAdapter(getSupportFragmentManager(), tabLayout.getTabCount(),MainActivity.this);
-        TabItem.setAdapter(mAdapter);
-
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-
-                TabItem.setCurrentItem(tab.getPosition());
 //
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
+//        final mTabAdapter mAdapter = new mTabAdapter(getSupportFragmentManager(), tabLayout.getTabCount(),MainActivity.this);
+//        TabItem.setAdapter(mAdapter);
+//
+//
+//        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//
+//                TabItem.setCurrentItem(tab.getPosition());
+////
+//            }
+//
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//
+//            }
+//
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//
+//            }
+//        });
+//
 
 
 

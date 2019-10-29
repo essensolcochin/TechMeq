@@ -9,7 +9,7 @@
         android:endColor="@android:color/white"
         />
     <corners
-       android:radius="50dp"
+       android:radius="20dp"
        />
 
     <!-- -->

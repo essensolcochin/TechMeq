@@ -309,32 +309,32 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 //        });
 
 
-        qty.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                if(!mRate.getText().equals("")&&!qty.getText().equals(""))
-                {
-                    Log.e("CAlC","Focused");
-                    int Total =Integer.parseInt(mRate.getText().toString().trim())*Integer.parseInt(qty.getText().toString().trim());
-                    mPrice.setText(Integer.toString(Total));
-//                    input.setText("");
-                }
-
-
-            }
-        });
+//        qty.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//                if(!mRate.getText().equals("")&&!qty.getText().equals(""))
+//                {
+//                    Log.e("CAlC","Focused");
+//                    int Total =Integer.parseInt(mRate.getText().toString().trim())*Integer.parseInt(qty.getText().toString().trim());
+//                    mPrice.setText(Integer.toString(Total));
+////                    input.setText("");
+//                }
+//
+//
+//            }
+//        });
 
 //        mRate.setText(Price);
 
