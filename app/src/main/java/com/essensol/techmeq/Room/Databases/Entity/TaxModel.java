@@ -1,4 +1,4 @@
-package com.essensol.techmeq.Room.Databases;
+package com.essensol.techmeq.Room.Databases.Entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
@@ -14,12 +14,12 @@ public class TaxModel {
 
     private String Tax_Name;
 
-    private int Tax_Percentage;
+    private double Tax_Percentage;
 
     public TaxModel() {
     }
 
-    public TaxModel( String tax_Name, int tax_Percentage) {
+    public TaxModel( String tax_Name, double tax_Percentage) {
         Tax_Name = tax_Name;
         Tax_Percentage = tax_Percentage;
     }
@@ -40,11 +40,11 @@ public class TaxModel {
         Tax_Name = tax_Name;
     }
 
-    public int getTax_Percentage() {
+    public double getTax_Percentage() {
         return Tax_Percentage;
     }
 
-    public void setTax_Percentage(int tax_Percentage) {
+    public void setTax_Percentage(double tax_Percentage) {
         Tax_Percentage = tax_Percentage;
     }
 }

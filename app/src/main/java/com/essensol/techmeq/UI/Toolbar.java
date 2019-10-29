@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.essensol.techmeq.DialogFragments.AddProduct_fragment;
@@ -27,7 +28,7 @@ public class Toolbar extends AppCompatActivity {
 
     private NavigationView navigationView;
 
-    ImageView addItem;
+    LinearLayout addItem;
 
 
     @Override
@@ -37,7 +38,7 @@ public class Toolbar extends AppCompatActivity {
 
         toolbar=findViewById(R.id.toolbar);
 
-        addItem=findViewById(R.id.addItem);
+        addItem=findViewById(R.id.user);
 
 
         setSupportActionBar(toolbar);

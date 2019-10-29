@@ -9,17 +9,25 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.essensol.techmeq.Room.Databases.DAO.CompanyMaster_DAO;
+import com.essensol.techmeq.Room.Databases.DAO.Customer_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.FinancialYear_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.ProductCategory_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Product_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Sale_Item_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Sales_Header_DAO;
+import com.essensol.techmeq.Room.Databases.DAO.Tax_DAO;
+import com.essensol.techmeq.Room.Databases.DAO.User_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Voucher_DAO;
+import com.essensol.techmeq.Room.Databases.Entity.CompanyMaster;
+import com.essensol.techmeq.Room.Databases.Entity.Customers;
 import com.essensol.techmeq.Room.Databases.Entity.FinancialYear;
 import com.essensol.techmeq.Room.Databases.Entity.Products;
 import com.essensol.techmeq.Room.Databases.Entity.SalesHeader;
 import com.essensol.techmeq.Room.Databases.Entity.SalesItem;
 import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
+import com.essensol.techmeq.Room.Databases.Entity.TaxModel;
+import com.essensol.techmeq.Room.Databases.Entity.Users;
 import com.essensol.techmeq.Room.Databases.Entity._dbExpenceVouchers;
 import com.essensol.techmeq.Room.DateTypeConverter;
 
@@ -37,6 +45,10 @@ import java.util.Date;
                 , SalesHeader.class
                 , SalesItem.class
                 , FinancialYear.class
+                , Users.class
+                , Customers.class
+                , CompanyMaster.class
+                , TaxModel.class
         }
         ,version = 1
 )
@@ -57,6 +69,16 @@ public abstract class OfflineDb extends RoomDatabase {
     public  abstract Sale_Item_DAO sale_item_dao();
 
     public  abstract FinancialYear_DAO financialYear_dao();
+
+    public  abstract User_DAO user_dao();
+
+    public  abstract CompanyMaster_DAO companyMaster_dao();
+
+    public abstract Tax_DAO tax_dao();
+
+    public abstract Customer_DAO customer_dao();
+
+
 
 
     public  static  synchronized OfflineDb getInstance(Context context)
@@ -80,6 +102,7 @@ public abstract class OfflineDb extends RoomDatabase {
             new PopulateAsync(Instance).execute();
 
 
+
         }
 
         public void onOpen(SupportSQLiteDatabase db) {
@@ -88,15 +111,27 @@ public abstract class OfflineDb extends RoomDatabase {
     };
 
 
-    private  static class PopulateAsync extends AsyncTask<Void,Void,Void>
-    {
+
+
+
+    private  static class PopulateAsync extends AsyncTask<Void,Void,Void> {
         private ProductCategory_DAO dao;
 
         private FinancialYear_DAO financialYear_dao;
 
+        private Tax_DAO tax_dao;
+
+        private Customer_DAO customer_dao;
+
+        private CompanyMaster_DAO companyMaster_dao;
+
+
         public PopulateAsync(OfflineDb db) {
             this.dao = db.productCategory_dao();
             this.financialYear_dao=db.financialYear_dao();
+            this.tax_dao=db.tax_dao();
+            this.customer_dao=db.customer_dao();
+            this.companyMaster_dao =db.companyMaster_dao();
         }
 
 
@@ -104,6 +139,10 @@ public abstract class OfflineDb extends RoomDatabase {
         @Override
         protected Void doInBackground(Void... voids) {
 
+
+            CompanyMaster master= new CompanyMaster("123","Def","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A",true);
+
+            companyMaster_dao.AddCompany(master);
 
             Sales_Category model =new Sales_Category("Select","null",false);
 
@@ -134,10 +173,26 @@ public abstract class OfflineDb extends RoomDatabase {
                     //startDate -1st Jan
             //endDate -31 dec
 
+
+
+
+
+            /**
+             * Tax Callback
+             */
+
+            TaxModel tax=new TaxModel("5%",5.00);
+            tax_dao.AddTax(tax);
+
+
+            Customers customers=new Customers(1,"CashCustomer","Nill","N/A",true);
+            customer_dao.AddCustomers(customers);
+
+
+
             return null;
         }
     }
-
 
 
 }

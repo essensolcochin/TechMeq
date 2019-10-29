@@ -32,6 +32,8 @@ public class Login extends AppCompatActivity {
 
         logoimage=findViewById(R.id.logoimage);
 
+        login.requestFocus();
+
 
         reg.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,27 +1,22 @@
 package com.essensol.techmeq.UI;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -34,10 +29,10 @@ import com.essensol.techmeq.DialogFragments._AddProductDetailsDailog;
 import com.essensol.techmeq.Adapters.HomeTabAdapter_;
 import com.essensol.techmeq.Adapters.PurchaseListAdapter;
 import com.essensol.techmeq.Model.CategoryModel;
+import com.essensol.techmeq.Model.CustomerSpinnerModel;
 import com.essensol.techmeq.Model.PurchaseModel;
-import com.essensol.techmeq.Model.mProductModel;
 import com.essensol.techmeq.R;
-import com.essensol.techmeq.Adapters.mTabAdapter;
+import com.essensol.techmeq.Room.Databases.DAO.Customer_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.FinancialYear_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Sale_Item_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Sales_Header_DAO;
@@ -45,18 +40,14 @@ import com.essensol.techmeq.Room.Databases.Entity.SalesHeader;
 import com.essensol.techmeq.Room.Databases.Entity.SalesItem;
 import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
 import com.essensol.techmeq.Room.Databases.OfflineDb;
-import com.essensol.techmeq.Room.Databases.TaxModel;
 import com.essensol.techmeq.ViewModel.ProductViewModel;
-import com.essensol.techmeq.ViewModel.TaxViewModel;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
-import io.realm.Realm;
 
 public class MainActivity extends Toolbar implements _AddProductDetailsDailog.OnCompleteListener  {
 
@@ -68,14 +59,14 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
     ProductsAdapter adapter;
     List<CategoryModel> items = new ArrayList<>();
 //    RecyclerView purchase;
-    Realm mRealm;
+//    Realm mRealm;
     private ProductViewModel model;
 
     ImageView add;
 
+    ArrayAdapter<CustomerSpinnerModel> CustomerAdapter;
 
-
-
+    List<CustomerSpinnerModel>customerSpinnerList=new ArrayList<>();
 
 
 
@@ -87,8 +78,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
     CardView bottom;
 
-//    TabLayout tabLayout;
-//    ViewPager TabItem;
+
     LinearLayout pay;
 
     private  static int FinYearId;
@@ -100,12 +90,15 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
      ArrayList<PurchaseModel> puchase = new ArrayList<>();
     List<SalesItem> addSaleList =new ArrayList<>();
 
-//    UltimateTabLayout tabLayout;
+
+    int CustId;
+
     HomeTabAdapter_ adapter_;
-//    ViewPager TabItem;
     String mName,mQty,mPrice;
 
     private  ProgressDialog dialog;
+
+    private SearchableSpinner CustomerName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +110,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         purchase =  findViewById(R.id.purchase);
 
 
-//        TabItem= findViewById(R.id.mPager);
+        CustomerName= findViewById(R.id.CustomerName);
 //
 //        tabLayout = (TabLayout) findViewById(R.id.tabMode);
 
@@ -133,14 +126,6 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
 
-//        tabLayout.addTab(tabLayout.newTab().setText("Categories"));
-//
-//
-//        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-//        tabLayout.setTabMode(TabLayout.MODE_FIXED);
-
-
-        Log.e("DbPath"," "+getDatabasePath("offline db.db").getAbsolutePath());
 
 
 
@@ -206,7 +191,35 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
             }
         });
 
+        model.GetCustNameAndId().observe(this, new Observer<List<CustomerSpinnerModel>>() {
+            @Override
+            public void onChanged(@Nullable List<CustomerSpinnerModel> customerSpinnerModels) {
 
+                Log.e("Size"," "+customerSpinnerModels.size());
+                customerSpinnerList =customerSpinnerModels;
+
+                CustomerAdapter = new ArrayAdapter<CustomerSpinnerModel>(MainActivity.this,android.R.layout.simple_spinner_dropdown_item,customerSpinnerList);
+                CustomerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                CustomerName.setAdapter(CustomerAdapter);
+
+
+            }
+        });
+
+
+
+        CustomerName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                CustId =customerSpinnerList.get(position).getCustId();
+                Log.e("CustId Iddddd"," "+CustId);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
 //////////////////
@@ -220,9 +233,6 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         int deviceheight = displaymetrics.heightPixels /4;
 
 
-////        matchesAdapter_viewHolder.activityImage.getLayoutParams().width = devicewidth;
-//
-//        bottom.getLayoutParams().height = deviceheight;
 
 
         pay.setOnClickListener(new View.OnClickListener() {
@@ -239,30 +249,6 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
 
-//
-//        final mTabAdapter mAdapter = new mTabAdapter(getSupportFragmentManager(), tabLayout.getTabCount(),MainActivity.this);
-//        TabItem.setAdapter(mAdapter);
-//
-//
-//        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//
-//                TabItem.setCurrentItem(tab.getPosition());
-////
-//            }
-//
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//
-//            }
-//        });
-//
 
 
 
@@ -272,58 +258,10 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         purchase.setLayoutManager(linearLayoutManager);
 
 
+//        new GetCustIdAsync(OfflineDb.getInstance(this).customer_dao()).execute();
 
 
     }
-
-
-
-
-
-
-
-
-
-    private void CalculateItemPrice() {
-        try
-        {
-            double amount = 0, netAmount = 0, taxAmt = 0, totalAmount = 0, itemQty = 0, itemPurRate = 0, discPerc = 0, discountAmt = 0, taxPerc = 0, margin = 0, itemWAmt = 0, itemamountWOT = 0, cost = 0;
-
-
-            //Amount
-            amount = itemQty * itemPurRate;
-            itemamountWOT = amount;
-            double _ItemAmt = amount;
-
-            //Tax Amt with net Amt
-            taxAmt = ((itemamountWOT * taxPerc) / 100);
-            itemWAmt = taxAmt;
-            double _ItemTaxAmt = taxAmt;
-
-            //Discount Amt
-            //discountAmt = ((amount * discPerc) / 100).TruncateDoublePlaces(3);
-            //_ItemDiscAmt = discountAmt;
-
-            //Net Amt
-            //netAmount = amount - discountAmt;
-            //_ItemNetAmount = netAmount;
-
-
-
-            //Total Amt
-            totalAmount = itemamountWOT + itemWAmt;
-
-
-
-        }
-        catch (Exception ex)
-        {
-
-        }
-    }
-
-
-
 
 
 
@@ -345,11 +283,11 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
         new GetFinancialAsync(OfflineDb.getInstance(this).financialYear_dao()).execute();
 
-        SalesHeader header =new SalesHeader(1,FinYearId,"09#001",c,0
+        SalesHeader header =new SalesHeader(1,FinYearId,Integer.toString(SaleId+1),c,CustId
                 ,Double.parseDouble(tot.getText().toString())
                 ,Double.parseDouble(vat.getText().toString()),0,Double.parseDouble(tot.getText().toString()),0);
 
-        new  AddProductAsync(OfflineDb.getInstance(this).sales_header_dao()).execute(header);
+        new  AddSalesHeaderAsync(OfflineDb.getInstance(this).sales_header_dao()).execute(header);
 
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -419,10 +357,6 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
 
-
-
-
-
     @Override
     public void getProductListItem(int Qty, int Product_Id, int ProductCatId, double TaxPercent, String ProductName, double Sales_Price, double rate) {
 
@@ -474,12 +408,12 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
     }
 
 
-    private  static class AddProductAsync extends AsyncTask<SalesHeader,Void,Void> {
+    private  static class AddSalesHeaderAsync extends AsyncTask<SalesHeader,Void,Void> {
 
         private Sales_Header_DAO header_dao;
 
 
-        public AddProductAsync(Sales_Header_DAO header_dao) {
+        public AddSalesHeaderAsync(Sales_Header_DAO header_dao) {
             this.header_dao = header_dao;
         }
 
@@ -527,7 +461,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
 
-            Log.e("GetAllSales","Id _--> "+item_dao.GetAllSales().size() );
+//            Log.e("GetAllSales","Id _--> "+item_dao.GetAllSales().size() );
 
 
 
@@ -558,7 +492,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
             FinYearId=dao.GetMaxFinId();
 
-            Log.e("GetFinancialAsync","Id _--> "+FinYearId);
+            Log.e("GetFinancialAsync","Id --> "+FinYearId);
 
             return null;
         }
@@ -571,6 +505,41 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         }
 
     }
+
+
+
+//    private  static  class GetCustIdAsync extends AsyncTask<Void,Void,Void> {
+//
+//        private Customer_DAO dao;
+//
+//
+//
+//        public GetCustIdAsync(Customer_DAO dao) {
+//            this.dao = dao;
+//        }
+//
+//        @Override
+//        protected Void doInBackground(Void... voids) {
+//
+//           int custId=dao.GetCustId();
+//
+//            Log.e("GetCustIdAsync","Id --> "+custId);
+//
+//            return null;
+//        }
+//
+//
+//        @Override
+//        protected void onPostExecute(Void result) {
+//            //do stuff
+//
+//        }
+//
+//    }
+
+
+
+
 
 
 }

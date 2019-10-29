@@ -9,13 +9,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.essensol.techmeq.R;
-import com.essensol.techmeq.Room.Databases.TaxModel;
-import com.essensol.techmeq.ViewModel.TaxViewModel;
+
 
 public class TaxManagement extends AppCompatActivity {
 
 
-    private TaxViewModel viewModel;
+//    private TaxViewModel viewModel;
 
     private EditText taxName,taxPer;
 
@@ -32,22 +31,22 @@ public class TaxManagement extends AppCompatActivity {
 
         add=findViewById(R.id.add);
 
-        viewModel= ViewModelProviders.of(this).get(TaxViewModel.class);
+//        viewModel= ViewModelProviders.of(this).get(TaxViewModel.class);
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addTax();
+//                addTax();
             }
         });
 
     }
 
-    private  void  addTax()
-    {
-        TaxModel tax=new TaxModel(taxName.getText().toString().trim(),Integer.parseInt(taxPer.getText().toString().trim()));
-
-        viewModel.AddTax(tax);
-
-    }
+//    private  void  addTax()
+//    {
+//        TaxModel tax=new TaxModel(taxName.getText().toString().trim(),Integer.parseInt(taxPer.getText().toString().trim()));
+//
+//        viewModel.AddTax(tax);
+//
+//    }
 }

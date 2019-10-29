@@ -4,6 +4,8 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
+import com.essensol.techmeq.Model.CustomerSpinnerModel;
+import com.essensol.techmeq.Room.Databases.DAO.Customer_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.ProductCategory_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Product_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Sale_Item_DAO;
@@ -22,6 +24,9 @@ public class mRepo {
     private Voucher_DAO voucher_dao;
     private LiveData<List<_dbExpenceVouchers>> AllVouchers;
 
+    private Customer_DAO customer_dao;
+    private LiveData<List<CustomerSpinnerModel>> GetCustNameAndId;
+
 
     private Sale_Item_DAO sale_item_dao;
     private LiveData<List<SalesItem>> AllSales;
@@ -39,12 +44,29 @@ public class mRepo {
         product_dao=db.product_dao();
         productCategory_dao=db.productCategory_dao();
         sale_item_dao=db.sale_item_dao();
+        customer_dao=db.customer_dao();
+
 
         AllVouchers=voucher_dao.GetAllVouchers();
         AllProducts=product_dao.GetAllProduct();
         AllCategories=productCategory_dao.GetProductCategory();
+        GetCustNameAndId=customer_dao.GetCustNameAndId();
 
     }
+
+
+
+    /**
+
+     Customer Master LiveData Function
+
+     */
+
+    public  LiveData<List<CustomerSpinnerModel>>getGetCustNameAndId()
+    {
+        return GetCustNameAndId;
+    }
+
 
     /**
 

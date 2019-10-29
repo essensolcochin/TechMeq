@@ -74,12 +74,11 @@
         <android.support.design.widget.TextInputEditText
             android:layout_marginTop="50sp"
 
-            android:background="@drawable/edittextbgm"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:textColor="@android:color/darker_gray"
             android:hint="Company Name"
-            android:id="@+id/uname"
+            android:id="@+id/Cpname"
             android:padding="10dp"
             android:layout_width="300sp"
             android:layout_height="wrap_content" />
@@ -88,7 +87,6 @@
         <android.support.design.widget.TextInputEditText
             android:layout_marginTop="20sp"
 
-            android:background="@drawable/edittextbgm"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:textColor="@android:color/darker_gray"
@@ -104,7 +102,6 @@
             android:layout_width="300sp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20sp"
-            android:background="@drawable/edittextbgm"
             android:hint="Mobile"
             android:imeOptions="actionNext"
             android:inputType="text"
@@ -114,7 +111,6 @@
         <android.support.design.widget.TextInputEditText
             android:layout_marginTop="20sp"
 
-            android:background="@drawable/edittextbgm"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:textColor="@android:color/darker_gray"
@@ -127,7 +123,6 @@
         <android.support.design.widget.TextInputEditText
             android:layout_marginTop="20sp"
 
-            android:background="@drawable/edittextbgm"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:textColor="@android:color/darker_gray"
@@ -140,7 +135,6 @@
         <android.support.design.widget.TextInputEditText
             android:layout_marginTop="20sp"
 
-            android:background="@drawable/edittextbgm"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:textColor="@android:color/darker_gray"
@@ -154,7 +148,6 @@
         <android.support.design.widget.TextInputEditText
             android:layout_marginTop="20sp"
 
-            android:background="@drawable/edittextbgm"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:textColor="@android:color/darker_gray"
@@ -169,12 +162,10 @@
         <android.support.design.widget.TextInputEditText
             android:layout_marginTop="20dp"
 
-            android:background="@drawable/edittextbgm"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:textColor="@android:color/darker_gray"
             android:hint="Password"
-            android:text="1222222222"
             android:id="@+id/pword"
             android:padding="10dp"
             android:layout_width="300sp"
@@ -195,7 +186,7 @@
 
             <TextView
                 android:textColor="@android:color/white"
-                android:textSize="30sp"
+                android:textSize="25sp"
                 android:layout_gravity="center"
                 android:text="Register"
                 android:layout_width="wrap_content"

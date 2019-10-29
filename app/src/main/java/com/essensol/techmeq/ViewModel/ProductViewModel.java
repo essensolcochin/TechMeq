@@ -8,6 +8,7 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
 
+import com.essensol.techmeq.Model.CustomerSpinnerModel;
 import com.essensol.techmeq.Room.Databases.Entity.Products;
 import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
 import com.essensol.techmeq.Room.Repository.mRepo;
@@ -23,14 +24,14 @@ public class ProductViewModel extends AndroidViewModel {
 
     private LiveData<List<Sales_Category>> allCategories;
 
-//    private LiveData<List<Sales_Category>> all_Product_By_CatId;
-
+    private LiveData<List<CustomerSpinnerModel>> getGetCustNameAndId;
 
     public ProductViewModel(@NonNull Application application) {
         super(application);
+
         product_repo =new mRepo(application);
         allProducts =product_repo.getAllProducts();
-
+        getGetCustNameAndId=product_repo.getGetCustNameAndId();
         allCategories =product_repo.getAllProductsCategory();
 
     }
@@ -53,6 +54,11 @@ public class ProductViewModel extends AndroidViewModel {
     public LiveData<List<Products>> GetAllProduct()
     {
       return  allProducts;
+    }
+
+    public LiveData<List<CustomerSpinnerModel>> GetCustNameAndId()
+    {
+        return getGetCustNameAndId;
     }
 
 
@@ -83,9 +89,6 @@ public class ProductViewModel extends AndroidViewModel {
         return  product_repo.getAllProduct_By_Category(Id);
     }
 
-//    public LiveData<List<Sales_Category>> GetProduct_By_CategoryId(int setId){
-//        return allFormSets = formDatabase.formSetDao().getAllFilledForms(setId);
-//    }
 
 
 

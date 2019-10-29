@@ -6,24 +6,23 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.essensol.techmeq.Room.Databases.Entity.TaxModel;
+import com.essensol.techmeq.Room.Databases.Entity.Users;
 
 import java.util.List;
 @Dao
-public interface Tax_DAO {
+public interface User_DAO {
 
     @Insert
-    void AddTax(TaxModel tax);
+    void   AddUser(Users users);
 
     @Update
-    void UpdateTax(TaxModel tax);
+    void UpdateUser(Users users);
 
     @Delete
-    void DeleteTax(TaxModel tax);
+    void DeleteUser(Users users);
 
 
-    @Query("SELECT * FROM Tax_master ORDER BY Tax_Id DESC")
-    List<TaxModel> GetTax();
-
+    @Query("SELECT * FROM User_Master ORDER BY UserId DESC")
+    List<Users>GetAllUsers();
 
 }

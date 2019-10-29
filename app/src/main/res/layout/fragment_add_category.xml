@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"/>
 
             <EditText
-                android:imeOptions="actionNext|flagNoExtractUi"
+                android:imeOptions="actionDone|flagNoExtractUi"
                 android:id="@+id/category"
                 android:background="@drawable/edittextbgm"
                 android:padding="10sp"

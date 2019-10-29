@@ -60,4 +60,8 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
 
     implementation 'com.nbsp:library:1.8'
+
+
+    //Searchable Spinner
+    implementation 'com.toptoche.searchablespinner:searchablespinnerlibrary:1.3.1'
 }

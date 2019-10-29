@@ -108,11 +108,10 @@
 
 
                         <TextView
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
 
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:layout_weight=".9"
                             android:padding="5dp"
                             android:singleLine="true"
                             android:text="Invoice No"
@@ -141,7 +140,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="5dp"
-                            android:layout_weight=".9"
+                            android:layout_weight=".8"
                             android:padding="5dp"
                             android:singleLine="true"
                             android:text="Invoice Date"
@@ -165,6 +164,7 @@
                     </LinearLayout>
 
                 <LinearLayout
+                    android:gravity="center_vertical"
                     android:padding="5dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -173,45 +173,40 @@
 
                 <TextView
                     android:singleLine="true"
-                    android:layout_weight=".8"
                     android:padding="5dp"
-                    android:layout_marginTop="5dp"
                     android:layout_width="0dp"
+                    android:layout_weight=".3"
                     android:layout_height="wrap_content"
-                    android:text="Customer Name"
+                    android:text="Customer"
                     android:textColor="@android:color/black"
                     android:textSize="10dp"
                     />
 
 
 
-                <EditText
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/CustomerName"
-                    android:singleLine="true"
                     android:padding="5dp"
-                    android:layout_marginTop="5dp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="12sp"
+                    android:layout_weight=".9"
                     android:background="@drawable/background_edittext"
                     android:textColor="@android:color/black"
 
                     />
 
                     <ImageView
+                        android:layout_marginTop="5dp"
                         android:tint="@android:color/black"
-                        android:layout_weight=".1"
                         android:src="@drawable/plus"
                         android:layout_width="35dp"
-                        android:layout_height="35dp"/>
+                        android:layout_height="25dp"/>
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
 
-                        android:layout_marginTop="5dp"
-                        android:layout_weight=".5"
+                        android:layout_weight=".3"
                         android:padding="5dp"
                         android:singleLine="true"
                         android:text="Balance"
@@ -222,7 +217,6 @@
                         android:id="@+id/balance"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
                         android:layout_weight="1"
                         android:background="@drawable/background_edittext"
                         android:padding="5dp"
@@ -442,7 +436,9 @@
                 android:layout_above="@+id/frame"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:orientation="vertical"></LinearLayout>
+                android:orientation="vertical">
+
+            </LinearLayout>
 
             <android.support.v7.widget.CardView
 
@@ -452,6 +448,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
+                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -542,6 +540,7 @@
 
                     <LinearLayout
                         android:layout_marginBottom="5dp"
+                        android:paddingBottom="5dp"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -673,7 +672,7 @@
                                 android:textStyle="bold"
                                 android:textSize="16sp"
                                 android:textColor="@android:color/white"
-                                android:text="Pay"
+                                android:text="Cash"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
 

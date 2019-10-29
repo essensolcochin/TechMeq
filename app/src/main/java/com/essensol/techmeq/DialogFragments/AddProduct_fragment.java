@@ -165,7 +165,7 @@ public class AddProduct_fragment extends DialogFragment {
 
     private  void _AddProduct() {
 
-        String _tax =String.format("%.2f", Double.parseDouble(tax.getText().toString().trim()));
+        double _tax = Double.parseDouble(tax.getText().toString().trim());
         double _salesPrice =Double.parseDouble(mPrice.getText().toString().trim());
 
         double d ;
@@ -179,11 +179,11 @@ public class AddProduct_fragment extends DialogFragment {
         Log.e("_tax",""+_tax);
         Log.e("_salesPrice",""+test);
 
-//        Products products =new Products(catId,_tax,mProduct_name.getText().toString().trim()
-//                ,_salesPrice
-//                ,true);
-//
-//        productViewModel.AddProduct(products);
+        Products products =new Products(catId,_tax,mProduct_name.getText().toString().trim()
+                ,_salesPrice
+                ,true);
+
+        productViewModel.AddProduct(products);
 
 
 
