@@ -309,32 +309,51 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 //        });
 
 
-//        qty.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//                if(!mRate.getText().equals("")&&!qty.getText().equals(""))
-//                {
-//                    Log.e("CAlC","Focused");
-//                    int Total =Integer.parseInt(mRate.getText().toString().trim())*Integer.parseInt(qty.getText().toString().trim());
-//                    mPrice.setText(Integer.toString(Total));
+            qty.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                    if(isFocused) {
+
+                        if (!s.toString().equals("") && !s.toString().equals(""))
+                        {
+
+                           if(qty.getText()!=null&& mRate.getText()!=null)
+                           {
+                               Log.e("CAlC", "mRate" + mRate.getText().toString().trim());
+
+                               Log.e("CAlC", "qty" + qty.getText().toString().trim());
+
+                               double rate = Double.parseDouble(mRate.getText().toString().trim());
+
+                               double Qty = Integer.parseInt(s.toString());
+
+                               double Total = rate * Qty;
+
+                               Log.e("CAlC", "Total " + Total);
+
+                               mPrice.setText(Double.toString(Total));
 ////                    input.setText("");
-//                }
-//
-//
-//            }
-//        });
+                           }
+                        }
+
+                    }
+                }
+            });
+
+
+
 
 //        mRate.setText(Price);
 
@@ -417,9 +436,10 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
                 addtoarray("0");
                 break;
             case R.id.clear:
-                if(isFocused)
+                if(isFocused&&!qty.getText().toString().equalsIgnoreCase(""))
                 {
-                    qty.setText("0");
+                  qty.setText(qty.getText().toString().substring(0, qty.getText().toString().length() - 1));
+
                 }
 
                 break;
@@ -449,10 +469,10 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
         if(qty.getText().equals(""))
         {
-            qty.setText(input.getText().toString());
-            input.setText("");
-            input.setError(null);
-            input.getText().clear();
+//            qty.setText(input.getText().toString());
+//            input.setText("");
+//            input.setError(null);
+//            input.getText().clear();
             if(!mRate.getText().equals("")) {
                 int Total = Integer.parseInt(mRate.getText().toString().trim()) * Integer.parseInt(qty.getText().toString().trim());
                 mPrice.setText(Integer.toString(Total));

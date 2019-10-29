@@ -6,7 +6,9 @@ import android.os.AsyncTask;
 
 import com.essensol.techmeq.Room.Databases.DAO.ProductCategory_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Product_DAO;
+import com.essensol.techmeq.Room.Databases.DAO.Sale_Item_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Voucher_DAO;
+import com.essensol.techmeq.Room.Databases.Entity.SalesItem;
 import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
 import com.essensol.techmeq.Room.Databases.OfflineDb;
 import com.essensol.techmeq.Room.Databases.Entity.Products;
@@ -16,10 +18,13 @@ import java.util.List;
 
 public class mRepo {
 
-    private int Id;
+
     private Voucher_DAO voucher_dao;
     private LiveData<List<_dbExpenceVouchers>> AllVouchers;
 
+
+    private Sale_Item_DAO sale_item_dao;
+    private LiveData<List<SalesItem>> AllSales;
 
     private ProductCategory_DAO productCategory_dao;
     private LiveData<List<Sales_Category>> AllCategories;
@@ -33,7 +38,7 @@ public class mRepo {
         voucher_dao=db.voucher_dao();
         product_dao=db.product_dao();
         productCategory_dao=db.productCategory_dao();
-
+        sale_item_dao=db.sale_item_dao();
 
         AllVouchers=voucher_dao.GetAllVouchers();
         AllProducts=product_dao.GetAllProduct();
@@ -135,6 +140,18 @@ public class mRepo {
     {
         return AllCategories;
     }
+
+
+
+    // SaleItem
+
+
+    public  LiveData<List<SalesItem>>getAllSales()
+    {
+        return AllSales;
+    }
+
+
 
 
 

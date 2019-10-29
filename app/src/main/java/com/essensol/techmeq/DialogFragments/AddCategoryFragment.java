@@ -34,6 +34,7 @@ import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.util.regex.Pattern;
 
 import static android.app.Activity.RESULT_OK;
@@ -146,6 +147,9 @@ public class AddCategoryFragment extends DialogFragment {
 
     private void AddCategory()
     {
+
+
+
         Sales_Category category =new Sales_Category(CategoryName.getText().toString(),Path.getText().toString(),true);
 
         viewModel.AddProductCategory(category);
@@ -258,5 +262,8 @@ public class AddCategoryFragment extends DialogFragment {
         // cursor.close();
         return null;
     }
+
+
+
 
 }
