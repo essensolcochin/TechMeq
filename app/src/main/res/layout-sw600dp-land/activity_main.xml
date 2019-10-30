@@ -696,7 +696,7 @@
 
                             android:layout_weight="1"
                             android:layout_margin="10dp"
-
+                            android:id="@+id/credit"
                             android:gravity="center"
                             android:background="@drawable/credit"
                             android:padding="5dp"

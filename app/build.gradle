@@ -10,6 +10,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -61,8 +63,12 @@ dependencies {
 
     implementation 'com.nbsp:library:1.8'
 
+    implementation 'com.android.support:multidex:1.0.3'
+
 
     //Searchable Spinner
     implementation 'com.toptoche.searchablespinner:searchablespinnerlibrary:1.3.1'
     implementation files('libs\\printersdkv22(standard_neutral).jar')
+    implementation files('libs\\xUtils-2.6.14.jar')
+
 }

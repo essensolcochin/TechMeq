@@ -46,7 +46,7 @@
         android:id="@+id/tvPortInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
         android:singleLine="false"
         android:textSize="15sp"
         android:background="@android:color/darker_gray"
@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:textColor="@android:color/white"
-            android:text="Port Num"/>
+            android:text="9100"/>
     </LinearLayout>
     <Button
         android:id="@+id/btOk"

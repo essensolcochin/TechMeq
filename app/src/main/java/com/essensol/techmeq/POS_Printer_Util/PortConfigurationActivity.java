@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,9 +41,8 @@ public class PortConfigurationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_port_configuration);
-
-        initView();
         mPortParam = new PortParameters();
+        initView();
     }
 
 
@@ -55,9 +55,9 @@ public class PortConfigurationActivity extends AppCompatActivity {
         rbEhternet = (RadioButton) findViewById(R.id.rbEthernet);
         etIpAddress = (EditText) findViewById(R.id.etIpAddress);
         etPortNum = (EditText) findViewById(R.id.etPortNumber);
-        rbUSB.setOnClickListener(new USBRaidoOnClickListener());
+//        rbUSB.setOnClickListener(new USBRaidoOnClickListener());
         rbBluetooth.setOnClickListener(new BluetoothRaidoOnClickListener());
-        rbEhternet.setOnClickListener(new EthernetRaidoOnClickListener());
+//        rbEhternet.setOnClickListener(new EthernetRaidoOnClickListener());
     }
 
     @Override
@@ -91,7 +91,7 @@ public class PortConfigurationActivity extends AppCompatActivity {
             llEthernet.setVisibility(View.GONE);
             tvPortInfo.setVisibility(View.GONE);
             mPortParam.setPortType(PortParameters.BLUETOOTH);
-//            getBluetoothDevice();
+            getBluetoothDevice();
         }
     }
 
@@ -111,63 +111,66 @@ public class PortConfigurationActivity extends AppCompatActivity {
 //                UsbDeviceList.class);
 //        startActivityForResult(intent, REQUEST_USB_DEVICE);
 //    }
-//
-//    public void getBluetoothDevice() {
-//        // Get local Bluetooth adapter
-//        BluetoothAdapter bluetoothAdapter = BluetoothAdapter
-//                .getDefaultAdapter();
-//        // If the adapter is null, then Bluetooth is not supported
-//        if (bluetoothAdapter == null) {
-//            messageBox("Bluetooth is not supported by the device");
-//        } else {
-//            // If BT is not on, request that it be enabled.
-//            // setupChat() will then be called during onActivityResult
-//            if (!bluetoothAdapter.isEnabled()) {
-//                Intent enableIntent = new Intent(
-//                        BluetoothAdapter.ACTION_REQUEST_ENABLE);
-//                startActivityForResult(enableIntent,
-//                        REQUEST_ENABLE_BT);
-//            } else {
-//                Intent intent = new Intent(PortConfigurationActivity.this,
-//                        BluetoothDeviceList.class);
-//                startActivityForResult(intent,
-//                        REQUEST_CONNECT_DEVICE);
-//            }
-//        }
-//    }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        // TODO Auto-generated method stub
-////    Log.d(DEBUG_TAG, "requestCode" + requestCode + "=>" + "resultCode"
-////        + resultCode);
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == REQUEST_ENABLE_BT) {
-//            if (resultCode == Activity.RESULT_OK) {
-//                // bluetooth is opened
-//                // select bluetooth device fome list
-//                Intent intent = new Intent(PortConfigurationActivity.this,
-//                        BluetoothDeviceList.class);
-//                startActivityForResult(intent,
-//                        REQUEST_CONNECT_DEVICE);
-//            } else {
-//                // bluetooth is not open
-//                Toast.makeText(this, R.string.bluetooth_is_not_enabled,
-//                        Toast.LENGTH_SHORT).show();
-//            }
-//        } else if (requestCode == REQUEST_CONNECT_DEVICE) {
-//            // When DeviceListActivity returns with a device to connect
-//            if (resultCode == Activity.RESULT_OK) {
-//                // Get the device MAC address
-//                String address = data.getExtras().getString(
-//                        EXTRA_DEVICE_ADDRESS);
-//                // fill in some parameters
-//                tvPortInfo.setVisibility(View.VISIBLE);
-//                tvPortInfo.setText(getString(R.string.bluetooth_address) + address);
-//                btConnect.setVisibility(View.VISIBLE);
-//                mPortParam.setBluetoothAddr(address);
-//            }
-//        } else if (requestCode == REQUEST_USB_DEVICE) {
+
+    public void getBluetoothDevice() {
+        // Get local Bluetooth adapter
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter
+                .getDefaultAdapter();
+        // If the adapter is null, then Bluetooth is not supported
+        if (bluetoothAdapter == null) {
+            messageBox("Bluetooth is not supported by the device");
+        } else {
+            // If BT is not on, request that it be enabled.
+            // setupChat() will then be called during onActivityResult
+            if (!bluetoothAdapter.isEnabled()) {
+                Intent enableIntent = new Intent(
+                        BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableIntent,
+                        REQUEST_ENABLE_BT);
+            } else {
+
+                Log.e("getBT device","Success"+REQUEST_CONNECT_DEVICE);
+                Intent intent = new Intent(PortConfigurationActivity.this,
+                        BluetoothDeviceList.class);
+                startActivityForResult(intent,
+                        REQUEST_CONNECT_DEVICE);
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+//    Log.d(DEBUG_TAG, "requestCode" + requestCode + "=>" + "resultCode"
+//        + resultCode);
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_ENABLE_BT) {
+            if (resultCode == Activity.RESULT_OK) {
+                // bluetooth is opened
+                // select bluetooth device fome list
+                Intent intent = new Intent(PortConfigurationActivity.this,
+                        BluetoothDeviceList.class);
+                startActivityForResult(intent,
+                        REQUEST_CONNECT_DEVICE);
+            } else {
+                // bluetooth is not open
+                Toast.makeText(this, "Bluetooth Enabled",
+                        Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == REQUEST_CONNECT_DEVICE) {
+            // When DeviceListActivity returns with a device to connect
+            if (resultCode == Activity.RESULT_OK) {
+                // Get the device MAC address
+                String address = data.getExtras().getString(
+                        EXTRA_DEVICE_ADDRESS);
+                // fill in some parameters
+                tvPortInfo.setVisibility(View.VISIBLE);
+                tvPortInfo.setText(getString(R.string.bluetooth_address) + address);
+                btConnect.setVisibility(View.VISIBLE);
+                mPortParam.setBluetoothAddr(address);
+            }
+        }
+//        else if (requestCode == REQUEST_USB_DEVICE) {
 //            // When DeviceListActivity returns with a device to connect
 //            if (resultCode == Activity.RESULT_OK) {
 //                // Get the device MAC address
@@ -180,24 +183,24 @@ public class PortConfigurationActivity extends AppCompatActivity {
 //                mPortParam.setUsbDeviceName(address);
 //            }
 //        }
-//    }
-//
-//    public void okButtonClicked(View view) {
-//        String ipAddress = etIpAddress.getText().toString();
-//        String portNum = etPortNum.getText().toString();
-//        mPortParam.setIpAddr(ipAddress);
-//        mPortParam.setPortNumber(Integer.valueOf(portNum));
-//        Intent intent = new Intent(this, PrinterConnectDialog.class);
-//        Bundle bundle = new Bundle();
-//        bundle.putInt(PrinterPrintService.PORT_TYPE, mPortParam.getPortType());
-//        bundle.putString(PrinterPrintService.IP_ADDR, mPortParam.getIpAddr());
-//        bundle.putInt(PrinterPrintService.PORT_NUMBER, mPortParam.getPortNumber());
-//        bundle.putString(PrinterPrintService.BLUETOOT_ADDR, mPortParam.getBluetoothAddr());
-//        bundle.putString(PrinterPrintService.USB_DEVICE_NAME, mPortParam.getUsbDeviceName());
-//        intent.putExtras(bundle);
-//        this.setResult(Activity.RESULT_OK, intent);
-//        this.finish();
-//    }
+    }
+
+    public void okButtonClicked(View view) {
+        String ipAddress = etIpAddress.getText().toString();
+        String portNum = etPortNum.getText().toString();
+        mPortParam.setIpAddr(ipAddress);
+        mPortParam.setPortNumber(Integer.valueOf(portNum));
+        Intent intent = new Intent(this, PrinterConnectDialog.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt(PrinterPrintService.PORT_TYPE, mPortParam.getPortType());
+        bundle.putString(PrinterPrintService.IP_ADDR, mPortParam.getIpAddr());
+        bundle.putInt(PrinterPrintService.PORT_NUMBER, mPortParam.getPortNumber());
+        bundle.putString(PrinterPrintService.BLUETOOT_ADDR, mPortParam.getBluetoothAddr());
+        bundle.putString(PrinterPrintService.USB_DEVICE_NAME, mPortParam.getUsbDeviceName());
+        intent.putExtras(bundle);
+        this.setResult(Activity.RESULT_OK, intent);
+        this.finish();
+    }
 
 
 }
