@@ -129,30 +129,48 @@ public class AddProduct_fragment extends DialogFragment {
 
 
 
+
                 progressDialog.show();
 
-                Runnable progressRunnable = new Runnable() {
+                if (mProduct_name.getText().equals("")){
 
-                    @Override
-                    public void run() {
+                    mProduct_name.setError("Field Empty");
+                }
+                else if(tax.getText().equals("")){
 
-                        _AddProduct();
+                    tax.setError("Field Empty");
+                }
+                else if(mPrice.getText().equals("")){
+
+                    mPrice.setError("Field Empty");
+                }
+                else {
+
+                    Runnable progressRunnable = new Runnable() {
+
+                        @Override
+                        public void run() {
+
+                            _AddProduct();
 
 
-                        progressDialog.cancel();
+                            progressDialog.cancel();
 
-                        mProduct_name.setText("");
-                        tax.setText("");
-                        mPrice.setText("");
-
-
-
-                    }};
+                            mProduct_name.setText("");
+                            tax.setText("");
+                            mPrice.setText("");
 
 
 
-                Handler pdCanceller = new Handler();
-                pdCanceller.postDelayed(progressRunnable, 500);
+                        }};
+
+
+
+                    Handler pdCanceller = new Handler();
+                    pdCanceller.postDelayed(progressRunnable, 500);
+                }
+
+
 
                 getDialog().dismiss();
 

@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.essensol.techmeq.R;
@@ -48,6 +49,7 @@ public class AddCategoryFragment extends DialogFragment {
     TextView Path;
     Button Add;
     ProgressDialog progressDialog;
+    ImageView dismiss;
 
     private ProductViewModel viewModel;
 
@@ -69,6 +71,7 @@ public class AddCategoryFragment extends DialogFragment {
 
         Path=rootview.findViewById(R.id.imagepath);
 
+        dismiss=rootview.findViewById(R.id.dismiss);
 
         progressDialog =new ProgressDialog(getContext());
         progressDialog.setTitle("Adding Category");
@@ -136,6 +139,14 @@ public class AddCategoryFragment extends DialogFragment {
 
 
                 }
+            }
+        });
+
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dismiss();
             }
         });
 
