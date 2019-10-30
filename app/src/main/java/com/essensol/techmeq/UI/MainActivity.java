@@ -491,12 +491,12 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
             if(result.equalsIgnoreCase("Completed"))
             {
                 dialog.dismiss();
-                Toast.makeText(MainActivity.this,"Saved",Toast.LENGTH_SHORT).show();
-                puchase.clear();
-                purchaseListAdapter.notifyDataSetChanged();
-                taxable.setText("");
-                vat.setText("");
-                tot.setText("");
+//                Toast.makeText(MainActivity.this,"Saved",Toast.LENGTH_SHORT).show();
+//                puchase.clear();
+//                purchaseListAdapter.notifyDataSetChanged();
+//                taxable.setText("");
+//                vat.setText("");
+//                tot.setText("");
             }
 
         } catch (ExecutionException e) {
@@ -776,64 +776,132 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         EscCommand esc = new EscCommand();
         esc.addInitializePrinter();
         esc.addPrintAndFeedLines((byte) 3);
-        esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);// 设置打印居中
+        esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
         esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.ON, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF);// 设置为倍高倍宽
-        esc.addText("Sample\n"); // 打印文字
+        esc.addText("***** TecMeq ******\n");
+        esc.addTurnUnderlineModeOnOrOff(EscCommand.UNDERLINE_MODE.UNDERLINE_1DOT);
+//        esc.addSetKanjiUnderLine(EscCommand.UNDERLINE_MODE.UNDERLINE_1DOT);
         esc.addPrintAndLineFeed();
 
-        /* 打印文字 */
+
+
+
         esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);// 取消倍高倍宽
-        esc.addSelectJustification(EscCommand.JUSTIFICATION.LEFT);// 设置打印左对齐
-        esc.addText("Print text\n"); // 打印文字
-        esc.addText("Welcome to use  printer!\n"); // 打印文字
+        esc.addSelectJustification(EscCommand.JUSTIFICATION.LEFT);
+//        esc.addText("Print text\n");
+//        esc.addText("Welcome to use  printer!\n");
+//
+//
+//        esc.addPrintAndLineFeed();
 
-        /* 打印繁体中文 需要打印机支持繁体字库 */
-        String message = "票據打印機\n";
-        // esc.addText(message,"BIG5");
-        esc.addText(message, "GB2312");
-        esc.addPrintAndLineFeed();
+//
+//        esc.addText("Printer");
+//        esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
+//        esc.addSetAbsolutePrintPosition((short) 6);
+//        esc.addText("Printer");
+//        esc.addSetAbsolutePrintPosition((short) 10);
+//        esc.addText("Printer");
+//        esc.addPrintAndLineFeed();
 
-        /* 绝对位置 具体详细信息请查看GP58编程手册 */
-        esc.addText("Printer");
+        esc.addText("Product     ");
         esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
         esc.addSetAbsolutePrintPosition((short) 6);
-        esc.addText("Printer");
-        esc.addSetAbsolutePrintPosition((short) 10);
-        esc.addText("Printer");
+        esc.addText("Quantity     ");
+        esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
+        esc.addSetAbsolutePrintPosition((short)25);
+        esc.addText("Rate\n");
         esc.addPrintAndLineFeed();
 
-        /* 打印图片 */
-        esc.addText("Print bitmap!\n"); // 打印文字
-//        Bitmap b = BitmapFactory.decodeResource(getResources(), R.raw.hani);
-//        esc.addRastBitImage(b, 384, 0); // 打印图片
 
-        /* 打印一维条码 */
-        esc.addText("Print code128\n"); // 打印文字
-        esc.addSelectPrintingPositionForHRICharacters(EscCommand.HRI_POSITION.BELOW);//
-        // 设置条码可识别字符位置在条码下方
-        esc.addSetBarcodeHeight((byte) 60); // 设置条码高度为60点
-        esc.addSetBarcodeWidth((byte) 1); // 设置条码单元宽度为1
-        esc.addCODE128(esc.genCodeB("Printer")); // 打印Code128码
+        for (int i=0;i<puchase.size();i++)
+        {
+
+            esc.addText(puchase.get(i).getName()+"     ");
+            esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
+            esc.addSetAbsolutePrintPosition((short) 6);
+            esc.addText(puchase.get(i).getQty()+"     ");
+            esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
+            esc.addSetAbsolutePrintPosition((short)25);
+            esc.addText(puchase.get(i).getRate()+"\n");
+            esc.addPrintAndLineFeed();
+
+//            esc.addText(puchase.get(i).getName());
+//            esc.addSetAbsolutePrintPosition((short) 10);
+//            esc.addText(Integer.toString(puchase.get(i).getQty()));
+//            esc.addSetAbsolutePrintPosition((short) 10);
+//            esc.addText(Double.toString(puchase.get(i).getRate())+"\n");
+//            esc.addSetAbsolutePrintPosition((short) 10);
+        }
+
+        esc.addText("-----------------------------");
         esc.addPrintAndLineFeed();
 
-        /*
-         * QRCode命令打印 此命令只在支持QRCode命令打印的机型才能使用。 在不支持二维码指令打印的机型上，则需要发送二维条码图片
-         */
-        esc.addText("Print QRcode\n"); // 打印文字
-        esc.addSelectErrorCorrectionLevelForQRCode((byte) 0x31); // 设置纠错等级
-        esc.addSelectSizeOfModuleForQRCode((byte) 3);// 设置qrcode模块大小
-        esc.addStoreQRCodeData("www.printer.cc");// 设置qrcode内容
-        esc.addPrintQRCode();// 打印QRCode
+        esc.addText("SubTotal       :");
+        esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
+        esc.addSetAbsolutePrintPosition((short)25);
+
+
+        esc.addText(taxable.getText().toString()+"\n");
+        esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
+        esc.addSetAbsolutePrintPosition((short)25);
+
+        esc.addText("Tax            :");
+        esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
+        esc.addSetAbsolutePrintPosition((short)25);
+
+
+        esc.addText(vat.getText().toString()+"\n");
+        esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
+        esc.addSetAbsolutePrintPosition((short)25);
+
+        esc.addText("-----------------------------");
         esc.addPrintAndLineFeed();
 
-        /* 打印文字 */
-        esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);// 设置打印左对齐
-        esc.addText("Completed!\r\n"); // 打印结束
-        // 开钱箱
+        esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.ON, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF);// 设置为倍高倍宽
+
+
+        esc.addText("Grand Total :");
+        esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
+        esc.addSetAbsolutePrintPosition((short)25);
+
+
+        esc.addText(tot.getText().toString()+"\n");
+        esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
+        esc.addSetAbsolutePrintPosition((short)25);
+
+//        /* 打印图片 */
+//        esc.addText("Print bitmap!\n"); // 打印文字
+////        Bitmap b = BitmapFactory.decodeResource(getResources(), R.raw.hani);
+////        esc.addRastBitImage(b, 384, 0); // 打印图片
+//
+//        /* 打印一维条码 */
+//        esc.addText("Print code128\n"); // 打印文字
+//        esc.addSelectPrintingPositionForHRICharacters(EscCommand.HRI_POSITION.BELOW);//
+//        // 设置条码可识别字符位置在条码下方
+//        esc.addSetBarcodeHeight((byte) 60); // 设置条码高度为60点
+//        esc.addSetBarcodeWidth((byte) 1); // 设置条码单元宽度为1
+//        esc.addCODE128(esc.genCodeB("Printer")); // 打印Code128码
+//        esc.addPrintAndLineFeed();
+
+//        /*
+//         * QRCode命令打印 此命令只在支持QRCode命令打印的机型才能使用。 在不支持二维码指令打印的机型上，则需要发送二维条码图片
+//         */
+//        esc.addText("Print QRcode\n"); // 打印文字
+//        esc.addSelectErrorCorrectionLevelForQRCode((byte) 0x31); // 设置纠错等级
+//        esc.addSelectSizeOfModuleForQRCode((byte) 3);// 设置qrcode模块大小
+//        esc.addStoreQRCodeData("www.printer.cc");// 设置qrcode内容
+//        esc.addPrintQRCode();// 打印QRCode
+//        esc.addPrintAndLineFeed();
+
+        esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);// 取消倍高倍宽
+
+        esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
+        esc.addText("--- Thank you for shopping ---\r\n");
+
         esc.addGeneratePlus(LabelCommand.FOOT.F5, (byte) 255, (byte) 255);
         esc.addPrintAndFeedLines((byte) 8);
 
-        Vector<Byte> datas = esc.getCommand(); // 发送数据
+        Vector<Byte> datas = esc.getCommand();
         byte[] bytes = PrinterUtils.ByteTo_byte(datas);
         String sss = Base64.encodeToString(bytes, Base64.DEFAULT);
         int rs;
