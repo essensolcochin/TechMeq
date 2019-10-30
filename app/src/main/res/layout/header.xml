@@ -22,7 +22,6 @@
             android:textSize="20dp"
             android:text="User Name"
             android:textAllCaps="true"
-            android:textStyle="bold"
             />
 
         <TextView
@@ -34,7 +33,6 @@
             android:textSize="16dp"
             android:text="Essensol"
             android:textAllCaps="true"
-            android:textStyle="bold"
             />
 
     </LinearLayout>
