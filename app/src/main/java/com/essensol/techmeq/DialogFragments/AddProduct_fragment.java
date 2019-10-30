@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.essensol.techmeq.R;
@@ -46,7 +47,7 @@ public class AddProduct_fragment extends DialogFragment {
     private ProductViewModel productViewModel;
     int  catId;
     Spinner mProductCategory;
-
+    ImageView dismiss;
     ProgressDialog progressDialog;
 
 
@@ -72,7 +73,7 @@ public class AddProduct_fragment extends DialogFragment {
         tax =Rootview.findViewById(R.id.tax);
         mPrice =Rootview.findViewById(R.id.price);
         Button mAddProduct = Rootview.findViewById(R.id.add);
-
+        dismiss= Rootview.findViewById(R.id.dismiss);
 
 
         progressDialog =new ProgressDialog(getContext());
@@ -100,6 +101,8 @@ public class AddProduct_fragment extends DialogFragment {
 
             }
         });
+
+
 
 
 
@@ -159,7 +162,13 @@ public class AddProduct_fragment extends DialogFragment {
             }
         });
 
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                dismiss();
+            }
+        });
         return Rootview;
     }
 

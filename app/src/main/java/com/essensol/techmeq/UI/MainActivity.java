@@ -73,7 +73,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 //    Realm mRealm;
     private ProductViewModel model;
 
-    ImageView add;
+    LinearLayout add;
 
     ArrayAdapter<CustomerSpinnerModel> CustomerAdapter;
 

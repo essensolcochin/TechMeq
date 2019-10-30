@@ -44,28 +44,35 @@
                     android:layout_width="350dp"
                     android:layout_height="30dp"/>
 
-                <TextView
-                    android:gravity="center_vertical"
-                    android:layout_toLeftOf="@+id/Add"
-                    android:layout_toStartOf="@+id/Add"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
-                    android:text="Add Category"/>
-
-                <ImageView
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/plus"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
+                <LinearLayout
+                 android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="#74bf94"
                     android:id="@+id/Add"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"/>
+                    android:padding="5dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp">
+
+                    <TextView
+                        android:gravity="center_vertical"
+                        android:textSize="15sp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:text="Add Category"/>
+
+                    <ImageView
+                        android:src="@drawable/plus"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"/>
+
+                </LinearLayout>
 
             </RelativeLayout>
 
@@ -246,7 +253,7 @@
 
         <RelativeLayout
             android:layout_margin="5dp"
-            android:layout_weight=".8"
+            android:layout_weight=".7"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             >
@@ -271,7 +278,7 @@
                     <TextView
                         android:singleLine="true"
                         android:layout_margin="5dp"
-                        android:layout_weight="1.5"
+                        android:layout_weight=".8"
                         android:id="@+id/proName"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -281,17 +288,18 @@
                         />
 
                     <TextView
-                        android:gravity="right"
                         android:singleLine="true"
                         android:layout_margin="5dp"
-                        android:id="@+id/qty"
+                        android:padding="8dp"
                         android:clickable="true"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Quantity"
-                        android:textColor="@android:color/black"
-                        android:layout_weight="1"
                         android:textSize="12dp"
+                        android:textColor="@android:color/black"
+                        android:layout_weight=".5"
+                        android:gravity="right"
+                        android:id="@+id/qty"
+                        android:text="Quantity"
 
 
                         />
@@ -307,14 +315,14 @@
                         android:layout_height="wrap_content"
                         android:text="Rate"
                         android:textColor="@android:color/black"
-                        android:layout_weight="1"
+                        android:layout_weight=".5"
                         android:textSize="12dp"
 
 
                         />
 
                     <TextView
-                        android:gravity="start"
+                        android:gravity="center"
                         android:id="@+id/price"
                         android:singleLine="true"
                         android:layout_margin="5dp"
@@ -322,16 +330,15 @@
                         android:text="Total"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight=".5"
                         android:textSize="12dp"
                         android:textColor="@android:color/black"
-
                         />
 
                     <LinearLayout
-                        android:layout_margin="5dp"
+
                         android:layout_width="25dp"
-                        android:layout_height="20dp"/>
+                        android:layout_height="25dp"/>
 
                 </LinearLayout>
 
@@ -411,18 +418,18 @@
                         <!--/>-->
 
                     <!--<LinearLayout-->
-                        <!--android:layout_margin="8dp"-->
-                        <!--android:layout_width="40sp"-->
-                        <!--android:layout_height="40sp"/>-->
+                        <!--android:layout_margin="5dp"-->
+                        <!--android:layout_width="25dp"-->
+                        <!--android:layout_height="25dp"/>-->
 
                 <!--</LinearLayout>-->
 
 
                 <android.support.v7.widget.RecyclerView
-                    android:background="@android:color/white"
                     android:id="@+id/purchase"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@android:color/white"
                     android:clipToPadding="false"
                     android:padding="5dp"
                     tools:listitem="@layout/purchaselist" />
@@ -482,6 +489,7 @@
                             android:text="0.00"
                             android:id="@+id/taxable"
                             android:singleLine="true"
+                            android:gravity="right"
                             android:padding="5dp"
                             android:layout_marginTop="5dp"
                             android:layout_width="0dp"
@@ -515,6 +523,8 @@
                             android:singleLine="true"
                             android:padding="5dp"
                             android:clickable="true"
+
+                            android:gravity="right"
                             android:id="@+id/discount"
                             android:layout_marginTop="5dp"
                             android:layout_width="0dp"
@@ -566,6 +576,7 @@
                             android:text="0.00"
                             android:padding="5dp"
                             android:clickable="true"
+                            android:gravity="right"
                             android:id="@+id/vat"
                             android:layout_marginTop="5dp"
                             android:layout_width="0dp"
@@ -597,6 +608,7 @@
                             android:singleLine="true"
                             android:padding="5dp"
                             android:clickable="true"
+                            android:gravity="right"
                             android:id="@+id/round_off"
                             android:layout_marginTop="5dp"
                             android:layout_width="0dp"

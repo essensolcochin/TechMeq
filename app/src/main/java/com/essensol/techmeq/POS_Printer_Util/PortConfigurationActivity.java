@@ -28,6 +28,7 @@ public class PortConfigurationActivity extends AppCompatActivity {
     private LinearLayout llEthernet;
     private PortParameters mPortParam;
     private EditText etIpAddress, etPortNum;
+
     // Return Intent extra
 
     public static       String EXTRA_DEVICE_ADDRESS   = "device_address";

@@ -11,8 +11,9 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
-    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-        <item name="boxStrokeColor">#ea6259</item>
+    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxStrokeColor">@android:color/darker_gray</item>
+        <item name="boxBackgroundColor">@android:color/transparent</item>
         <item name="boxStrokeWidth">5dp</item>
     </style>
 
