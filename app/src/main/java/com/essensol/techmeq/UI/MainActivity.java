@@ -1,8 +1,13 @@
 package com.essensol.techmeq.UI;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -31,6 +36,7 @@ import com.essensol.techmeq.Adapters.PurchaseListAdapter;
 import com.essensol.techmeq.Model.CategoryModel;
 import com.essensol.techmeq.Model.CustomerSpinnerModel;
 import com.essensol.techmeq.Model.PurchaseModel;
+import com.essensol.techmeq.POS_Printer_Util.PortConfigurationActivity;
 import com.essensol.techmeq.R;
 import com.essensol.techmeq.Room.Databases.DAO.Customer_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.FinancialYear_DAO;
@@ -47,14 +53,19 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
+
+
 
 public class MainActivity extends Toolbar implements _AddProductDetailsDailog.OnCompleteListener  {
 
 
     //from tab
 
-
+    private ArrayAdapter<String> mPairedDevicesArrayAdapter;
+    private BluetoothAdapter mBluetoothAdapter;
+    private ArrayAdapter<String> mNewDevicesArrayAdapter;
 
     ProductsAdapter adapter;
     List<CategoryModel> items = new ArrayList<>();
@@ -507,39 +518,72 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
     }
 
 
-
-//    private  static  class GetCustIdAsync extends AsyncTask<Void,Void,Void> {
-//
-//        private Customer_DAO dao;
-//
-//
-//
-//        public GetCustIdAsync(Customer_DAO dao) {
-//            this.dao = dao;
+    /**
+     *
+     * Getting Bluetooth Devices
+     */
+//    protected void getDeviceList() {
+//        // Initialize array adapters. One for already paired devices and
+//        // one for newly discovered devices
+//        mPairedDevicesArrayAdapter = new ArrayAdapter<String>(this,
+//                R.layout.bluetooth_device_name_item);
+//        mNewDevicesArrayAdapter = new ArrayAdapter<String>(this,
+//                R.layout.bluetooth_device_name_item);
+//        lvPairedDevice.setAdapter(mPairedDevicesArrayAdapter);
+//        lvPairedDevice.setOnItemClickListener(mDeviceClickListener);
+//        lvNewDevice.setAdapter(mNewDevicesArrayAdapter);
+//        lvNewDevice.setOnItemClickListener(mDeviceClickListener);
+//        // Register for broadcasts when a device is discovered
+//        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+//        this.registerReceiver(mFindBlueToothReceiver, filter);
+//        // Register for broadcasts when discovery has finished
+//        filter = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+//        this.registerReceiver(mFindBlueToothReceiver, filter);
+//        // Get the local Bluetooth adapter
+//        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+//        // Get a set of currently paired devices
+//        Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+//        // If there are paired devices, add each one to the ArrayAdapter
+//        if (pairedDevices.size() > 0) {
+//            tvPairedDevice.setVisibility(View.VISIBLE);
+//            for (BluetoothDevice device : pairedDevices) {
+//                mPairedDevicesArrayAdapter.add(device.getName() + "\n"
+//                        + device.getAddress());
+//            }
+//        } else {
+//            String noDevices = getResources().getText(R.string.none_paired)
+//                    .toString();
+//            mPairedDevicesArrayAdapter.add(noDevices);
 //        }
-//
-//        @Override
-//        protected Void doInBackground(Void... voids) {
-//
-//           int custId=dao.GetCustId();
-//
-//            Log.e("GetCustIdAsync","Id --> "+custId);
-//
-//            return null;
-//        }
-//
-//
-//        @Override
-//        protected void onPostExecute(Void result) {
-//            //do stuff
-//
-//        }
-//
 //    }
 
 
+    /**
+     * Device Click Listeners
+     *
+     */
 
-
+//    private AdapterView.OnItemClickListener mDeviceClickListener = new AdapterView.OnItemClickListener() {
+//        @Override
+//        public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
+//            // Cancel discovery because it's costly and we're about to connect
+//            mBluetoothAdapter.cancelDiscovery();
+//            // Get the device MAC address, which is the last 17 chars in the View
+//            String info = ((TextView) v).getText().toString();
+//            String noDevices = getResources().getText(R.string.none_paired).toString();
+//            String noNewDevice = getResources().getText(R.string.none_bluetooth_device_found).toString();
+//            Log.i("tag", info);
+//            if (! info.equals(noDevices) && ! info.equals(noNewDevice)) {
+//                String address = info.substring(info.length() - 17);
+//                // Create the result Intent and include the MAC address
+//                Intent intent = new Intent();
+//                intent.putExtra(PortConfigurationActivity.EXTRA_DEVICE_ADDRESS, address);
+//                // Set result and finish this Activity
+//                setResult(Activity.RESULT_OK, intent);
+//                finish();
+//            }
+//        }
+//    };
 
 
 }

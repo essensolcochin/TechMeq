@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".POS_Printer_Util.PortConfigurationActivity">
+
+    <RadioGroup
+        android:id="@+id/rgPort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="10sp"
+        android:paddingRight="10sp">
+        <RadioButton
+            android:id="@+id/rbBluetooth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:textSize="15sp"
+            android:textColor="@android:color/black"
+            android:text="Bluetooth" >
+        </RadioButton>
+
+        <RadioButton
+            android:id="@+id/rbUsb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@android:color/black"
+            android:text="Usb" >
+        </RadioButton>
+
+        <RadioButton
+            android:id="@+id/rbEthernet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@android:color/black"
+            android:text="Ethernet" >
+        </RadioButton>
+    </RadioGroup>
+    <TextView
+        android:id="@+id/tvPortInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:singleLine="false"
+        android:textSize="15sp"
+        android:background="@android:color/darker_gray"
+        android:paddingLeft="10sp"
+        android:textColor="@android:color/black"
+        />
+    <LinearLayout
+        android:id="@+id/llEthernet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@android:color/black"
+        android:visibility="gone"
+        android:paddingLeft="10sp"
+        android:paddingRight="10sp"
+        android:paddingBottom="10sp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="177777"
+            android:textColor="@android:color/black"
+            android:padding="0sp"/>
+        <EditText
+            android:id="@+id/etIpAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="6666666"
+            android:textColor="@android:color/black"
+            android:hint=""/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nummmm"
+            android:textColor="@android:color/black"/>
+        <EditText
+            android:id="@+id/etPortNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textColor="@android:color/white"
+            android:text="Port Num"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/btOk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal|center_vertical"
+        android:textSize="15sp"
+        android:visibility="gone"
+        android:textColor="@android:color/black"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="Ok"
+        android:layout_margin="5sp"
+        android:onClick="okButtonClicked"
+        />
+
+</LinearLayout>
