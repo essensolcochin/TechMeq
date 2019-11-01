@@ -44,15 +44,15 @@ public class CreditSales extends Fragment {
         credit.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
 
 
-
-        for(int i=0;i<10;i++)
-        {
-            ItemReportModel list= new ItemReportModel(false,"Item "+i+1,Integer.toString(100*i+1),"12-22-2019","45");
-
-            report.add(list);
-        }
-        adapter=new ReportsAdapter(report,getContext());
-        credit.setAdapter(adapter);
+//
+//        for(int i=0;i<10;i++)
+//        {
+//            ItemReportModel list= new ItemReportModel(false,"Item "+i+1,Integer.toString(100*i+1),"12-22-2019","45");
+//
+//            report.add(list);
+//        }
+//        adapter=new ReportsAdapter(report,getContext());
+//        credit.setAdapter(adapter);
 
         return  rootview;
     }

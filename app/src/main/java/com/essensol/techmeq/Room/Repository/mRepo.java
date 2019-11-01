@@ -5,10 +5,13 @@ import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
 import com.essensol.techmeq.Model.CustomerSpinnerModel;
+import com.essensol.techmeq.Model.ItemReportModel;
+import com.essensol.techmeq.Model.ProductModel;
 import com.essensol.techmeq.Room.Databases.DAO.Customer_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.ProductCategory_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Product_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Sale_Item_DAO;
+import com.essensol.techmeq.Room.Databases.DAO.Sales_Header_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Voucher_DAO;
 import com.essensol.techmeq.Room.Databases.Entity.SalesItem;
 import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
@@ -16,6 +19,7 @@ import com.essensol.techmeq.Room.Databases.OfflineDb;
 import com.essensol.techmeq.Room.Databases.Entity.Products;
 import com.essensol.techmeq.Room.Databases.Entity._dbExpenceVouchers;
 
+import java.util.Date;
 import java.util.List;
 
 public class mRepo {
@@ -28,6 +32,9 @@ public class mRepo {
     private LiveData<List<CustomerSpinnerModel>> GetCustNameAndId;
 
 
+
+
+
     private Sale_Item_DAO sale_item_dao;
     private LiveData<List<SalesItem>> AllSales;
 
@@ -35,7 +42,11 @@ public class mRepo {
     private LiveData<List<Sales_Category>> AllCategories;
 
     private Product_DAO product_dao;
-    private LiveData<List<Products>>AllProducts;
+    private LiveData<List<ProductModel>>AllProducts;
+
+    private Sales_Header_DAO sales_header_dao;
+    private LiveData<Integer>GetInvoiceId;
+    private LiveData<List<ItemReportModel>>GetSaleReports;
 
     public mRepo(Application application) {
 
@@ -45,13 +56,24 @@ public class mRepo {
         productCategory_dao=db.productCategory_dao();
         sale_item_dao=db.sale_item_dao();
         customer_dao=db.customer_dao();
-
+        sales_header_dao=db.sales_header_dao();
 
         AllVouchers=voucher_dao.GetAllVouchers();
         AllProducts=product_dao.GetAllProduct();
         AllCategories=productCategory_dao.GetProductCategory();
         GetCustNameAndId=customer_dao.GetCustNameAndId();
+        GetInvoiceId =sales_header_dao.getId();
 
+
+
+    }
+
+
+
+    public  List<Products>getExist(String name)
+    {
+
+        return product_dao.getDuplicateIfExist(name);
     }
 
 
@@ -97,6 +119,21 @@ public class mRepo {
         return product_dao.GetProductCategoryByID(Id);
     }
 
+    public  List<ProductModel> getGetExists(String name)
+    {
+        return product_dao.alreadyinserted(name);
+    }
+
+    public  LiveData<Integer> getInvoiceAndSaleID()
+    {
+        return GetInvoiceId;
+    }
+
+    public  LiveData<List<ItemReportModel>> getAllSalesReport(long d1,long d2)
+    {
+        return sales_header_dao.getSalesitemReport(d1 ,d2);
+    }
+
 
 
 
@@ -121,7 +158,7 @@ public class mRepo {
     }
 
 
-    public  LiveData<List<Products>>getAllProducts()
+    public  LiveData<List<ProductModel>>getAllProducts()
     {
         return AllProducts;
     }

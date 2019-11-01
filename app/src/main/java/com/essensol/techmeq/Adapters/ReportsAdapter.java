@@ -12,7 +12,9 @@ import android.widget.TextView;
 import com.essensol.techmeq.Model.ItemReportModel;
 import com.essensol.techmeq.R;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 
 public  class ReportsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -32,13 +34,13 @@ public  class ReportsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHold
 
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        if (items.get(position).isHeader()) {
-            return LAYOUT_HEADER;
-        } else
-            return LAYOUT_CHILD;
-    }
+//    @Override
+//    public int getItemViewType(int position) {
+//        if (items.get(position).isHeader()) {
+//            return LAYOUT_HEADER;
+//        } else
+//            return LAYOUT_CHILD;
+//    }
 
 
     @NonNull
@@ -46,17 +48,22 @@ public  class ReportsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHold
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
 
-        RecyclerView.ViewHolder holder;
-        if (viewType == LAYOUT_HEADER) {
-            View view = inflater.inflate(R.layout.reporthead, parent, false);
-            holder = new MyViewHolderHeader(view);
-        } else {
-            View view = inflater.inflate(R.layout.reportbody, parent, false);
-            holder = new MyViewHolderChild(view);
-        }
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.reportbody, parent, false);
 
 
-        return holder;
+        return new MyViewHolderChild(view);
+
+//        RecyclerView.ViewHolder holder;
+//        if (viewType == LAYOUT_HEADER) {
+//            View view = inflater.inflate(R.layout.reporthead, parent, false);
+//            holder = new MyViewHolderHeader(view);
+//        } else {
+//            View view = inflater.inflate(R.layout.reportbody, parent, false);
+//            holder = new MyViewHolderChild(view);
+//        }
+
+
+
     }
 
 
@@ -68,10 +75,10 @@ public  class ReportsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHold
 
 
 
-        if (holder.getItemViewType() == LAYOUT_HEADER) {
-            MyViewHolderHeader vaultItemHolder = (MyViewHolderHeader) holder;
-
-        } else {
+//        if (holder.getItemViewType() == LAYOUT_HEADER) {
+//            MyViewHolderHeader vaultItemHolder = (MyViewHolderHeader) holder;
+//
+//        } else {
 
 
             final ItemReportModel   model = items.get(position);
@@ -79,13 +86,22 @@ public  class ReportsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHold
 
 
 
-        childItemHolder.itemName.setText(items.get(position).getItemName());
+        childItemHolder.Saleno.setText(items.get(position).getSaleNo());
 
-        childItemHolder.itemqty.setText(items.get(position).getItemQty());
+        childItemHolder.grandtotal.setText(items.get(position).getGrandTotal().toString());
 
-        childItemHolder.price.setText(items.get(position).getItemPrice());
+        childItemHolder.price.setText(items.get(position).getSubTotal().toString());
 
-            childItemHolder.date.setText(items.get(position).getSaleDate());
+        String myFormat = "dd/MMM/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
+
+        childItemHolder.date.setText(sdf.format(items.get(position).getSaleDate()));
+
+        childItemHolder.vat.setText(items.get(position).getTaxAmt().toString());
+
+        childItemHolder.paid.setText(items.get(position).getPaidAmt().toString());
+
+        childItemHolder.credit.setText("0");
 
 
 //        childItemHolder.lay.setOnClickListener(new View.OnClickListener() {
@@ -98,7 +114,7 @@ public  class ReportsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHold
 //            }
 //        });
 
-        }
+//        }
 
     }
 
@@ -111,6 +127,12 @@ public  class ReportsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
 
+
+    public  void AddReports(List<ItemReportModel>reports)
+    {
+        this.items=reports;
+        notifyDataSetChanged();
+    }
 
 
 
@@ -129,7 +151,7 @@ public  class ReportsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHold
 
         LinearLayout lay;
 
-        TextView itemName,itemqty,price,date;
+        TextView Saleno,grandtotal,price,date,vat,paid,credit;
 
 
         private MyViewHolderChild(View itemView) {
@@ -137,13 +159,18 @@ public  class ReportsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHold
 
 
 
-            itemName=itemView.findViewById(R.id.proName);
+            Saleno=itemView.findViewById(R.id.Saleno);
 
-            itemqty=itemView.findViewById(R.id.qty);
+            grandtotal=itemView.findViewById(R.id.grandtotal);
 
             price=itemView.findViewById(R.id.price);
 
             date=itemView.findViewById(R.id.date);
+            vat=itemView.findViewById(R.id.vat);
+
+            paid=itemView.findViewById(R.id.paid);
+
+            credit=itemView.findViewById(R.id.credit);
 
         }
 

@@ -13,8 +13,6 @@
     <string name="init_port_info">Port:undefined Addr:undefined</string>
 
 
-
-
     <string name="port_parameters_wrong">Invalid parameters！</string>
     <string name="port_parameters_is_not_save">Port parameters is not saved！</string>
     <string name="gprinter001">Printer 001</string>

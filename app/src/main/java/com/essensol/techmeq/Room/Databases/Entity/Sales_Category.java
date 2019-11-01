@@ -1,5 +1,6 @@
 package com.essensol.techmeq.Room.Databases.Entity;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
@@ -11,7 +12,7 @@ public class Sales_Category {
 
     private  int ProductCatId;
 
-
+    @ColumnInfo(name = "ProductCategory")
     private  String ProductCategory;
 
     private String Image;

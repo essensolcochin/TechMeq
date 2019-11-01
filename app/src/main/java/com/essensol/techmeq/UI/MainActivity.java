@@ -53,6 +53,7 @@ import com.essensol.techmeq.Room.Databases.Entity.SalesHeader;
 import com.essensol.techmeq.Room.Databases.Entity.SalesItem;
 import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
 import com.essensol.techmeq.Room.Databases.OfflineDb;
+import com.essensol.techmeq.Utils;
 import com.essensol.techmeq.ViewModel.ProductViewModel;
 
 import com.printer.aidl.PService;
@@ -64,10 +65,17 @@ import com.printer.io.PrinterDevice;
 import com.printer.service.PrinterPrintService;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Vector;
 import java.util.concurrent.ExecutionException;
 
@@ -109,9 +117,9 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
     private  static int FinYearId;
 
-    private static   int SaleId;
+    private static   int SaleId,InvoiceNo=1;
 
-    TextView tot,vat,taxable;
+    TextView tot,vat,taxable,invoiceNo,invoiceDate;
 
      ArrayList<PurchaseModel> puchase = new ArrayList<>();
     List<SalesItem> addSaleList =new ArrayList<>();
@@ -257,8 +265,24 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
         tot=findViewById(R.id.tot);
 
+        invoiceNo =findViewById(R.id.invoiceNo);
+
         taxable=findViewById(R.id.taxable);
         credit=findViewById(R.id.credit);
+
+        invoiceDate=findViewById(R.id.invoiceDate);
+
+
+        Date c = Calendar.getInstance().getTime();
+        System.out.println("Current time => " + c);
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        String formattedDate = df.format(c);
+
+        invoiceDate.setText(formattedDate);
+
+
+
+
         connection();
 
 
@@ -283,7 +307,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
 
-////from tab
+
         products = findViewById(R.id.products);
 
         add = findViewById(R.id.Add);
@@ -318,6 +342,28 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
         model = ViewModelProviders.of(this).get(ProductViewModel.class);
+
+
+
+        model.GetInvoiceandSaleId().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable Integer integer) {
+                if(integer!=null)
+                {
+                    InvoiceNo =integer+1;
+                    SaleId = integer;
+
+                    Log.e("SaleId","GetInvoiceandSaleId() "+SaleId);
+
+                    invoiceNo.setText(Integer.toString(integer + 1));
+                }
+
+            }
+        });
+
+
+        invoiceNo.setText(Integer.toString(InvoiceNo));
+
 
         model.GetAllProductCategory().observe(this, new Observer<List<Sales_Category>>() {
             @Override
@@ -362,6 +408,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
 
+
         CustomerName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -376,7 +423,8 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         });
 
 
-//////////////////
+
+
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
@@ -433,15 +481,21 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         dialog.setCancelable(false);
         dialog.show();
 
+        BigDecimal Total = Utils.round(Float.parseFloat(taxable.getText().toString()),2);
+        BigDecimal Discount =BigDecimal.valueOf(0);
+        BigDecimal PaidAmnt =BigDecimal.valueOf(0);
+        BigDecimal TaxAmt = Utils.round(Float.parseFloat(vat.getText().toString().trim()),2);
+
 
         Date c = Calendar.getInstance().getTime();
-        System.out.println("Current time => " + c);
+
+        BigDecimal grandTot = Utils.round(Float.valueOf(tot.getText().toString()),2);
+
 
         new GetFinancialAsync(OfflineDb.getInstance(this).financialYear_dao()).execute();
 
-        SalesHeader header =new SalesHeader(1,FinYearId,Integer.toString(SaleId+1),c,CustId
-                ,Double.parseDouble(tot.getText().toString())
-                ,Double.parseDouble(vat.getText().toString()),0,Double.parseDouble(tot.getText().toString()),0);
+        SalesHeader header =new SalesHeader(1,FinYearId,Integer.toString(InvoiceNo),c,CustId
+                ,Total,TaxAmt,Discount,grandTot,grandTot);
 
         new  AddSalesHeaderAsync(OfflineDb.getInstance(this).sales_header_dao()).execute(header);
 
@@ -463,23 +517,19 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         for (int i=0;i<puchase.size();i++)
         {
 
-//            SaleId = saleId;
-//            ProductId = productId;
-//            Qty = qty;
-//            Price = price;
-//            Total = total;
-//            TaxPercent = taxPercent;
-//            TaxAmt = taxAmt;
-//            LineTotal = lineTotal;
+
+            BigDecimal Total = Utils.round(Float.parseFloat(tot.getText().toString().trim()),2);
+            BigDecimal TaxPercent = BigDecimal.valueOf(5.00);
+            BigDecimal TaxAmt = Utils.round(Float.parseFloat(vat.getText().toString().trim()),2);
 
 
 
             PurchaseModel items =puchase.get(i);
 
-            Log.e("Mainnnn"," "+items.getProductId());
+            Log.e("SaleId"," "+SaleId);
 
-            SalesItem model=new SalesItem(SaleId,items.getProductId(),items.getQty(),items.getRate(),Double.parseDouble(tot.getText().toString())
-                                            ,5.0,Double.parseDouble(vat.getText().toString()),items.getLinetot());
+            SalesItem model=new SalesItem(SaleId,items.getProductId(),items.getQty(),items.getRate(),Total
+                                            ,TaxPercent,TaxAmt,items.getLinetot());
 
             addSaleList.add(model);
 
@@ -491,12 +541,14 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
             if(result.equalsIgnoreCase("Completed"))
             {
                 dialog.dismiss();
-//                Toast.makeText(MainActivity.this,"Saved",Toast.LENGTH_SHORT).show();
-//                puchase.clear();
-//                purchaseListAdapter.notifyDataSetChanged();
-//                taxable.setText("");
-//                vat.setText("");
-//                tot.setText("");
+                Toast.makeText(MainActivity.this,"Saved",Toast.LENGTH_SHORT).show();
+                puchase.clear();
+                purchaseListAdapter.notifyDataSetChanged();
+                taxable.setText("0.00");
+                vat.setText("0.00");
+                tot.setText("0.00");
+
+//                new GetInvoiceNoAsync(OfflineDb.getInstance(this).sales_header_dao()).execute();
             }
 
         } catch (ExecutionException e) {
@@ -508,55 +560,104 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
     }
 
     @Override
-    public void getProductListItem(int Qty, int Product_Id, int ProductCatId, double TaxPercent, String ProductName, double Sales_Price, double rate) {
+    public void getProductListItem(int Qty, int Product_Id, int ProductCatId, BigDecimal TaxPercent, String ProductName, BigDecimal Sales_Price, BigDecimal rate) {
 
 
-        double lineTot=((Sales_Price/100.0f)*5)+Qty;
+        BigDecimal lineTot=((Sales_Price.divide(BigDecimal.valueOf(100),2,RoundingMode.CEILING)).multiply(BigDecimal.valueOf(5))).add(BigDecimal.valueOf(Qty));
 
-       PurchaseModel model =new PurchaseModel(ProductName,Product_Id,Qty,rate,rate,lineTot);
+        PurchaseModel model =new PurchaseModel(ProductName,Product_Id,Qty,Sales_Price,rate,lineTot);
 
-       puchase.add(model);
+        puchase.add(model);
 
-        purchaseListAdapter = new PurchaseListAdapter(puchase, this);
+        purchaseListAdapter = new PurchaseListAdapter(puchase, MainActivity.this);
 
         purchase.setAdapter(purchaseListAdapter);
         purchaseListAdapter.notifyDataSetChanged();
 
 
+        Calc();
 
 
-
-        double  total = 0;
-        double netAmnt = 0;
-        double  percentage=0;
-        double  _taxable =0;
-
-        for(int i=0;i<puchase.size();i++)
-        {
-
-            netAmnt=puchase.get(i).getNetAmount();
-
-            _taxable =_taxable+netAmnt;
-
-            taxable.setText(Double.toString(_taxable));
-
-            percentage = percentage+(netAmnt/100.0f)*5 ;
-
-            vat.setText(String.valueOf(percentage));
-
-            Log.e("percentage()","percentage "+percentage);
-
-
-
-            total = total+ puchase.get(i).getNetAmount()+percentage;
-            tot.setText(Double.toString(total));
-
-
-        }
 
 
     }
 
+
+
+    public   void Calc()
+    {
+
+        BigDecimal  total =BigDecimal.valueOf(0);
+        BigDecimal netAmnt =BigDecimal.valueOf(0);
+        BigDecimal  percentage=BigDecimal.valueOf(0);
+        BigDecimal  _taxable=BigDecimal.valueOf(0);
+        BigDecimal  Tax=BigDecimal.valueOf(0);
+
+
+        if(puchase.size()==0)
+        {
+            taxable.setText("0.00");
+            vat.setText("0.00");
+            tot.setText("0.00");
+
+//            total =BigDecimal.valueOf(0);
+//            netAmnt =BigDecimal.valueOf(0);
+//            percentage=BigDecimal.valueOf(0);
+//            _taxable=BigDecimal.valueOf(0);
+//            Tax=BigDecimal.valueOf(0);
+        }
+        else {
+
+
+
+            for(int i=0;i<puchase.size();i++)
+            {
+//            ToDo... Refine Equation
+
+
+
+                netAmnt=puchase.get(i).getNetAmount();
+
+                _taxable =_taxable.add(netAmnt);
+
+                taxable.setText(_taxable.toString());
+
+
+                Tax =Tax.add(netAmnt.multiply(BigDecimal.valueOf(5).divide(BigDecimal.valueOf(100),2,RoundingMode.HALF_UP))).setScale(2,RoundingMode.HALF_UP);
+
+
+
+
+                vat.setText(Tax.toString());
+
+                Log.e("percentage()","percentage "+percentage);
+
+
+
+
+
+
+
+            }
+
+            BigDecimal subtotal =Utils.round(Float.parseFloat(taxable.getText().toString()),2);
+            BigDecimal Vat =Utils.round(Float.parseFloat(vat.getText().toString()),2);
+            total =subtotal.add(Vat);
+
+            BigDecimal netTotal = Utils.round(total.floatValue(),2);
+
+            tot.setText(netTotal.toString());
+
+        }
+
+
+
+    }
+
+    /**
+     * Adding Values to Sales Header Table @Param sales_header
+     *
+     */
 
     private  static class AddSalesHeaderAsync extends AsyncTask<SalesHeader,Void,Void> {
 
@@ -578,9 +679,9 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
             header_dao.AddSalesHeader(salesHeaders[0]);
 
-            SaleId = header_dao.getId();
+//            SaleId = header_dao.getId();
 
-            Log.e("LastAdded","Id _--> "+SaleId );
+//            Log.e("LastAdded","Id _--> "+SaleId );
 
 
 
@@ -655,6 +756,8 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         }
 
     }
+
+
 
 
 
@@ -869,29 +972,6 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
         esc.addSetAbsolutePrintPosition((short)25);
 
-//        /* 打印图片 */
-//        esc.addText("Print bitmap!\n"); // 打印文字
-////        Bitmap b = BitmapFactory.decodeResource(getResources(), R.raw.hani);
-////        esc.addRastBitImage(b, 384, 0); // 打印图片
-//
-//        /* 打印一维条码 */
-//        esc.addText("Print code128\n"); // 打印文字
-//        esc.addSelectPrintingPositionForHRICharacters(EscCommand.HRI_POSITION.BELOW);//
-//        // 设置条码可识别字符位置在条码下方
-//        esc.addSetBarcodeHeight((byte) 60); // 设置条码高度为60点
-//        esc.addSetBarcodeWidth((byte) 1); // 设置条码单元宽度为1
-//        esc.addCODE128(esc.genCodeB("Printer")); // 打印Code128码
-//        esc.addPrintAndLineFeed();
-
-//        /*
-//         * QRCode命令打印 此命令只在支持QRCode命令打印的机型才能使用。 在不支持二维码指令打印的机型上，则需要发送二维条码图片
-//         */
-//        esc.addText("Print QRcode\n"); // 打印文字
-//        esc.addSelectErrorCorrectionLevelForQRCode((byte) 0x31); // 设置纠错等级
-//        esc.addSelectSizeOfModuleForQRCode((byte) 3);// 设置qrcode模块大小
-//        esc.addStoreQRCodeData("www.printer.cc");// 设置qrcode内容
-//        esc.addPrintQRCode();// 打印QRCode
-//        esc.addPrintAndLineFeed();
 
         esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);// 取消倍高倍宽
 
@@ -921,24 +1001,24 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         EscCommand esc = new EscCommand();
         esc.addInitializePrinter();
         esc.addPrintAndFeedLines((byte) 3);
-        esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);// 设置打印居中
+        esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
         esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.ON, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF);// 设置为倍高倍宽
         esc.addText("Sample\n"); // 打印文字
         esc.addPrintAndLineFeed();
 
-        /* 打印文字 */
-        esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);// 取消倍高倍宽
-        esc.addSelectJustification(EscCommand.JUSTIFICATION.LEFT);// 设置打印左对齐
-        esc.addText("Print text\n"); // 打印文字
-        esc.addText("Welcome to use printer!\n"); // 打印文字
 
-        /* 打印繁体中文 需要打印机支持繁体字库 */
+        esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);// 取消倍高倍宽
+        esc.addSelectJustification(EscCommand.JUSTIFICATION.LEFT);
+        esc.addText("Print text\n");
+        esc.addText("Welcome to use printer!\n");
+
+
         String message = "票據打印機\n";
         // esc.addText(message,"BIG5");
         esc.addText(message, "GB2312");
         esc.addPrintAndLineFeed();
 
-        /* 绝对位置 具体详细信息请查看GP58编程手册 */
+
         esc.addText("Printer");
         esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
         esc.addSetAbsolutePrintPosition((short) 6);
@@ -947,13 +1027,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         esc.addText("Printer");
         esc.addPrintAndLineFeed();
 
-        /* 打印图片 */
-        // esc.addText("Print bitmap!\n"); // 打印文字
-        // Bitmap b = BitmapFactory.decodeResource(getResources(),
-        // R.drawable.gprinter);
-        // esc.addRastBitImage(b, 384, 0); // 打印图片
 
-        /* 打印一维条码 */
         esc.addText("Print code128\n"); // 打印文字
         esc.addSelectPrintingPositionForHRICharacters(EscCommand.HRI_POSITION.BELOW);//
 

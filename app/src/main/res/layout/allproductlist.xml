@@ -1,96 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    app:cardElevation="10dp"
-    app:cardCornerRadius="8dp"
-    android:layout_marginTop="5dp"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
-
     <LinearLayout
+        android:id="@+id/lay"
         android:gravity="center"
-
+        android:padding="5sp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
 
         <TextView
+            android:gravity="center"
             android:singleLine="true"
-            android:layout_margin="5dp"
+            android:layout_margin="8dp"
             android:id="@+id/proName"
-            android:padding="8dp"
+            android:padding="5dp"
+            android:layout_marginTop="8dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:textSize="12dp"
-            android:layout_weight=".8"
+            android:layout_weight="1"
             />
 
         <TextView
-            android:gravity="right"
+            android:gravity="center"
             android:singleLine="true"
-            android:id="@+id/qty"
-
-            android:padding="8dp"
+            android:layout_margin="8dp"
+            android:id="@+id/category"
+            android:padding="5dp"
             android:clickable="true"
-            android:layout_margin="5dp"
+            android:layout_marginTop="8dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:textSize="12dp"
-            android:layout_weight=".4"
-
-
-
+            android:layout_weight="1"
             />
 
 
         <TextView
-            android:gravity="right"
+            android:gravity="center"
             android:singleLine="true"
-            android:id="@+id/rate"
-            android:padding="8dp"
+            android:layout_margin="8dp"
+            android:id="@+id/tax"
+            android:padding="5dp"
             android:clickable="true"
-            android:layout_margin="5dp"
+            android:layout_marginTop="8dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:textSize="12dp"
             android:layout_weight=".5"
-
             />
 
-
-
         <TextView
-            android:gravity="right"
+            android:gravity="center"
+            android:singleLine="true"
+            android:layout_margin="8dp"
             android:id="@+id/price"
-            android:singleLine="true"
-            android:layout_margin="5dp"
-            android:padding="8dp"
+            android:padding="5dp"
             android:clickable="true"
+            android:layout_marginTop="8dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="12dp"
             android:textColor="@android:color/black"
-            android:layout_weight=".5"
-
+            android:textSize="12dp"
+            android:layout_weight=".7"
             />
 
-        <ImageView
-            android:id="@+id/remove"
-            android:scaleType="fitXY"
-            android:layout_margin="5dp"
-            android:tint="@android:color/holo_red_light"
-            android:src="@drawable/less"
-            android:layout_width="25dp"
-            android:layout_height="25dp"/>
 
     </LinearLayout>
 
 
-</android.support.v7.widget.CardView>
+</LinearLayout>

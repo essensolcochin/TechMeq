@@ -4,9 +4,10 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:clickable="true"
+        android:focusable="true"
         android:id="@+id/lay"
         android:gravity="center"
-        android:padding="5sp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -14,10 +15,9 @@
 
         <TextView
             android:singleLine="true"
-            android:layout_margin="8dp"
+            android:layout_margin="5dp"
             android:id="@+id/proName"
             android:padding="8dp"
-            android:layout_marginTop="8dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
@@ -28,11 +28,10 @@
         <TextView
             android:gravity="center"
             android:singleLine="true"
-            android:layout_margin="8dp"
+            android:layout_margin="5dp"
             android:id="@+id/rate"
             android:padding="8dp"
             android:clickable="true"
-            android:layout_marginTop="8dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"

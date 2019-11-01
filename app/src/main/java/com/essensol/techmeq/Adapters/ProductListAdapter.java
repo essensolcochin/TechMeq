@@ -58,7 +58,7 @@ public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapte
 
         holder.name.setText(items.get(position).getProductName());
 
-        holder.rate.setText(Double.toString(items.get(position).getSales_Price()));
+        holder.rate.setText(items.get(position).getSales_Price().toString());
 
         holder.lay.setOnClickListener(new View.OnClickListener() {
             @Override

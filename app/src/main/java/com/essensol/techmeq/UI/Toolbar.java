@@ -1,6 +1,11 @@
 package com.essensol.techmeq.UI;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -9,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +23,13 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.essensol.techmeq.DialogFragments.AddProduct_fragment;
+import com.essensol.techmeq.POS_Printer_Util.PrinterConnectDialog;
 import com.essensol.techmeq.R;
+import com.printer.aidl.PService;
+import com.printer.io.PrinterDevice;
+import com.printer.service.PrinterPrintService;
+
+import static com.essensol.techmeq.UI.MainActivity.CONNECT_STATUS;
 
 public class Toolbar extends AppCompatActivity {
 
@@ -30,6 +42,34 @@ public class Toolbar extends AppCompatActivity {
 
     LinearLayout addItem;
 
+    ImageView bluetooth;
+
+    private PService mPService = null;
+
+
+
+
+    class PrinterServiceConnection implements ServiceConnection {
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            Log.e("ServiceConnection", "onServiceDisconnected() called");
+            mPService = null;
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mPService = PService.Stub.asInterface(service);
+            Log.e("ServiceConnection", "onServiceDisconnected() called"+mPService);
+        }
+    }
+
+//    private void connection() {
+//        conn = new MainActivity.PrinterServiceConnection();
+//        Intent intent = new Intent(this, PrinterPrintService.class);
+//        bindService(intent, conn, Context.BIND_AUTO_CREATE); // bindService
+//    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +80,7 @@ public class Toolbar extends AppCompatActivity {
 
         addItem=findViewById(R.id.user);
 
+        bluetooth=findViewById(R.id.bluetooth);
 
         setSupportActionBar(toolbar);
 
@@ -95,12 +136,11 @@ public class Toolbar extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                final String appPackageName = getPackageName();
 
                 int id = item.getItemId();
 
                 switch(id) {
-                    case R.id.home:
+                    case R.id.newInvoice:
                         Intent intent = new Intent(Toolbar.this, MainActivity.class);
                         startActivity(intent);
                         finish();
@@ -113,13 +153,19 @@ public class Toolbar extends AppCompatActivity {
                         break;
 
                     case R.id.sales:
-                        intent = new Intent(Toolbar.this, SalesActivity.class);
+                        intent = new Intent(Toolbar.this, Reports.class);
                         startActivity(intent);
                         drawerLayout.closeDrawers();
                         break;
 
-                    case R.id.reports:
-                        intent = new Intent(Toolbar.this, Reports.class);
+//                    case R.id.reports:
+//                        intent = new Intent(Toolbar.this, SalesActivity.class);
+//                        startActivity(intent);
+//                        drawerLayout.closeDrawers();
+//                        break;
+
+                    case R.id.taxreport:
+                        intent = new Intent(Toolbar.this, TaxReport.class);
                         startActivity(intent);
                         drawerLayout.closeDrawers();
                         break;
@@ -129,6 +175,10 @@ public class Toolbar extends AppCompatActivity {
                         intent = new Intent(Toolbar.this, Login.class);
                         startActivity(intent);
                         drawerLayout.closeDrawers();
+                        break;
+
+
+
 
                     default:
                 }
@@ -169,6 +219,38 @@ public class Toolbar extends AppCompatActivity {
 
     }
 
+    public void openPortDialogueClicked() {
+
+        Log.e("ServiceConnection", "openPortDialogueClicked() called"+mPService);
+
+        if (mPService == null) {
+            Toast.makeText(this, "Print Service is not start, please check it", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Log.d("Test", "openPortConfigurationDialog ");
+        Intent intent = new Intent(this, PrinterConnectDialog.class);
+        boolean[] state = getConnectState();
+        intent.putExtra(CONNECT_STATUS, state);
+        this.startActivity(intent);
+    }
+
+
+    public boolean[] getConnectState() {
+        boolean[] state = new boolean[PrinterPrintService.MAX_PRINTER_CNT];
+        for (int i = 0; i < PrinterPrintService.MAX_PRINTER_CNT; i++) {
+            state[i] = false;
+        }
+        for (int i = 0; i < PrinterPrintService.MAX_PRINTER_CNT; i++) {
+            try {
+                if (mPService.getPrinterConnectStatus(i) == PrinterDevice.STATE_CONNECTED) {
+                    state[i] = true;
+                }
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+        return state;
+    }
 
 
 

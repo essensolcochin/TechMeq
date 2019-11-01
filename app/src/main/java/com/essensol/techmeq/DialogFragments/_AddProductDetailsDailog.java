@@ -16,6 +16,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -42,10 +44,12 @@ import com.essensol.techmeq.OnSelectedListener;
 import com.essensol.techmeq.R;
 import com.essensol.techmeq.Room.Databases.Entity.Products;
 import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
+import com.essensol.techmeq.Utils;
 import com.essensol.techmeq.ViewModel.ProductViewModel;
 
 import org.w3c.dom.Text;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,11 +68,11 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
 
     public  interface OnCompleteListener {
-        void getProductListItem(int Qty,int Product_Id,int ProductCatId,double TaxPercent,String ProductName,double Sales_Price,double rate);
+        void getProductListItem(int Qty, int Product_Id, int ProductCatId, BigDecimal TaxPercent, String ProductName, BigDecimal Sales_Price, BigDecimal rate);
     }
     private OnCompleteListener mListner;
 
-    LinearLayout[] btn = new LinearLayout[13];
+    LinearLayout[] btn = new LinearLayout[15];
 
     TextView qty,mRate,mPrice,title;
 
@@ -79,6 +83,8 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
     LinearLayout rateclick;
 
     boolean isFocused=false;
+
+    boolean isRate=false;
 
     private int CategoryId;
 
@@ -102,9 +108,9 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
     int Product_Id;
     int ProductCatId;
-    double TaxPercent;
+    BigDecimal TaxPercent;
     String ProductName;
-    double Sales_Price;
+    BigDecimal Sales_Price;
     boolean Status;
 
 
@@ -198,6 +204,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         products.setLayoutManager(linearLayoutManager);
+        products.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
 
 
 
@@ -211,10 +218,43 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
             qty.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    final int sdk = android.os.Build.VERSION.SDK_INT;
+                    if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                        qty.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm) );
+                        mRate.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.selected) );
+
+                    } else {
+                        qty.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm));
+                        mRate.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selected));
+                    }
+
+
+
                     isFocused=true;
+                    isRate=false;
                 }
             });
 
+            mRate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    isRate=true;
+                    isFocused=false;
+
+                    final int sdk = android.os.Build.VERSION.SDK_INT;
+                    if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                        mRate.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm) );
+                        qty.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.selected) );
+
+                    } else {
+                        mRate.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm));
+                        qty.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selected));
+                    }
+
+                }
+            });
 
 
 
@@ -285,11 +325,13 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
         btn[10] = RootView.findViewById(R.id.clear);
         btn[11] = RootView.findViewById(R.id.done);
         btn[12] = RootView.findViewById(R.id.dot);
+        btn[13] = RootView.findViewById(R.id.back);
+        btn[14] = RootView.findViewById(R.id.Zero);
 
 
 //        qty.requestFocus();
 
-        for(int i =0;i<13;i++){
+        for(int i =0;i<15;i++){
             btn[i].setOnClickListener(this);
         }
 
@@ -327,7 +369,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
                     if(isFocused) {
 
-                        if (!s.toString().equals("") && !s.toString().equals(""))
+                        if (!qty.getText().toString().equals("") && !mRate.getText().toString().equals(""))
                         {
 
                            if(qty.getText()!=null&& mRate.getText()!=null)
@@ -336,23 +378,113 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
                                Log.e("CAlC", "qty" + qty.getText().toString().trim());
 
-                               double rate = Double.parseDouble(mRate.getText().toString().trim());
+                               BigDecimal rate = Utils.round(Float.parseFloat(mRate.getText().toString().trim()),2);
 
-                               double Qty = Integer.parseInt(s.toString());
+                               int Qty = Integer.parseInt(qty.getText().toString());
 
-                               double Total = rate * Qty;
+                               BigDecimal Total = rate.multiply(BigDecimal.valueOf(Qty));
 
                                Log.e("CAlC", "Total " + Total);
 
-                               mPrice.setText(Double.toString(Total));
-////                    input.setText("");
+                               mPrice.setText(Total.toString());
                            }
                         }
 
                     }
+                    else if(isRate) {
+                        if (!qty.getText().toString().equals("") && !mRate.getText().toString().equals("")) {
+
+                            if (qty.getText() != null && mRate.getText() != null) {
+                                Log.e("CAlC", "mRate" + mRate.getText().toString().trim());
+
+                                Log.e("CAlC", "qty" + qty.getText().toString().trim());
+
+                                BigDecimal rate = Utils.round(Float.parseFloat(mRate.getText().toString().trim()), 2);
+
+                                int Qty = Integer.parseInt(s.toString());
+
+                                BigDecimal Total = rate.multiply(BigDecimal.valueOf(Qty));
+
+                                Log.e("CAlC", "Total " + Total);
+
+                                mPrice.setText(Total.toString());
+                            }
+                        }
+                    }
+
+
+
+
                 }
             });
 
+
+
+        mRate.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if(isFocused) {
+
+                    if (!qty.getText().toString().equals("") && !mRate.getText().toString().equals(""))
+                    {
+
+                        if(qty.getText()!=null&& mRate.getText()!=null)
+                        {
+                            Log.e("CAlC", "mRate" + mRate.getText().toString().trim());
+
+                            Log.e("CAlC", "qty" + qty.getText().toString().trim());
+
+                            BigDecimal rate = Utils.round(Float.parseFloat(mRate.getText().toString().trim()),2);
+
+                            int Qty = Integer.parseInt(qty.getText().toString());
+
+                            BigDecimal Total = rate.multiply(BigDecimal.valueOf(Qty));
+
+                            Log.e("CAlC", "Total " + Total);
+
+                            mPrice.setText(Total.toString());
+                        }
+                    }
+
+                }
+                else if(isRate) {
+                    if (!qty.getText().toString().equals("") && !mRate.getText().toString().equals("")) {
+
+                        if (qty.getText() != null && mRate.getText() != null) {
+                            Log.e("CAlC", "mRate" + mRate.getText().toString().trim());
+
+                            Log.e("CAlC", "qty" + qty.getText().toString().trim());
+
+                            BigDecimal rate = Utils.round(Float.parseFloat(mRate.getText().toString().trim()), 2);
+
+                            int Qty = Integer.parseInt(qty.getText().toString());
+
+                            BigDecimal Total = rate.multiply(BigDecimal.valueOf(Qty));
+
+                            Log.e("CAlC", "Total " + Total);
+
+                            mPrice.setText(Total.toString());
+                        }
+                    }
+                }
+
+
+
+
+            }
+        });
 
 
 
@@ -418,12 +550,39 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
                 addtoarray("0");
                 break;
             case R.id.dot:
-                addtoarray(".");
+                if(!isFocused) {
+                    addtoarray(".");
+                }
                 break;
+
+            case R.id.Zero:
+                addtoarray("00");
+                break;
+
+
+
+
             case R.id.clear:
                 if(isFocused&&!qty.getText().toString().equalsIgnoreCase(""))
                 {
+                    qty.setText("");
+
+                }
+                else if(isRate&&!mRate.getText().toString().equalsIgnoreCase(""))
+                {
+                    mRate.setText("");
+
+                }
+                break;
+            case R.id.back:
+                if(isFocused&&!qty.getText().toString().equalsIgnoreCase(""))
+                {
                   qty.setText(qty.getText().toString().substring(0, qty.getText().toString().length() - 1));
+
+                }
+                else if(isRate&&!mRate.getText().toString().equalsIgnoreCase(""))
+                {
+                    mRate.setText(mRate.getText().toString().substring(0, mRate.getText().toString().length() - 1));
 
                 }
 
@@ -442,6 +601,10 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
         if(isFocused)
         {
             qty.append(numbers);
+        }
+        else if(isRate)
+        {
+            mRate.append(numbers);
         }
 
     }
@@ -480,8 +643,9 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
         else if(!mRate.getText().equals("")&&!qty.getText().equals("")&&!mPrice.getText().toString().trim().equals(""))
         {
-//            input.setError(null);
-            double rate= Sales_Price*Integer.parseInt(qty.getText().toString());
+            Sales_Price =Utils.round(Float.parseFloat(mRate.getText().toString()),2);
+//
+            BigDecimal rate= Sales_Price.multiply(BigDecimal.valueOf(Integer.parseInt(qty.getText().toString())));
 
             assert mListner != null;
             mListner.getProductListItem(Integer.parseInt(qty.getText().toString()),Product_Id,ProductCatId,TaxPercent,title.getText().toString(),Sales_Price,rate);
@@ -590,7 +754,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
 
     @Override
-    public void getProductDetails(int Product_Id, int ProductCatId, double TaxPercent, String ProductName, double Sales_Price, boolean Status) {
+    public void getProductDetails(int Product_Id, int ProductCatId, BigDecimal TaxPercent, String ProductName, BigDecimal Sales_Price, boolean Status) {
 
         title.setText(ProductName);
 
@@ -605,9 +769,9 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
         qty.setText("1");
 
-        mRate.setText(Double.toString(Sales_Price));
+        mRate.setText(Sales_Price.toString());
 
-        mPrice.setText(Double.toString(Sales_Price*Integer.parseInt(qty.getText().toString().trim())));
+        mPrice.setText(Sales_Price.multiply(new BigDecimal(Integer.parseInt(qty.getText().toString().trim()))).toString());
 
     }
 

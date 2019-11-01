@@ -2,13 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.essensol.techmeq">
 
-
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-
-
-
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -26,8 +20,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-
-
     <application
         android:name=".ApplicationClass"
         android:allowBackup="true"
@@ -36,7 +28,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".POS_Printer_Util.BluetoothDeviceList"></activity>
+        <activity android:name=".UI.TaxReport"></activity>
+        <activity android:name=".POS_Printer_Util.BluetoothDeviceList" />
         <activity android:name=".POS_Printer_Util.PrinterConnectDialog" />
         <activity android:name=".POS_Printer_Util.PortConfigurationActivity" />
         <activity android:name=".UI.TaxManagement" />
@@ -67,24 +60,20 @@
             android:name=".UI.MainActivity"
             android:screenOrientation="landscape" />
 
-        <receiver android:name="com.essensol.techmeq.POS_Printer_Util.DeviceBootReceiver">
+        <receiver android:name=".POS_Printer_Util.DeviceBootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-
-
-        <service android:name="com.printer.service.PrinterPrintService"
-
+        <service
+            android:name="com.printer.service.PrinterPrintService"
             android:label="PrinterPrintService">
             <intent-filter>
                 <action android:name="com.printer.aidl.PrinterPrintService" />
             </intent-filter>
         </service>
-        <service android:name="com.printer.service.AllService">
-        </service>
-
+        <service android:name="com.printer.service.AllService"></service>
     </application>
 
 </manifest>

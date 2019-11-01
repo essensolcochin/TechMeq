@@ -125,6 +125,8 @@ public abstract class OfflineDb extends RoomDatabase {
 
         private CompanyMaster_DAO companyMaster_dao;
 
+        private Sales_Header_DAO sales_header_dao;
+
 
         public PopulateAsync(OfflineDb db) {
             this.dao = db.productCategory_dao();

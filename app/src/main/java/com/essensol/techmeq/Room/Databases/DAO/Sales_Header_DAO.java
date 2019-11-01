@@ -7,9 +7,12 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
+import com.essensol.techmeq.Model.ItemReportModel;
 import com.essensol.techmeq.Model.SaleReportModel;
 import com.essensol.techmeq.Room.Databases.Entity.SalesHeader;
+import com.essensol.techmeq.Room.Databases.Entity.SalesItem;
 
+import java.util.Date;
 import java.util.List;
 @Dao
 public interface Sales_Header_DAO {
@@ -29,16 +32,25 @@ public interface Sales_Header_DAO {
 
 
     @Query("SELECT MAX(SaleId) FROM sales_header ")
-    int getId();
+    LiveData<Integer> getId();
 
-//        @Query("SELECT  sales_header.SaleNo , sales_header.SaleDate," +
-//                "Customer_master.CustName ,sales_header.TaxAmt," +
-//                "sales_header.PaidAmt,sales_header.GrandTotal " +
-//                "FROM sales_header " +
-//                "INNER JOIN Customer_master " +
-//                "ON Customer_master.CustId=sales_header.CustId ")
-//
-//          LiveData<List<SaleReportModel>> getSalesReport();
+//    @Query("SELECT  SH.SaleId , SH.SaleNo,SH.SaleDate,SI.Price,SH.TaxAmt,SH.GrandTotal" +
+//            " FROM sales_header AS SH " +
+//            "INNER JOIN sales_item SI " +
+//            "ON SH.SaleId=SI.SaleId ")
+//    LiveData<List<ItemReportModel>> getSalesitemReport();
+
+
+    @Query("SELECT  SaleId , SaleNo,SaleDate,SubTotal,TaxAmt,GrandTotal,PaidAmt,GrandTotal-PaidAmt AS Credit FROM sales_header " +
+            "WHERE SaleDate BETWEEN :FromDate AND :toDate")
+    LiveData<List<ItemReportModel>> getSalesitemReport(long FromDate,long toDate);
+
+//    @Query("SELECT  SaleId , SaleNo,SaleDate,SubTotal,TaxAmt,GrandTotal,PaidAmt,GrandTotal-PaidAmt AS Credit FROM sales_header ")
+//    LiveData<List<ItemReportModel>> getSalesitemReport();
+
+
+    @Query("SELECT  SaleDate FROM sales_header")
+    List<Date> GetDates();
 
 
 

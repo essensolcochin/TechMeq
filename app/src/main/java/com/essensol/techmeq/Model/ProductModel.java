@@ -1,40 +1,39 @@
 package com.essensol.techmeq.Model;
 
+import android.arch.persistence.room.TypeConverters;
+
+import com.essensol.techmeq.Room.DecimalConverter;
+
+import java.math.BigDecimal;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 
-public class ProductModel extends RealmObject {
+public class ProductModel {
 
-
-    public static final String ProductId = "Product_Id";
-    public static final String ProductName = "Product_Name";
-    public static final String ProductCategory = "Product_Category";
-    public static final String ProductPrice = "Product_Price";
-
-
-    @PrimaryKey
     private int Product_Id;
 
-    private  String Product_Name;
+    private  String ProductName;
 
-    private String Product_Category;
+    private String ProductCategory;
 
-    private String Product_Price;
+    @TypeConverters({DecimalConverter.class})
+    private BigDecimal Sales_Price;
 
+    @TypeConverters({DecimalConverter.class})
+    private BigDecimal TaxPercent;
 
     public ProductModel() {
     }
 
-    public ProductModel(int product_Id, String product_Name, String product_Category, String product_Price) {
+    public ProductModel(int product_Id, String productName, String productCategory, BigDecimal sales_Price, BigDecimal taxPercent) {
         Product_Id = product_Id;
-        Product_Name = product_Name;
-        Product_Category = product_Category;
-        Product_Price = product_Price;
+        ProductName = productName;
+        ProductCategory = productCategory;
+        Sales_Price = sales_Price;
+        TaxPercent = taxPercent;
     }
-
-
-
 
     public int getProduct_Id() {
         return Product_Id;
@@ -44,30 +43,35 @@ public class ProductModel extends RealmObject {
         Product_Id = product_Id;
     }
 
-    public String getProduct_Name() {
-        return Product_Name;
+    public String getProductName() {
+        return ProductName;
     }
 
-    public void setProduct_Name(String product_Name) {
-        Product_Name = product_Name;
+    public void setProductName(String productName) {
+        ProductName = productName;
     }
 
-    public String getProduct_Category() {
-        return Product_Category;
+    public String getProductCategory() {
+        return ProductCategory;
     }
 
-    public void setProduct_Category(String product_Category) {
-        Product_Category = product_Category;
+    public void setProductCategory(String productCategory) {
+        ProductCategory = productCategory;
     }
 
-    public String getProduct_Price() {
-        return Product_Price;
+    public BigDecimal getSales_Price() {
+        return Sales_Price;
     }
 
-    public void setProduct_Price(String product_Price) {
-        Product_Price = product_Price;
+    public void setSales_Price(BigDecimal sales_Price) {
+        Sales_Price = sales_Price;
     }
 
+    public BigDecimal getTaxPercent() {
+        return TaxPercent;
+    }
 
-
+    public void setTaxPercent(BigDecimal taxPercent) {
+        TaxPercent = taxPercent;
+    }
 }

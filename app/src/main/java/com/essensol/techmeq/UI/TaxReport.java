@@ -3,9 +3,7 @@ package com.essensol.techmeq.UI;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
-import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,14 +18,11 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.essensol.techmeq.Adapters.ReportsAdapter;
+import com.essensol.techmeq.Adapters.TaxAdapter;
 import com.essensol.techmeq.Model.ItemReportModel;
 import com.essensol.techmeq.R;
-import com.essensol.techmeq.Room.Databases.DAO.Sales_Header_DAO;
-import com.essensol.techmeq.Room.Databases.Entity.Products;
-import com.essensol.techmeq.Room.Databases.OfflineDb;
 import com.essensol.techmeq.ViewModel.ReportViewModel;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,12 +30,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import javax.security.auth.callback.Callback;
+public class TaxReport extends Toolbar {
 
-public class Reports extends Toolbar {
 
     RecyclerView reports;
-    ReportsAdapter adapter;
+    TaxAdapter adapter;
     List<ItemReportModel> report= new ArrayList<>();
 
     private ReportViewModel model;
@@ -55,13 +49,17 @@ public class Reports extends Toolbar {
 
     final Calendar myCalendar = Calendar.getInstance();
 
-    DatePickerDialog pickerDialog;
+    private DatePickerDialog pickerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
-        getLayoutInflater().inflate(R.layout.activity_reports, contentFrameLayout);
+        getLayoutInflater().inflate(R.layout.activity_tax_report, contentFrameLayout);
+
+
+
 
 
         reports=findViewById(R.id.report);
@@ -70,7 +68,7 @@ public class Reports extends Toolbar {
         view=findViewById(R.id.view);
 
 
-       final DatePickerDialog.OnDateSetListener fromdate = new DatePickerDialog.OnDateSetListener() {
+        final DatePickerDialog.OnDateSetListener fromdate = new DatePickerDialog.OnDateSetListener() {
 
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -100,23 +98,11 @@ public class Reports extends Toolbar {
         };
 
 
-
         from.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 setfromDate();
-
-//                new DatePickerDialog(Reports.this, fromdate, myCalendar
-//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-//                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-//                String myFormat = "MM/dd/yyyy"; //In which you need put here
-//                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-//                from.setText(sdf.format(myCalendar.getTime()));
-//
-//                Date d=myCalendar.getTime();
-//
-//                mFromDate =d.getTime();
             }
         });
 
@@ -125,20 +111,6 @@ public class Reports extends Toolbar {
             public void onClick(View v) {
 
                 setToDate();
-
-//                new DatePickerDialog(Reports.this, todate, myCalendar
-//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-//                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-//                String myFormat = "dd/MMM/yyyy"; //In which you need put here
-//                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
-//                to.setText(sdf.format(myCalendar.getTime()));
-//                Log.e("format"," "+myCalendar.getTime());
-//
-//                Date to=myCalendar.getTime();
-//
-//                mToDate=to.getTime();
-
-
             }
         });
 
@@ -164,8 +136,10 @@ public class Reports extends Toolbar {
 
 
 
-        adapter=new ReportsAdapter(mList,this);
+        adapter=new TaxAdapter(mList,this);
         reports.setAdapter(adapter);
+
+
 
     }
 
@@ -179,31 +153,10 @@ public class Reports extends Toolbar {
 
                 if(itemReportModels!=null)
                 {
-                    adapter.AddReports(itemReportModels);
+                    adapter.AddTax(itemReportModels);
                 }
             }
         });
-    }
-
-
-    private static class DateAsync extends AsyncTask<Void,Void,Void>
-    {
-        private Sales_Header_DAO sales_header_dao;
-
-        public DateAsync(Sales_Header_DAO sales_header_dao) {
-            this.sales_header_dao = sales_header_dao;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-
-
-         List<Date>mList =   sales_header_dao.GetDates();
-
-         Log.e("Date",""+mList.get(4));
-
-            return null;
-        }
     }
 
 
@@ -274,8 +227,6 @@ public class Reports extends Toolbar {
 
         pickerDialog.show();
     }
-
-
 
 
 

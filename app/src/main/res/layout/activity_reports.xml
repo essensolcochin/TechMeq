@@ -7,125 +7,281 @@
     tools:context=".UI.Reports">
 
     <LinearLayout
-        android:padding="20sp"
+        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.CardView
-            android:layout_margin="5sp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
+        <TextView
+            android:text="Sale Report From Date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-            <LinearLayout
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="10sp"
-                android:background="@drawable/gradienttoolbar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        <TextView
+            android:padding="5dp"
+            android:id="@+id/fromdate"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/edittextbgm"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"/>
 
-                <TextView
-                    android:layout_gravity="start"
-                    android:layout_margin="10sp"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    android:text="Last Month Sales"
-                    android:textColor="@android:color/white"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:text="To Date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+        <TextView
+            android:padding="5dp"
+            android:id="@+id/todate"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/edittextbgm"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"/>
 
-                    <ProgressBar
-                        android:max="100"
-                        android:indeterminate="false"
-                        android:progressDrawable="@drawable/progress"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:id="@+id/progress_bar"
-                        android:progress="100"
-                        android:secondaryProgress="80"
-                        android:layout_width="105dp"
-                        android:layout_height="105dp" />
-
-                    <TextView
-                        android:layout_gravity="center"
-                        android:textSize="25sp"
-                        android:text="80%"
-                        android:textColor="@android:color/white"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-
-                </FrameLayout>
-
-
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_margin="5sp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="10sp"
-                android:background="@drawable/gradienttoolbar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    android:layout_margin="10sp"
-                    android:text="This Month Sales"
-                    android:textColor="@android:color/white"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ProgressBar
-                        android:max="100"
-                        android:indeterminate="false"
-                        android:progressDrawable="@drawable/progress"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:id="@+id/thismonth"
-                        android:progress="100"
-                        android:secondaryProgress="20"
-                        android:layout_width="105dp"
-                        android:layout_height="105dp" />
-
-                    <TextView
-                        android:layout_gravity="center"
-                        android:textSize="25sp"
-                        android:text="20%"
-                        android:textColor="@android:color/white"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-
-                </FrameLayout>
-
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-
+        <Button
+            android:id="@+id/view"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_width="200dp"
+            android:textSize="12dp"
+            android:text="View"
+            android:layout_height="wrap_content"/>
 
 
     </LinearLayout>
+
+    <LinearLayout
+        android:background="@android:color/black"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:singleLine="true"
+            android:layout_margin="5dp"
+            android:layout_weight=".5"
+            android:text="Sale No"
+            android:padding="5dp"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            />
+
+        <TextView
+            android:singleLine="true"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+
+
+            />
+
+        <TextView
+            android:id="@+id/price"
+            android:singleLine="true"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:text="Taxable"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            />
+
+        <TextView
+            android:gravity="center"
+            android:singleLine="true"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:layout_width="0dp"
+            android:text="Vat"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+
+            />
+
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/date"
+            android:singleLine="true"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:layout_width="0dp"
+            android:text="Grand total"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+
+            />
+
+        <TextView
+            android:gravity="center"
+            android:singleLine="true"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:layout_width="0dp"
+            android:text="Paid "
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+
+            />
+
+        <TextView
+            android:gravity="center"
+            android:singleLine="true"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:layout_width="0dp"
+            android:text="Credit"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+
+            />
+
+
+    </LinearLayout>
+
+<!--    <LinearLayout-->
+<!--        android:padding="20sp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
+
+<!--        <android.support.v7.widget.CardView-->
+<!--            android:layout_margin="5sp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content">-->
+
+<!--            <LinearLayout-->
+<!--                android:gravity="center"-->
+<!--                android:orientation="vertical"-->
+<!--                android:padding="10sp"-->
+<!--                android:background="@drawable/gradienttoolbar"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent">-->
+
+<!--                <TextView-->
+<!--                    android:layout_gravity="start"-->
+<!--                    android:layout_margin="10sp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:textSize="20sp"-->
+<!--                    android:text="Last Month Sales"-->
+<!--                    android:textColor="@android:color/white"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"/>-->
+
+<!--                <FrameLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content">-->
+
+<!--                    <ProgressBar-->
+<!--                        android:max="100"-->
+<!--                        android:indeterminate="false"-->
+<!--                        android:progressDrawable="@drawable/progress"-->
+<!--                        style="?android:attr/progressBarStyleHorizontal"-->
+<!--                        android:id="@+id/progress_bar"-->
+<!--                        android:progress="100"-->
+<!--                        android:secondaryProgress="80"-->
+<!--                        android:layout_width="105dp"-->
+<!--                        android:layout_height="105dp" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:textSize="25sp"-->
+<!--                        android:text="80%"-->
+<!--                        android:textColor="@android:color/white"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"/>-->
+
+
+<!--                </FrameLayout>-->
+
+
+
+<!--            </LinearLayout>-->
+
+<!--        </android.support.v7.widget.CardView>-->
+
+<!--        <android.support.v7.widget.CardView-->
+<!--            android:layout_margin="5sp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content">-->
+
+<!--            <LinearLayout-->
+<!--                android:gravity="center"-->
+<!--                android:orientation="vertical"-->
+<!--                android:padding="10sp"-->
+<!--                android:background="@drawable/gradienttoolbar"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent">-->
+
+<!--                <TextView-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:textSize="20sp"-->
+<!--                    android:layout_margin="10sp"-->
+<!--                    android:text="This Month Sales"-->
+<!--                    android:textColor="@android:color/white"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"/>-->
+
+
+<!--                <FrameLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content">-->
+
+<!--                    <ProgressBar-->
+<!--                        android:max="100"-->
+<!--                        android:indeterminate="false"-->
+<!--                        android:progressDrawable="@drawable/progress"-->
+<!--                        style="?android:attr/progressBarStyleHorizontal"-->
+<!--                        android:id="@+id/thismonth"-->
+<!--                        android:progress="100"-->
+<!--                        android:secondaryProgress="20"-->
+<!--                        android:layout_width="105dp"-->
+<!--                        android:layout_height="105dp" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:textSize="25sp"-->
+<!--                        android:text="20%"-->
+<!--                        android:textColor="@android:color/white"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"/>-->
+
+
+<!--                </FrameLayout>-->
+
+
+<!--            </LinearLayout>-->
+
+<!--        </android.support.v7.widget.CardView>-->
+
+
+
+
+<!--    </LinearLayout>-->
 
 
     <android.support.v7.widget.RecyclerView

@@ -1,12 +1,14 @@
 package com.essensol.techmeq.Model;
 
+import java.math.BigDecimal;
+
 public class PurchaseModel {
 
     private String name;
     private int qty,ProductId;
-    private double rate,netAmount,linetot;
+    private BigDecimal rate,netAmount,linetot;
 
-    public PurchaseModel(String name, int ProductId,int qty, double rate, double netAmount,double linetot) {
+    public PurchaseModel(String name, int ProductId,int qty, BigDecimal rate, BigDecimal netAmount,BigDecimal linetot) {
         this.name = name;
         this.qty = qty;
         this.rate = rate;
@@ -31,19 +33,19 @@ public class PurchaseModel {
         this.qty = qty;
     }
 
-    public double getRate() {
+    public BigDecimal getRate() {
         return rate;
     }
 
-    public void setRate(double rate) {
+    public void setRate(BigDecimal rate) {
         this.rate = rate;
     }
 
-    public double getNetAmount() {
+    public BigDecimal getNetAmount() {
         return netAmount;
     }
 
-    public void setNetAmount(double netAmount) {
+    public void setNetAmount(BigDecimal netAmount) {
         this.netAmount = netAmount;
     }
 
@@ -55,11 +57,11 @@ public class PurchaseModel {
         ProductId = productId;
     }
 
-    public double getLinetot() {
+    public BigDecimal getLinetot() {
         return linetot;
     }
 
-    public void setLinetot(double linetot) {
+    public void setLinetot(BigDecimal linetot) {
         this.linetot = linetot;
     }
 }

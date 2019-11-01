@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 
 
 import com.essensol.techmeq.Model.CustomerSpinnerModel;
+import com.essensol.techmeq.Model.ProductModel;
 import com.essensol.techmeq.Room.Databases.Entity.Products;
 import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
 import com.essensol.techmeq.Room.Repository.mRepo;
@@ -20,11 +21,15 @@ import java.util.List;
 public class ProductViewModel extends AndroidViewModel {
 
     private mRepo product_repo;
-    private LiveData<List<Products>>allProducts;
+    private LiveData<List<ProductModel>>allProducts;
+
+    private LiveData<Integer>getInvoiceId;
 
     private LiveData<List<Sales_Category>> allCategories;
 
     private LiveData<List<CustomerSpinnerModel>> getGetCustNameAndId;
+
+    private  String exists;
 
     public ProductViewModel(@NonNull Application application) {
         super(application);
@@ -33,6 +38,7 @@ public class ProductViewModel extends AndroidViewModel {
         allProducts =product_repo.getAllProducts();
         getGetCustNameAndId=product_repo.getGetCustNameAndId();
         allCategories =product_repo.getAllProductsCategory();
+        getInvoiceId =product_repo.getInvoiceAndSaleID();
 
     }
 
@@ -51,7 +57,7 @@ public class ProductViewModel extends AndroidViewModel {
         product_repo.DeleteProduct(Product);
     }
 
-    public LiveData<List<Products>> GetAllProduct()
+    public LiveData<List<ProductModel>> GetAllProduct()
     {
       return  allProducts;
     }
@@ -88,6 +94,18 @@ public class ProductViewModel extends AndroidViewModel {
     {
         return  product_repo.getAllProduct_By_Category(Id);
     }
+
+    public LiveData<Integer> GetInvoiceandSaleId()
+    {
+        return  getInvoiceId;
+    }
+
+
+    public List<Products> GetAllreadyExist(String name)
+    {
+        return  product_repo.getExist(name);
+    }
+
 
 
 

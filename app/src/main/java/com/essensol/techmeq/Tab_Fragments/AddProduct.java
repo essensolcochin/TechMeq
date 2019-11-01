@@ -19,11 +19,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.essensol.techmeq.Model.ProductModel;
 import com.essensol.techmeq.R;
 import com.essensol.techmeq.Room.Databases.Entity.Products;
 import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
+import com.essensol.techmeq.Utils;
 import com.essensol.techmeq.ViewModel.ProductViewModel;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -124,7 +127,7 @@ public class AddProduct extends Fragment {
                 @Override
                 public void run() {
 
-                    _AddProduct();
+                    CheckExist();
 
 
                     progressDialog.cancel();
@@ -140,7 +143,7 @@ public class AddProduct extends Fragment {
 
 
                 Handler pdCanceller = new Handler();
-            pdCanceller.postDelayed(progressRunnable, 500);
+                pdCanceller.postDelayed(progressRunnable, 500);
 
 
 
@@ -157,6 +160,12 @@ public class AddProduct extends Fragment {
     }
 
 
+    private void CheckExist()
+    {
+        List<Products> name =   productViewModel.GetAllreadyExist(mProduct_name.getText().toString().trim());
+
+        Log.e("Already Exists",""+name.size());
+    }
 
 
 
@@ -164,11 +173,33 @@ public class AddProduct extends Fragment {
 
 
 
-        Products products =new Products(catId,Double.parseDouble(tax.getText().toString()),mProduct_name.getText().toString()
-                ,Double.parseDouble(mPrice.getText().toString())
-                ,true);
 
-        productViewModel.AddProduct(products);
+
+//
+//        if(name.size()>0)
+//        {
+//            Log.e("Already Exists","");
+//
+//        }
+//        else {
+
+            BigDecimal mTax = Utils.round(Float.parseFloat(tax.getText().toString().trim()),2);
+
+            BigDecimal _mPrice = Utils.round(Float.parseFloat(mPrice.getText().toString().trim()),2);
+
+
+            Products products =new Products(0,catId,mTax,mProduct_name.getText().toString()
+                    ,_mPrice
+                    ,true);
+
+
+
+            productViewModel.AddProduct(products);
+
+//        }
+
+
+
 
 
 

@@ -70,12 +70,12 @@
         <!--</TextView>-->
 
         <android.support.design.widget.TextInputLayout
-            android:padding="10dp"
+            android:padding="5dp"
             android:layout_gravity="center"
             android:theme="@style/TextLabel"
             style="@style/LoginTextInputLayoutStyle"
             android:textColorHint="@android:color/darker_gray"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
 
@@ -88,7 +88,7 @@
                 android:hint="username"
                 android:id="@+id/uname"
 
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"  />
 
 
@@ -96,13 +96,12 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:padding="10dp"
-            android:layout_marginTop="10dp"
+            android:padding="5dp"
             android:layout_gravity="center"
             android:theme="@style/TextLabel"
             style="@style/LoginTextInputLayoutStyle"
             android:textColorHint="@android:color/darker_gray"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
 
@@ -112,7 +111,7 @@
                 android:textColor="@android:color/black"
                 android:hint="Password"
                 android:id="@+id/pword"
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content" />
 
 
@@ -126,7 +125,7 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:padding="10dp"
-            android:layout_width="300sp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content">
 
             <TextView

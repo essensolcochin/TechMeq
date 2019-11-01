@@ -1,56 +1,117 @@
 package com.essensol.techmeq.Model;
 
+import android.arch.persistence.room.TypeConverters;
+
+import com.essensol.techmeq.Room.DateTypeConverter;
+import com.essensol.techmeq.Room.DecimalConverter;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
 public class ItemReportModel {
 
-   private boolean isHeader =false;
+//   private boolean isHeader =false;
 
-   private String ItemName,ItemPrice,SaleDate,ItemQty;
+    private int SaleId;
 
-    public ItemReportModel(boolean isHeader, String itemName, String itemPrice, String saleDate, String itemQty) {
-        this.isHeader = isHeader;
-        ItemName = itemName;
-        ItemPrice = itemPrice;
+    private String SaleNo;
+
+    @TypeConverters({DateTypeConverter.class})
+    private Date SaleDate;
+
+    @TypeConverters({DecimalConverter.class})
+    private BigDecimal SubTotal;
+
+
+    @TypeConverters ({DecimalConverter.class})
+    private BigDecimal TaxAmt;
+
+
+    @TypeConverters ({DecimalConverter.class})
+    private BigDecimal GrandTotal;
+
+    @TypeConverters ({DecimalConverter.class})
+    private BigDecimal PaidAmt;
+
+    @TypeConverters ({DecimalConverter.class})
+    private BigDecimal Credit;
+
+
+    public ItemReportModel() {
+    }
+
+    public ItemReportModel(int saleId, String saleNo, Date saleDate, BigDecimal subTotal, BigDecimal taxAmt, BigDecimal grandTotal, BigDecimal paidAmt, BigDecimal credit) {
+        SaleId = saleId;
+        SaleNo = saleNo;
         SaleDate = saleDate;
-        ItemQty = itemQty;
+        SubTotal = subTotal;
+        TaxAmt = taxAmt;
+        GrandTotal = grandTotal;
+        PaidAmt = paidAmt;
+        Credit = credit;
     }
 
-    public boolean isHeader() {
-        return isHeader;
+    public int getSaleId() {
+        return SaleId;
     }
 
-    public void setHeader(boolean header) {
-        isHeader = header;
+    public void setSaleId(int saleId) {
+        SaleId = saleId;
     }
 
-    public String getItemName() {
-        return ItemName;
+    public String getSaleNo() {
+        return SaleNo;
     }
 
-    public void setItemName(String itemName) {
-        ItemName = itemName;
+    public void setSaleNo(String saleNo) {
+        SaleNo = saleNo;
     }
 
-    public String getItemPrice() {
-        return ItemPrice;
-    }
-
-    public void setItemPrice(String itemPrice) {
-        ItemPrice = itemPrice;
-    }
-
-    public String getSaleDate() {
+    public Date getSaleDate() {
         return SaleDate;
     }
 
-    public void setSaleDate(String saleDate) {
+    public void setSaleDate(Date saleDate) {
         SaleDate = saleDate;
     }
 
-    public String getItemQty() {
-        return ItemQty;
+    public BigDecimal getSubTotal() {
+        return SubTotal;
     }
 
-    public void setItemQty(String itemQty) {
-        ItemQty = itemQty;
+    public void setSubTotal(BigDecimal subTotal) {
+        SubTotal = subTotal;
+    }
+
+    public BigDecimal getTaxAmt() {
+        return TaxAmt;
+    }
+
+    public void setTaxAmt(BigDecimal taxAmt) {
+        TaxAmt = taxAmt;
+    }
+
+    public BigDecimal getGrandTotal() {
+        return GrandTotal;
+    }
+
+    public void setGrandTotal(BigDecimal grandTotal) {
+        GrandTotal = grandTotal;
+    }
+
+    public BigDecimal getPaidAmt() {
+        return PaidAmt;
+    }
+
+    public void setPaidAmt(BigDecimal paidAmt) {
+        PaidAmt = paidAmt;
+    }
+
+    public BigDecimal getCredit() {
+        return Credit;
+    }
+
+    public void setCredit(BigDecimal credit) {
+        Credit = credit;
     }
 }

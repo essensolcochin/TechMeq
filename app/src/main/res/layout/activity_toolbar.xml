@@ -56,6 +56,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
+                <ImageView
+                    android:layout_marginRight="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_toStartOf="@+id/user"
+                    android:layout_toLeftOf="@+id/user"
+                    android:id="@+id/bluetooth"
+                    android:src="@drawable/bluetooth"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    />
+
                 <LinearLayout
                     android:background="#74bf94"
 

@@ -5,7 +5,9 @@ import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
 import com.essensol.techmeq.Room.DateTypeConverter;
+import com.essensol.techmeq.Room.DecimalConverter;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity(tableName = "Sales_Header")
@@ -28,21 +30,26 @@ public class SalesHeader {
 
     private int CustId;
 
-    private double SubTotal;
+    @TypeConverters ({DecimalConverter.class})
+    private BigDecimal SubTotal;
 
-    private double TaxAmt;
+    @TypeConverters ({DecimalConverter.class})
+    private BigDecimal TaxAmt;
 
-    private double Discount;
+    @TypeConverters ({DecimalConverter.class})
+    private BigDecimal Discount;
 
-    private double GrandTotal;
+    @TypeConverters ({DecimalConverter.class})
+    private BigDecimal GrandTotal;
 
-    private double PaidAmt;
+    @TypeConverters ({DecimalConverter.class})
+    private BigDecimal PaidAmt;
 
 
     public SalesHeader() {
     }
 
-    public SalesHeader(int compId, int finYearId, String saleNo, Date saleDate, int custId, double subTotal, double taxAmt, double discount, double grandTotal, double paidAmt) {
+    public SalesHeader(int compId, int finYearId, String saleNo, Date saleDate, int custId, BigDecimal subTotal, BigDecimal taxAmt, BigDecimal discount, BigDecimal grandTotal, BigDecimal paidAmt) {
         CompId = compId;
         FinYearId = finYearId;
         SaleNo = saleNo;
@@ -106,43 +113,43 @@ public class SalesHeader {
         CustId = custId;
     }
 
-    public double getSubTotal() {
+    public BigDecimal getSubTotal() {
         return SubTotal;
     }
 
-    public void setSubTotal(double subTotal) {
+    public void setSubTotal(BigDecimal subTotal) {
         SubTotal = subTotal;
     }
 
-    public double getTaxAmt() {
+    public BigDecimal getTaxAmt() {
         return TaxAmt;
     }
 
-    public void setTaxAmt(double taxAmt) {
+    public void setTaxAmt(BigDecimal taxAmt) {
         TaxAmt = taxAmt;
     }
 
-    public double getDiscount() {
+    public BigDecimal getDiscount() {
         return Discount;
     }
 
-    public void setDiscount(double discount) {
+    public void setDiscount(BigDecimal discount) {
         Discount = discount;
     }
 
-    public double getGrandTotal() {
+    public BigDecimal getGrandTotal() {
         return GrandTotal;
     }
 
-    public void setGrandTotal(double grandTotal) {
+    public void setGrandTotal(BigDecimal grandTotal) {
         GrandTotal = grandTotal;
     }
 
-    public double getPaidAmt() {
+    public BigDecimal getPaidAmt() {
         return PaidAmt;
     }
 
-    public void setPaidAmt(double paidAmt) {
+    public void setPaidAmt(BigDecimal paidAmt) {
         PaidAmt = paidAmt;
     }
 }

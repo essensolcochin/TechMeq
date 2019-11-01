@@ -48,7 +48,7 @@
         android:layout_height="match_parent">
 
     <LinearLayout
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:padding="20dp"
         android:orientation="vertical"
 
@@ -62,7 +62,6 @@
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
                     android:textSize="20sp"
-                    android:layout_marginTop="10dp"
                     android:textColor="@android:color/black"
                     android:text="Registration"
                     android:layout_width="wrap_content"
@@ -73,9 +72,8 @@
         <android.support.design.widget.TextInputLayout
             android:layout_marginTop="10dp"
             android:theme="@style/TextLabel"
-            style="@style/LoginTextInputLayoutStyle"
             android:textColorHint="@android:color/darker_gray"
-            android:padding="10dp"
+            android:padding="5dp"
             android:layout_width="300sp"
             android:layout_height="wrap_content">
 
@@ -94,11 +92,9 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:layout_marginTop="10dp"
             android:theme="@style/TextLabel"
-            style="@style/LoginTextInputLayoutStyle"
             android:textColorHint="@android:color/darker_gray"
-            android:padding="10dp"
+            android:padding="5dp"
             android:layout_width="300sp"
             android:layout_height="wrap_content">
 
@@ -119,11 +115,9 @@
 
 
         <android.support.design.widget.TextInputLayout
-            android:layout_marginTop="10dp"
             android:theme="@style/TextLabel"
-            style="@style/LoginTextInputLayoutStyle"
             android:textColorHint="@android:color/darker_gray"
-            android:padding="10dp"
+            android:padding="5dp"
             android:layout_width="300sp"
             android:layout_height="wrap_content">
         <android.support.design.widget.TextInputEditText
@@ -134,7 +128,7 @@
             android:layout_marginTop="20sp"
             android:hint="Mobile"
             android:imeOptions="actionNext"
-            android:inputType="text"
+            android:inputType="number"
             android:padding="10dp"
             android:textColor="@android:color/darker_gray" />
 
@@ -143,36 +137,31 @@
         <android.support.design.widget.TextInputLayout
             android:layout_marginTop="10dp"
             android:theme="@style/TextLabel"
-            style="@style/LoginTextInputLayoutStyle"
             android:textColorHint="@android:color/darker_gray"
             android:padding="10dp"
             android:layout_width="300sp"
             android:layout_height="wrap_content">
         <android.support.design.widget.TextInputEditText
-            android:layout_marginTop="20sp"
 
             android:imeOptions="actionNext"
-            android:inputType="text"
+            android:inputType="textEmailAddress"
             android:textColor="@android:color/darker_gray"
             android:hint="Email"
             android:id="@+id/email"
-            android:padding="10dp"
+            android:padding="5dp"
             android:layout_width="300sp"
             android:layout_height="wrap_content" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:layout_marginTop="10dp"
             android:theme="@style/TextLabel"
-            style="@style/LoginTextInputLayoutStyle"
             android:textColorHint="@android:color/darker_gray"
-            android:padding="10dp"
+            android:padding="5dp"
             android:layout_width="300sp"
             android:layout_height="wrap_content">
         <android.support.design.widget.TextInputEditText
             android:layout_marginTop="20sp"
 
-            android:imeOptions="actionNext"
             android:inputType="text"
             android:textColor="@android:color/darker_gray"
             android:hint="Shop Address"
@@ -184,11 +173,9 @@
 </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:layout_marginTop="10dp"
             android:theme="@style/TextLabel"
-            style="@style/LoginTextInputLayoutStyle"
             android:textColorHint="@android:color/darker_gray"
-            android:padding="10dp"
+            android:padding="5dp"
             android:layout_width="300sp"
             android:layout_height="wrap_content">
         <android.support.design.widget.TextInputEditText
@@ -205,11 +192,9 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:layout_marginTop="10dp"
             android:theme="@style/TextLabel"
-            style="@style/LoginTextInputLayoutStyle"
             android:textColorHint="@android:color/darker_gray"
-            android:padding="10dp"
+            android:padding="5dp"
             android:layout_width="300sp"
             android:layout_height="wrap_content">
 
@@ -227,11 +212,9 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:layout_marginTop="10dp"
             android:theme="@style/TextLabel"
-            style="@style/LoginTextInputLayoutStyle"
             android:textColorHint="@android:color/darker_gray"
-            android:padding="10dp"
+            android:padding="5dp"
             android:layout_width="300sp"
             android:layout_height="wrap_content">
 
@@ -257,8 +240,8 @@
             android:layout_marginRight="50dp"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:padding="10dp"
-            android:layout_width="300sp"
+            android:padding="5dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content">
 
             <TextView

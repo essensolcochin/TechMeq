@@ -7,6 +7,11 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
+
+import com.essensol.techmeq.Room.DecimalConverter;
+
+import java.math.BigDecimal;
 
 @Entity(tableName="Sales_Item"
 , indices = @Index(value = {"ProductId", "SaleId"}),
@@ -27,20 +32,25 @@ public class SalesItem {
 
     private int Qty;
 
-    private double Price;
+    @TypeConverters({DecimalConverter.class})
+    private BigDecimal Price;
 
-    private double Total;
+    @TypeConverters ({DecimalConverter.class})
+    private BigDecimal Total;
 
-    private double TaxPercent;
+    @TypeConverters ({DecimalConverter.class})
+    private BigDecimal TaxPercent;
 
-    private double TaxAmt;
+    @TypeConverters ({DecimalConverter.class})
+    private BigDecimal TaxAmt;
 
-    private double LineTotal;
+    @TypeConverters ({DecimalConverter.class})
+    private BigDecimal LineTotal;
 
     public SalesItem() {
     }
 
-    public SalesItem(int saleId, int productId, int qty, double price, double total, double taxPercent, double taxAmt, double lineTotal) {
+    public SalesItem(int saleId, int productId, int qty, BigDecimal price, BigDecimal total, BigDecimal taxPercent, BigDecimal taxAmt, BigDecimal lineTotal) {
         SaleId = saleId;
         ProductId = productId;
         Qty = qty;
@@ -84,43 +94,43 @@ public class SalesItem {
         Qty = qty;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return Price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         Price = price;
     }
 
-    public double getTotal() {
+    public BigDecimal getTotal() {
         return Total;
     }
 
-    public void setTotal(double total) {
+    public void setTotal(BigDecimal total) {
         Total = total;
     }
 
-    public double getTaxPercent() {
+    public BigDecimal getTaxPercent() {
         return TaxPercent;
     }
 
-    public void setTaxPercent(double taxPercent) {
+    public void setTaxPercent(BigDecimal taxPercent) {
         TaxPercent = taxPercent;
     }
 
-    public double getTaxAmt() {
+    public BigDecimal getTaxAmt() {
         return TaxAmt;
     }
 
-    public void setTaxAmt(double taxAmt) {
+    public void setTaxAmt(BigDecimal taxAmt) {
         TaxAmt = taxAmt;
     }
 
-    public double getLineTotal() {
+    public BigDecimal getLineTotal() {
         return LineTotal;
     }
 
-    public void setLineTotal(double lineTotal) {
+    public void setLineTotal(BigDecimal lineTotal) {
         LineTotal = lineTotal;
     }
 }

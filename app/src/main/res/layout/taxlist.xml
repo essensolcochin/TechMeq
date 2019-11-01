@@ -7,31 +7,27 @@
     <TextView
         android:singleLine="true"
         android:layout_margin="8dp"
-        android:layout_weight="1"
+        android:layout_weight=".5"
         android:id="@+id/Saleno"
-        android:gravity="center"
-
-        android:padding="8dp"
+        android:padding="5dp"
         android:layout_marginTop="8dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:textSize="15sp"
+        android:textSize="20sp"
         />
 
     <TextView
         android:singleLine="true"
         android:layout_margin="8dp"
         android:id="@+id/date"
-        android:gravity="center"
-
-        android:padding="8dp"
+        android:padding="5dp"
         android:layout_marginTop="8dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:layout_weight="1"
-        android:textSize="15sp"
+        android:textSize="20sp"
 
 
         />
@@ -40,13 +36,12 @@
         android:id="@+id/price"
         android:singleLine="true"
         android:layout_margin="8dp"
-        android:padding="8dp"
-        android:gravity="center"
+        android:padding="5dp"
         android:layout_marginTop="8dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textSize="15sp"
+        android:textSize="20sp"
         android:textColor="@android:color/black"
 
         />
@@ -55,66 +50,32 @@
         android:id="@+id/vat"
         android:singleLine="true"
         android:layout_margin="8dp"
-        android:padding="8dp"
+        android:padding="5dp"
         android:gravity="center"
-
         android:layout_marginTop="8dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textSize="15sp"
+        android:textSize="20sp"
         android:textColor="@android:color/black"
 
         />
+
 
     <TextView
         android:id="@+id/grandtotal"
         android:singleLine="true"
         android:layout_margin="8dp"
-        android:padding="8dp"
-        android:gravity="center"
-
-        android:layout_marginTop="8dp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="15sp"
-        android:textColor="@android:color/black"
-
-        />
-
-    <TextView
-        android:id="@+id/paid"
-        android:singleLine="true"
-        android:layout_margin="8dp"
-        android:padding="8dp"
-        android:gravity="center"
-
-        android:layout_marginTop="8dp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="15sp"
-        android:textColor="@android:color/black"
-
-        />
-
-    <TextView
-        android:id="@+id/credit"
-        android:singleLine="true"
-        android:layout_margin="8dp"
-        android:padding="8dp"
+        android:padding="5dp"
         android:gravity="center"
         android:layout_marginTop="8dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textSize="15sp"
+        android:textSize="20sp"
         android:textColor="@android:color/black"
 
         />
-
-
 
 
 
