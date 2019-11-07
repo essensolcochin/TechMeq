@@ -34,6 +34,7 @@ import android.widget.Toast;
 import com.essensol.techmeq.Adapters.AllProductListAdapter;
 import com.essensol.techmeq.Adapters.ProductsAdapter;
 import com.essensol.techmeq.Model.ProductModel;
+import com.essensol.techmeq.ProductItemClickListener;
 import com.essensol.techmeq.R;
 import com.essensol.techmeq.Room.Databases.DAO.Product_DAO;
 import com.essensol.techmeq.Room.Databases.Entity.Products;
@@ -52,7 +53,7 @@ import java.util.concurrent.ExecutionException;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AddProduct_fragment extends DialogFragment {
+public class AddProduct_fragment extends DialogFragment implements ProductItemClickListener {
 
 
 
@@ -76,6 +77,10 @@ public class AddProduct_fragment extends DialogFragment {
 
     private boolean withoutTax =false;
 
+    private Button mAddProduct;
+
+    private int ProductId;
+
 
     public AddProduct_fragment() {
         // Required empty public constructor
@@ -97,7 +102,7 @@ public class AddProduct_fragment extends DialogFragment {
         mProductCategory = Rootview.findViewById(R.id.category);
         tax =Rootview.findViewById(R.id.tax);
         mPrice =Rootview.findViewById(R.id.price);
-        Button mAddProduct = Rootview.findViewById(R.id.add);
+        mAddProduct = Rootview.findViewById(R.id.add);
         dismiss= Rootview.findViewById(R.id.dismiss);
         products = Rootview.findViewById(R.id.products);
         pricewithtax =Rootview.findViewById(R.id.pricewithtax);
@@ -114,7 +119,7 @@ public class AddProduct_fragment extends DialogFragment {
         products.setLayoutManager(linearLayoutManager);
 
 
-        adapter = new AllProductListAdapter(mList,getContext());
+        adapter = new AllProductListAdapter(mList,getContext(), (ProductItemClickListener) AddProduct_fragment.this);
 
         products.setAdapter(adapter);
 
@@ -123,19 +128,8 @@ public class AddProduct_fragment extends DialogFragment {
 
         productViewModel= ViewModelProviders.of(this).get(ProductViewModel.class);
 
-        productViewModel.GetAllProductCategory().observe(this, new Observer<List<Sales_Category>>() {
-            @Override
-            public void onChanged(@Nullable List<Sales_Category> sales_categories) {
-
-                categories=sales_categories;
-
-                categoryArrayAdapter = new ArrayAdapter<Sales_Category>(getContext(), android.R.layout.simple_spinner_dropdown_item, categories);
-                categoryArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                mProductCategory.setAdapter(categoryArrayAdapter);
-
-            }
-        });
-
+        //SetSpinner Observer
+        setSpinnerObserver(-1);
 
         productViewModel.GetAllProduct().observe(this, new Observer<List<ProductModel>>() {
             @Override
@@ -265,41 +259,42 @@ public class AddProduct_fragment extends DialogFragment {
 
                     mPrice.setError("Field Empty");
                 }
+
+                else if(mAddProduct.getText().toString().equalsIgnoreCase("Update Item"))
+                {
+
+                    Runnable progressRunnable = new Runnable() {
+
+                        @Override
+                        public void run() {
+
+                            _UpdateProduct(ProductId);
+
+
+                            progressDialog.cancel();
+
+                            mProduct_name.setText("");
+                            tax.setText("");
+                            mPrice.setText("");
+                            pricewithtax.setText("");
+
+
+
+                        }};
+
+                    Handler pdCanceller = new Handler();
+                    pdCanceller.postDelayed(progressRunnable, 500);
+
+
+
+                }
+
                 else {
 
                     CheckExist ();
 
                 }
-//                    progressDialog.show();
-//
-//                    Runnable progressRunnable = new Runnable() {
-//
-//                        @Override
-//                        public void run() {
-//
-//                            _AddProduct();
-//
-//
-//                            progressDialog.cancel();
-//
-//                            mProduct_name.setText("");
-//                            tax.setText("");
-//                            mPrice.setText("");
-//                            pricewithtax.setText("");
-//
-//
-//
-//                        }};
-//
-//
-//
-//                    Handler pdCanceller = new Handler();
-//                    pdCanceller.postDelayed(progressRunnable, 500);
-//                }
 
-
-
-//                getDialog().dismiss();
 
 
 
@@ -331,8 +326,45 @@ public class AddProduct_fragment extends DialogFragment {
                 Toast.makeText(getContext(),"Product Already Exists",Toast.LENGTH_LONG).show();
             }
             else {
-                _AddProduct();
-            }
+
+                   progressDialog.show();
+
+                    Runnable progressRunnable = new Runnable() {
+
+                        @Override
+                        public void run() {
+
+                            _AddProduct();
+
+
+                            progressDialog.cancel();
+
+                            mProduct_name.setText("");
+                            tax.setText("");
+                            mPrice.setText("");
+                            pricewithtax.setText("");
+
+
+
+                        }};
+
+                    Handler pdCanceller = new Handler();
+                    pdCanceller.postDelayed(progressRunnable, 500);
+
+
+
+
+                }
+
+
+
+
+
+
+
+
+
+
 
         } catch (ExecutionException e) {
             e.printStackTrace();
@@ -340,6 +372,39 @@ public class AddProduct_fragment extends DialogFragment {
             e.printStackTrace();
         }
 
+
+    }
+
+
+    private void setSpinnerObserver(final int Id)
+    {
+
+        Log.e("ProductId"," "+Id);
+
+        productViewModel.GetAllProductCategory().observe(this, new Observer<List<Sales_Category>>() {
+            @Override
+            public void onChanged(@Nullable List<Sales_Category> sales_categories) {
+
+                categories=sales_categories;
+
+                categoryArrayAdapter = new ArrayAdapter<Sales_Category>(getContext(), android.R.layout.simple_spinner_dropdown_item, categories);
+                categoryArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                mProductCategory.setAdapter(categoryArrayAdapter);
+
+                int pos =0;
+
+                for(Sales_Category items : categories){
+                    if (items.getProductCatId()==Id){
+
+                        pos = categories.indexOf(items);
+                        break;
+                    }
+                }
+
+                mProductCategory.setSelection(pos);
+
+            }
+        });
 
     }
 
@@ -383,33 +448,7 @@ public class AddProduct_fragment extends DialogFragment {
         }
     }
 
-    public static BigDecimal GetTaxReverse(BigDecimal price, BigDecimal taxPerc)
-    {
-        BigDecimal rTax = price.multiply(taxPerc).divide(BigDecimal.valueOf(100),2,RoundingMode.HALF_UP);
 
-        BigDecimal mPrice =price;
-        BigDecimal wTax =mPrice.add(rTax);
-
-        Log.e("Valueee","rTax "+rTax);
-        Log.e("Valueee","mPrice "+mPrice);
-        Log.e("Valueee","wTax "+wTax);
-
-        return wTax;
-    }
-
-
-    public static BigDecimal GetReversedAmount(BigDecimal price, BigDecimal taxPerc)
-    {
-        BigDecimal rTax = price.multiply(taxPerc).divide(BigDecimal.valueOf(100),2,RoundingMode.HALF_UP);
-        BigDecimal mPrice =price;
-        BigDecimal wtTax =mPrice.subtract(rTax);
-
-        Log.e("Valueee","rTax "+rTax);
-        Log.e("Valueee","mPrice "+mPrice);
-        Log.e("Valueee","wtTax "+wtTax);
-
-        return wtTax;
-    }
 
 
     public static BigDecimal GetReverse(BigDecimal price, BigDecimal taxPerc)
@@ -418,6 +457,56 @@ public class AddProduct_fragment extends DialogFragment {
         return val;
 
     }
+
+    @Override
+    public void getProductDetailsForEdit(int Product_Id, int ProductCatId, BigDecimal TaxPercent, String ProductName, BigDecimal Sales_Price, boolean Status) {
+
+        mProduct_name.setText(ProductName);
+        tax.setText(TaxPercent.toString());
+        mPrice.setText(Sales_Price.toString());
+
+        this.ProductId =Product_Id;
+
+
+        setSpinnerObserver(ProductCatId);
+
+        mAddProduct.setText("Update Item");
+
+    }
+
+
+
+    private  void _UpdateProduct(int ProductId) {
+
+
+        progressDialog.show();
+
+        float mTax = Float.parseFloat(tax.getText().toString().trim());
+
+        float d = Float.parseFloat(mPrice.getText().toString().trim());
+
+        BigDecimal _salesPrice  = Utils.round(d,2);
+
+        BigDecimal _tax  =Utils.round(mTax,2);
+
+
+        Log.e("_tax",""+_tax);
+        Log.e("_salesPrice",""+_salesPrice);
+
+        Products products =new Products(ProductId,catId,_tax,mProduct_name.getText().toString().trim()
+                ,_salesPrice
+                ,true);
+
+        productViewModel.UpdateProduct(products);
+
+
+
+
+    }
+
+
+
+
 
 
     private  static class CheckExistAsync extends AsyncTask<String,Void,String> {
@@ -454,6 +543,8 @@ public class AddProduct_fragment extends DialogFragment {
 
 
     }
+
+
 
 
 

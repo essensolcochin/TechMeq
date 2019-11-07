@@ -10,7 +10,6 @@
             android:id="@+id/desc"
             android:textColor="@android:color/black"
             android:gravity="center"
-            android:text="Description"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
@@ -20,7 +19,6 @@
             android:id="@+id/remark"
             android:textColor="@android:color/black"
             android:gravity="center"
-            android:text="Remarks"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
@@ -29,7 +27,6 @@
             android:id="@+id/tax"
             android:textColor="@android:color/black"
             android:gravity="center"
-            android:text="Taxable"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
@@ -38,10 +35,18 @@
             android:id="@+id/vat"
             android:textColor="@android:color/black"
             android:gravity="center"
-            android:text="VAT"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/date"
+            android:textColor="@android:color/black"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
 
 
 

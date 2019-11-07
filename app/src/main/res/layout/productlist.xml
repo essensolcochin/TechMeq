@@ -20,7 +20,6 @@
 
 
         <LinearLayout
-            android:paddingTop="5dp"
             android:paddingBottom="20dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -31,7 +30,6 @@
             <ImageView
                 android:id="@+id/imageid"
                 android:scaleType="fitXY"
-                android:src="@drawable/placeholder"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
@@ -61,6 +59,7 @@
 
 
             <TextView
+                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:singleLine="true"
                 android:id="@+id/name"

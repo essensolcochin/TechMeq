@@ -5,16 +5,18 @@ import java.math.BigDecimal;
 public class PurchaseModel {
 
     private String name;
-    private int qty,ProductId;
-    private BigDecimal rate,netAmount,linetot;
+    private int ProductId;
+    private BigDecimal rate,netAmount,linetot,TaxPer,qty,TaxAmnt;
 
-    public PurchaseModel(String name, int ProductId,int qty, BigDecimal rate, BigDecimal netAmount,BigDecimal linetot) {
+    public PurchaseModel(String name, int productId, BigDecimal rate, BigDecimal netAmount, BigDecimal linetot, BigDecimal taxPer, BigDecimal qty, BigDecimal taxAmnt) {
         this.name = name;
-        this.qty = qty;
+        ProductId = productId;
         this.rate = rate;
         this.netAmount = netAmount;
-        this.ProductId = ProductId;
         this.linetot = linetot;
+        TaxPer = taxPer;
+        this.qty = qty;
+        TaxAmnt = taxAmnt;
     }
 
     public String getName() {
@@ -25,12 +27,12 @@ public class PurchaseModel {
         this.name = name;
     }
 
-    public int getQty() {
-        return qty;
+    public int getProductId() {
+        return ProductId;
     }
 
-    public void setQty(int qty) {
-        this.qty = qty;
+    public void setProductId(int productId) {
+        ProductId = productId;
     }
 
     public BigDecimal getRate() {
@@ -49,19 +51,35 @@ public class PurchaseModel {
         this.netAmount = netAmount;
     }
 
-    public int getProductId() {
-        return ProductId;
-    }
-
-    public void setProductId(int productId) {
-        ProductId = productId;
-    }
-
     public BigDecimal getLinetot() {
         return linetot;
     }
 
     public void setLinetot(BigDecimal linetot) {
         this.linetot = linetot;
+    }
+
+    public BigDecimal getTaxPer() {
+        return TaxPer;
+    }
+
+    public void setTaxPer(BigDecimal taxPer) {
+        TaxPer = taxPer;
+    }
+
+    public BigDecimal getQty() {
+        return qty;
+    }
+
+    public void setQty(BigDecimal qty) {
+        this.qty = qty;
+    }
+
+    public BigDecimal getTaxAmnt() {
+        return TaxAmnt;
+    }
+
+    public void setTaxAmnt(BigDecimal taxAmnt) {
+        TaxAmnt = taxAmnt;
     }
 }

@@ -27,4 +27,9 @@ public interface Voucher_DAO {
     @Query("SELECT * FROM Voucher_Master ORDER BY Created_On DESC")
     LiveData<List<_dbExpenceVouchers>> GetAllVouchers();
 
+//    begintime <= '$start' AND endtime >= '$end')
+
+    @Query("SELECT  * FROM Voucher_Master WHERE Created_On <= :mDate ")
+    LiveData<List<_dbExpenceVouchers>> GetAllVouchers(long mDate);
+
 }

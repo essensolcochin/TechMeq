@@ -25,6 +25,13 @@ public class VoucherViewModel extends AndroidViewModel {
     }
 
 
+    public LiveData<List<_dbExpenceVouchers>>getAllVoucherReportByDate(long date)
+    {
+        return m_repo.getAllVoucherReport(date);
+    }
+
+
+
     public void AddVoucher(_dbExpenceVouchers vouchers)
     {
         m_repo.AddVoucher(vouchers);

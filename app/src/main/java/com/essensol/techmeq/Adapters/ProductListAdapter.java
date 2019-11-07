@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,15 +21,16 @@ import com.essensol.techmeq.OnSelectedListener;
 import com.essensol.techmeq.R;
 import com.essensol.techmeq.Room.Databases.Entity.Products;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapter.viewHolder> {
+public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapter.viewHolder> implements Filterable {
 
     private List<Products> items;
-
-    private List<mProductModel> newList=new ArrayList<>();
+    private List<Products> searchedItems;
+//    private List<mProductModel> newList=new ArrayList<>();
 
     private Context mContext;
 
@@ -40,7 +43,7 @@ public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapte
         this.items = items;
         this.mContext = mContext;
         this.mListner = mListner;
-
+        this.searchedItems=items;
     }
 
     @NonNull
@@ -54,23 +57,21 @@ public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder,  int position) {
-       final Products products=items.get(position);
+       final Products products=searchedItems.get(position);
 
-        holder.name.setText(items.get(position).getProductName());
+        holder.name.setText(products.getProductName());
 
-        holder.rate.setText(items.get(position).getSales_Price().toString());
+        BigDecimal TaxPer =products.getSales_Price()
+                .multiply(products.getTaxPercent().divide(BigDecimal.valueOf(100),2,BigDecimal.ROUND_HALF_UP)).setScale(2,BigDecimal.ROUND_HALF_UP);
+
+        BigDecimal priceWithTax =products.getSales_Price().add(TaxPer)
+                .setScale(2,BigDecimal.ROUND_HALF_UP);
+
+        holder.rate.setText(priceWithTax.toString());
 
         holder.lay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                mProductModel model=new mProductModel(products.getProduct_Id(),products.getProductCatId()
-//                                                        ,products.getTaxPercent(),products.getProductName()
-//                                                        ,products.getSales_Price(),products.isStatus());
-//
-//                newList.add(model);
-
-                Log.e("newList","size "+newList.size());
 
                 if(mListner!=null)
                 {
@@ -82,6 +83,38 @@ public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapte
 
             }
         });
+
+        holder.name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(mListner!=null)
+                {
+                    mListner.getProductDetails(products.getProduct_Id(),products.getProductCatId()
+                            ,products.getTaxPercent(),products.getProductName()
+                            ,products.getSales_Price(),products.isStatus());
+                }
+
+
+            }
+        });
+
+
+        holder.rate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(mListner!=null)
+                {
+                    mListner.getProductDetails(products.getProduct_Id(),products.getProductCatId()
+                            ,products.getTaxPercent(),products.getProductName()
+                            ,products.getSales_Price(),products.isStatus());
+                }
+
+
+            }
+        });
+
 
 
         if(items.size()==1)
@@ -104,14 +137,53 @@ public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapte
     @Override
     public int getItemCount() {
 
-        Log.e("getItemCount","list Size -- "+items.size());
-        return items.size();
+//        Log.e("getItemCount","list Size -- "+items.size());
+        return searchedItems.size();
     }
 
     public  void SetProducts(List<Products>products)
     {
         this.items=products;
+        this.searchedItems=products;
         notifyDataSetChanged();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+
+//                searchedItems.clear();
+                String charString = constraint.toString();
+                if (charString.isEmpty()) {
+                    searchedItems = items;
+                } else {
+                    List<Products> filteredList = new ArrayList<>();
+                    for (Products row : items) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (row.getProductName().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    searchedItems = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = searchedItems;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                searchedItems = (List<Products>) results.values;
+                notifyDataSetChanged();
+
+            }
+        };
     }
 
 

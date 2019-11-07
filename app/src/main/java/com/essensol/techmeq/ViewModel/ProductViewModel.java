@@ -23,6 +23,8 @@ public class ProductViewModel extends AndroidViewModel {
     private mRepo product_repo;
     private LiveData<List<ProductModel>>allProducts;
 
+    private LiveData<List<Products>>allProductsForSale;
+
     private LiveData<Integer>getInvoiceId;
 
     private LiveData<List<Sales_Category>> allCategories;
@@ -39,7 +41,7 @@ public class ProductViewModel extends AndroidViewModel {
         getGetCustNameAndId=product_repo.getGetCustNameAndId();
         allCategories =product_repo.getAllProductsCategory();
         getInvoiceId =product_repo.getInvoiceAndSaleID();
-
+        allProductsForSale=product_repo.getAllProductForSale();
     }
 
     public void AddProduct(Products Product)
@@ -60,6 +62,11 @@ public class ProductViewModel extends AndroidViewModel {
     public LiveData<List<ProductModel>> GetAllProduct()
     {
       return  allProducts;
+    }
+
+    public LiveData<List<Products>> GetAllProductForSale()
+    {
+        return  allProductsForSale;
     }
 
     public LiveData<List<CustomerSpinnerModel>> GetCustNameAndId()

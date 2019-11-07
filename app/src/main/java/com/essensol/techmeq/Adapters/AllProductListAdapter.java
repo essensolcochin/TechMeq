@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.essensol.techmeq.Model.ProductModel;
 import com.essensol.techmeq.Model.mProductModel;
 import com.essensol.techmeq.OnSelectedListener;
+import com.essensol.techmeq.ProductItemClickListener;
 import com.essensol.techmeq.R;
 import com.essensol.techmeq.Room.Databases.Entity.Products;
 
@@ -29,15 +30,13 @@ public class AllProductListAdapter  extends  RecyclerView.Adapter<AllProductList
     private Context mContext;
 
 
+    private ProductItemClickListener mlistener;
 
 
-
-
-    public AllProductListAdapter(List<ProductModel> items, Context mContext) {
+    public AllProductListAdapter(List<ProductModel> items, Context mContext, ProductItemClickListener mlistener) {
         this.items = items;
         this.mContext = mContext;
-
-
+        this.mlistener = mlistener;
     }
 
     @NonNull
@@ -50,7 +49,7 @@ public class AllProductListAdapter  extends  RecyclerView.Adapter<AllProductList
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AllProductListAdapter.viewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AllProductListAdapter.viewHolder holder, final int position) {
         final ProductModel products=items.get(position);
 
         holder.name.setText(items.get(position).getProductName());
@@ -63,6 +62,11 @@ public class AllProductListAdapter  extends  RecyclerView.Adapter<AllProductList
             @Override
             public void onClick(View v) {
 
+                if(mlistener!=null)
+                {
+                    mlistener.getProductDetailsForEdit(products.getProduct_Id(),products.getProductCatId(),products.getTaxPercent()
+                    ,products.getProductName(),products.getSales_Price(),true);
+                }
 
             }
         });

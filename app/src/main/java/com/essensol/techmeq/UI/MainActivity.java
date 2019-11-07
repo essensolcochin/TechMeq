@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.IBinder;
@@ -21,12 +22,14 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,6 +40,7 @@ import android.widget.Toast;
 
 import com.essensol.techmeq.Adapters.ProductsAdapter;
 import com.essensol.techmeq.DialogFragments.AddCategoryFragment;
+import com.essensol.techmeq.DialogFragments.AddCustomer;
 import com.essensol.techmeq.DialogFragments._AddProductDetailsDailog;
 import com.essensol.techmeq.Adapters.HomeTabAdapter_;
 import com.essensol.techmeq.Adapters.PurchaseListAdapter;
@@ -92,8 +96,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
     ProductsAdapter adapter;
     List<CategoryModel> items = new ArrayList<>();
-//    RecyclerView purchase;
-//    Realm mRealm;
+
     private ProductViewModel model;
 
     LinearLayout add;
@@ -112,6 +115,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
     CardView bottom;
 
+    android.support.v7.widget.Toolbar toolbar;
 
     LinearLayout pay,credit;
 
@@ -130,9 +134,15 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
     HomeTabAdapter_ adapter_;
     String mName,mQty,mPrice;
 
+    private android.support.v7.widget.SearchView searchView;
+
     private  ProgressDialog dialog;
 
     private SearchableSpinner CustomerName;
+
+    private  BigDecimal mTaxPercent;
+
+    private LinearLayout search;
 
 
     /**
@@ -253,9 +263,12 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
         purchase =  findViewById(R.id.purchase);
 
+//        searchView =  findViewById(R.id.search);
 
-        CustomerName= findViewById(R.id.CustomerName);
 
+//        CustomerName= findViewById(R.id.CustomerName);
+
+        search=findViewById(R.id.mSearch);
 
         bottom =findViewById(R.id.frame);
 
@@ -271,6 +284,11 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         credit=findViewById(R.id.credit);
 
         invoiceDate=findViewById(R.id.invoiceDate);
+
+        toolbar=getToolbar();
+
+        ImageView bluetooth =toolbar.findViewById(R.id.bluetooth);
+
 
 
         Date c = Calendar.getInstance().getTime();
@@ -292,16 +310,51 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
         registerReceiver(mBroadcastReceiver, new IntentFilter(PrinterCom.ACTION_LABEL_RESPONSE));
 
-        credit.setOnClickListener(new View.OnClickListener() {
+
+
+        bluetooth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 openPortDialogueClicked();
 
-                printReceiptClicked(v);
+            }
+        });
+
+        credit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+                FragmentManager fm =getSupportFragmentManager();
+
+
+                final AddCustomer dialog= new AddCustomer();
+
+                dialog.show(fm,"TAG");
+
+
+
+
 
 //                Intent intent = new Intent(MainActivity.this, PortConfigurationActivity.class);
 //                startActivityForResult(intent, INTENT_PORT_SETTINGS);
+            }
+        });
+
+
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentManager fm =getSupportFragmentManager();
+
+
+                final _AddProductDetailsDailog dialog= new _AddProductDetailsDailog(1,MainActivity.this);
+
+                dialog.show(fm,"TAG");
+
             }
         });
 
@@ -310,19 +363,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
         products = findViewById(R.id.products);
 
-        add = findViewById(R.id.Add);
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                FragmentManager fm =getSupportFragmentManager();
-
-
-                final AddCategoryFragment dialog= new AddCategoryFragment();
-
-                dialog.show(fm,"TAG");
-            }
-        });
 
         layoutManager = new GridLayoutManager(this, getResources().getInteger(R.integer.number_of_grid_items));
         products.setLayoutManager(layoutManager);
@@ -334,9 +375,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 //
 
-        adapter = new ProductsAdapter(items,this);
 
-        products.setAdapter(adapter);
 
 
 
@@ -350,8 +389,10 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
             public void onChanged(@Nullable Integer integer) {
                 if(integer!=null)
                 {
-                    InvoiceNo =integer+1;
                     SaleId = integer;
+
+                    InvoiceNo =integer+1;
+
 
                     Log.e("SaleId","GetInvoiceandSaleId() "+SaleId);
 
@@ -385,42 +426,46 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
                     }
 
 
-                    adapter.SetProducts(items);
+                    adapter = new ProductsAdapter(items,MainActivity.this);
+
+                    products.setAdapter(adapter);
+
+
                 }
 
             }
         });
 
-        model.GetCustNameAndId().observe(this, new Observer<List<CustomerSpinnerModel>>() {
-            @Override
-            public void onChanged(@Nullable List<CustomerSpinnerModel> customerSpinnerModels) {
-
-                Log.e("Size"," "+customerSpinnerModels.size());
-                customerSpinnerList =customerSpinnerModels;
-
-                CustomerAdapter = new ArrayAdapter<CustomerSpinnerModel>(MainActivity.this,android.R.layout.simple_spinner_dropdown_item,customerSpinnerList);
-                CustomerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                CustomerName.setAdapter(CustomerAdapter);
-
-
-            }
-        });
-
-
+//        model.GetCustNameAndId().observe(this, new Observer<List<CustomerSpinnerModel>>() {
+//            @Override
+//            public void onChanged(@Nullable List<CustomerSpinnerModel> customerSpinnerModels) {
+//
+//                Log.e("Size"," "+customerSpinnerModels.size());
+//                customerSpinnerList =customerSpinnerModels;
+//
+//                CustomerAdapter = new ArrayAdapter<CustomerSpinnerModel>(MainActivity.this,android.R.layout.simple_spinner_dropdown_item,customerSpinnerList);
+//                CustomerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                CustomerName.setAdapter(CustomerAdapter);
+//
+//
+//            }
+//        });
 
 
-        CustomerName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                CustId =customerSpinnerList.get(position).getCustId();
-                Log.e("CustId Iddddd"," "+CustId);
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
+//        CustomerName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                CustId =customerSpinnerList.get(position).getCustId();
+//                Log.e("CustId Iddddd"," "+CustId);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
 
 
 
@@ -494,20 +539,25 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
         new GetFinancialAsync(OfflineDb.getInstance(this).financialYear_dao()).execute();
 
-        SalesHeader header =new SalesHeader(1,FinYearId,Integer.toString(InvoiceNo),c,CustId
+        SalesHeader header =new SalesHeader(1,FinYearId,Integer.toString(InvoiceNo),c,1
                 ,Total,TaxAmt,Discount,grandTot,grandTot);
 
-        new  AddSalesHeaderAsync(OfflineDb.getInstance(this).sales_header_dao()).execute(header);
+        try {
+            String result= new  AddSalesHeaderAsync(OfflineDb.getInstance(this).sales_header_dao()).execute(header).get();
 
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
+            Log.e("Resulttttttt","res  "+result);
 
+            if(result.equalsIgnoreCase("Completed"))
+            {
                 AddSaleItem();
-
             }
-        }, 1000);
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
 
 
     }
@@ -519,7 +569,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
             BigDecimal Total = Utils.round(Float.parseFloat(tot.getText().toString().trim()),2);
-            BigDecimal TaxPercent = BigDecimal.valueOf(5.00);
+//            BigDecimal TaxPercent = BigDecimal.valueOf(5.00);
             BigDecimal TaxAmt = Utils.round(Float.parseFloat(vat.getText().toString().trim()),2);
 
 
@@ -529,7 +579,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
             Log.e("SaleId"," "+SaleId);
 
             SalesItem model=new SalesItem(SaleId,items.getProductId(),items.getQty(),items.getRate(),Total
-                                            ,TaxPercent,TaxAmt,items.getLinetot());
+                                            ,mTaxPercent,TaxAmt,items.getLinetot());
 
             addSaleList.add(model);
 
@@ -542,12 +592,8 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
             {
                 dialog.dismiss();
                 Toast.makeText(MainActivity.this,"Saved",Toast.LENGTH_SHORT).show();
-                puchase.clear();
-                purchaseListAdapter.notifyDataSetChanged();
-                taxable.setText("0.00");
-                vat.setText("0.00");
-                tot.setText("0.00");
 
+                printReceiptClicked();
 //                new GetInvoiceNoAsync(OfflineDb.getInstance(this).sales_header_dao()).execute();
             }
 
@@ -560,12 +606,17 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
     }
 
     @Override
-    public void getProductListItem(int Qty, int Product_Id, int ProductCatId, BigDecimal TaxPercent, String ProductName, BigDecimal Sales_Price, BigDecimal rate) {
+    public void getProductListItem(BigDecimal Qty, int Product_Id, int ProductCatId, BigDecimal TaxPercent,BigDecimal TaxAmnt, String ProductName, BigDecimal Sales_Price, BigDecimal rate) {
 
 
-        BigDecimal lineTot=((Sales_Price.divide(BigDecimal.valueOf(100),2,RoundingMode.CEILING)).multiply(BigDecimal.valueOf(5))).add(BigDecimal.valueOf(Qty));
 
-        PurchaseModel model =new PurchaseModel(ProductName,Product_Id,Qty,Sales_Price,rate,lineTot);
+        mTaxPercent =TaxPercent;
+
+        BigDecimal netAmnt =Sales_Price.multiply(Qty).setScale(2,BigDecimal.ROUND_HALF_UP);
+
+        BigDecimal lineTot=Sales_Price.multiply(Qty).add(TaxAmnt).setScale(2,BigDecimal.ROUND_HALF_UP);
+
+        PurchaseModel model =new PurchaseModel(ProductName,Product_Id,rate,netAmnt,lineTot,TaxPercent,Qty,TaxAmnt);
 
         puchase.add(model);
 
@@ -592,6 +643,8 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         BigDecimal  percentage=BigDecimal.valueOf(0);
         BigDecimal  _taxable=BigDecimal.valueOf(0);
         BigDecimal  Tax=BigDecimal.valueOf(0);
+        BigDecimal  SingleItemTax=BigDecimal.valueOf(0);
+
 
 
         if(puchase.size()==0)
@@ -621,10 +674,12 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
                 _taxable =_taxable.add(netAmnt);
 
                 taxable.setText(_taxable.toString());
+                SingleItemTax=puchase.get(i).getTaxPer();
 
+                Log.e("SingleItemTax","SingleItemTax "+SingleItemTax);
 
-                Tax =Tax.add(netAmnt.multiply(BigDecimal.valueOf(5).divide(BigDecimal.valueOf(100),2,RoundingMode.HALF_UP))).setScale(2,RoundingMode.HALF_UP);
-
+//                Tax =Tax.add(netAmnt.multiply(SingleItemTax.divide(BigDecimal.valueOf(100),2,RoundingMode.HALF_UP))).setScale(2,RoundingMode.HALF_UP);
+                    Tax=Tax.add(puchase.get(i).getTaxAmnt());
 
 
 
@@ -659,7 +714,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
      *
      */
 
-    private  static class AddSalesHeaderAsync extends AsyncTask<SalesHeader,Void,Void> {
+    private  static class AddSalesHeaderAsync extends AsyncTask<SalesHeader,Void,String> {
 
         private Sales_Header_DAO header_dao;
 
@@ -669,7 +724,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         }
 
         @Override
-        protected Void doInBackground(SalesHeader... salesHeaders) {
+        protected String doInBackground(SalesHeader... salesHeaders) {
 
 
 //            SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
@@ -689,7 +744,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
 
-            return null;
+            return "Completed";
         }
     }
 
@@ -766,7 +821,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
     /**
-     * Device Click Listeners
+     * Bluetooth Device Connection
      *
      */
 
@@ -995,6 +1050,14 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+
+        puchase.clear();
+        purchaseListAdapter.notifyDataSetChanged();
+        taxable.setText("0.00");
+        vat.setText("0.00");
+        tot.setText("0.00");
+
     }
 
     void sendReceiptWithResponse() {
@@ -1145,7 +1208,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         }
     }
 
-    public void printReceiptClicked(View view) {
+    public void printReceiptClicked() {
         try {
             int type = mPService.getPrinterCommandType(mPrinterIndex);
             if (type == PrinterCom.ESC_COMMAND) {
@@ -1205,6 +1268,49 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 //        Intent intent = new Intent(this, CustomerDiaplayActivity.class);
 //        startActivity(intent);
     }
+
+
+
+//    private  void SearchFilter() {
+//        if (items.isEmpty()) {
+//
+//            Log.e("Arraylist", "" + items.size());
+//
+//        }
+//        else {
+//
+//            Log.e("Search", "else "+items.size() );
+//
+//           searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//               @Override
+//               public boolean onQueryTextSubmit(String query) {
+//                   if (items.contains(query)) {
+//                       adapter.getFilter().filter(query);
+//                   } else {
+//                       Toast.makeText(MainActivity.this, "No Match found", Toast.LENGTH_LONG).show();
+//                   }
+//                   return false;
+//
+//               }
+//
+//               @Override
+//               public boolean onQueryTextChange(String newText) {
+//
+//                   adapter.getFilter().filter(newText);
+//
+//                   return false;
+//               }
+//           });
+//
+//        }
+//        EditText searchEditText = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+//
+//        searchEditText.setTextColor(Color.DKGRAY);
+//        searchEditText.setHintTextColor(Color.DKGRAY);
+//
+//
+//    }
+
 
 
 }

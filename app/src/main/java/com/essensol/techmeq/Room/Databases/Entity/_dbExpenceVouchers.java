@@ -2,6 +2,13 @@ package com.essensol.techmeq.Room.Databases.Entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
+
+import com.essensol.techmeq.Room.DateTypeConverter;
+import com.essensol.techmeq.Room.DecimalConverter;
+
+import java.math.BigDecimal;
+import java.util.Date;
 
 
 @Entity(tableName = "Voucher_Master")
@@ -14,20 +21,25 @@ public class _dbExpenceVouchers {
 
     private  String Remarks;
 
-    private  String Taxable;
 
-    private  String vat;
+    @TypeConverters({DecimalConverter.class})
+    private BigDecimal Taxable;
 
-    private  String total;
+    @TypeConverters({DecimalConverter.class})
+    private  BigDecimal vat;
 
-    private  String Created_On;
+    @TypeConverters({DecimalConverter.class})
+    private  BigDecimal total;
+
+    @TypeConverters({DateTypeConverter.class})
+    private Date Created_On;
 
     public _dbExpenceVouchers() {
 
 
     }
 
-    public _dbExpenceVouchers( String description, String remarks, String taxable, String vat, String total, String created_On) {
+    public _dbExpenceVouchers( String description, String remarks, BigDecimal taxable, BigDecimal vat, BigDecimal total, Date created_On) {
         Description = description;
         Remarks = remarks;
         Taxable = taxable;
@@ -60,35 +72,35 @@ public class _dbExpenceVouchers {
         Remarks = remarks;
     }
 
-    public String getTaxable() {
+    public BigDecimal getTaxable() {
         return Taxable;
     }
 
-    public void setTaxable(String taxable) {
+    public void setTaxable(BigDecimal taxable) {
         Taxable = taxable;
     }
 
-    public String getVat() {
+    public BigDecimal getVat() {
         return vat;
     }
 
-    public void setVat(String vat) {
+    public void setVat(BigDecimal vat) {
         this.vat = vat;
     }
 
-    public String getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 
-    public void setTotal(String total) {
+    public void setTotal(BigDecimal total) {
         this.total = total;
     }
 
-    public String getCreated_On() {
+    public Date getCreated_On() {
         return Created_On;
     }
 
-    public void setCreated_On(String created_On) {
+    public void setCreated_On(Date created_On) {
         Created_On = created_On;
     }
 }

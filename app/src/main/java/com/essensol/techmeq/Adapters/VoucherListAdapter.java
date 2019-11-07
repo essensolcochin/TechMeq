@@ -11,7 +11,10 @@ import android.widget.TextView;
 import com.essensol.techmeq.R;
 import com.essensol.techmeq.Room.Databases.Entity._dbExpenceVouchers;
 
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 
 public  class VoucherListAdapter extends  RecyclerView.Adapter<VoucherListAdapter.viewHolder> {
@@ -38,18 +41,27 @@ public  class VoucherListAdapter extends  RecyclerView.Adapter<VoucherListAdapte
 
         holder.desc.setText(items.get(position).getDescription());
         holder.remark.setText(items.get(position).getRemarks());
-        holder.tax.setText(items.get(position).getTaxable());
-        holder.vat.setText(items.get(position).getVat());
+        holder.tax.setText(items.get(position).getTaxable().toString());
+        holder.vat.setText(items.get(position).getVat().toString());
+
+        String myFormat = "dd/MMM/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
+
+        holder.date.setText(sdf.format(items.get(position).getCreated_On()));
 
     }
 
 
-    public  void SetProducts(List<_dbExpenceVouchers> vouchers)
+    public  void AddVoucher(List<_dbExpenceVouchers> vouchers)
     {
         this.items=vouchers;
         notifyDataSetChanged();
     }
 
+//    public List<_dbExpenceVouchers> GetNetTaxandtotal()
+//    {
+//        re
+//    }
 
 
     @Override
@@ -59,7 +71,7 @@ public  class VoucherListAdapter extends  RecyclerView.Adapter<VoucherListAdapte
 
     public class viewHolder extends RecyclerView.ViewHolder{
 
-        TextView desc,remark,tax,vat;
+        TextView desc,remark,tax,vat,date;
 
         private viewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,6 +79,7 @@ public  class VoucherListAdapter extends  RecyclerView.Adapter<VoucherListAdapte
             remark=itemView.findViewById(R.id.remark);
             tax=itemView.findViewById(R.id.tax);
             vat=itemView.findViewById(R.id.vat);
+            date=itemView.findViewById(R.id.date);
 
         }
     }

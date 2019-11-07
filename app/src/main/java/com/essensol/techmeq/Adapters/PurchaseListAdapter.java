@@ -41,9 +41,10 @@ public  class PurchaseListAdapter extends  RecyclerView.Adapter<PurchaseListAdap
     public void onBindViewHolder(@NonNull final viewHolder holder, int position) {
 
         holder.name.setText(items.get(position).getName());
-        holder.qty.setText(Integer.toString(items.get(position).getQty()));
+        holder.qty.setText(items.get(position).getQty().toString());
         holder.rate.setText(items.get(position).getRate().toString());
-        holder.price.setText(items.get(position).getNetAmount().toString());
+        holder.vat.setText(items.get(position).getTaxAmnt().toString());
+        holder.price.setText(items.get(position).getLinetot().toString());
 
         holder.remove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +63,7 @@ public  class PurchaseListAdapter extends  RecyclerView.Adapter<PurchaseListAdap
 
     public class viewHolder extends RecyclerView.ViewHolder{
 
-        TextView name,qty,price,rate;
+        TextView name,qty,price,rate,vat;
         ImageView remove;
 
         private viewHolder(@NonNull View itemView) {
@@ -72,6 +73,7 @@ public  class PurchaseListAdapter extends  RecyclerView.Adapter<PurchaseListAdap
             price=itemView.findViewById(R.id.price);
             rate=itemView.findViewById(R.id.rate);
             remove=itemView.findViewById(R.id.remove);
+            vat=itemView.findViewById(R.id.vat);
         }
     }
 

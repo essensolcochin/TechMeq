@@ -30,7 +30,8 @@ public class SalesItem {
     @ColumnInfo(name = "ProductId")
     private int ProductId;
 
-    private int Qty;
+    @TypeConverters({DecimalConverter.class})
+    private BigDecimal Qty;
 
     @TypeConverters({DecimalConverter.class})
     private BigDecimal Price;
@@ -50,7 +51,7 @@ public class SalesItem {
     public SalesItem() {
     }
 
-    public SalesItem(int saleId, int productId, int qty, BigDecimal price, BigDecimal total, BigDecimal taxPercent, BigDecimal taxAmt, BigDecimal lineTotal) {
+    public SalesItem(int saleId, int productId, BigDecimal qty, BigDecimal price, BigDecimal total, BigDecimal taxPercent, BigDecimal taxAmt, BigDecimal lineTotal) {
         SaleId = saleId;
         ProductId = productId;
         Qty = qty;
@@ -86,11 +87,11 @@ public class SalesItem {
         ProductId = productId;
     }
 
-    public int getQty() {
+    public BigDecimal getQty() {
         return Qty;
     }
 
-    public void setQty(int qty) {
+    public void setQty(BigDecimal qty) {
         Qty = qty;
     }
 

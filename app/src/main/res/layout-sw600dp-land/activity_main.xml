@@ -35,44 +35,75 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/background"
                 android:layout_width="match_parent"
-                android:layout_height="35dp">
+                android:layout_height="36dp">
 
-                <android.support.v7.widget.SearchView
-                    app:queryHint="Search Product"
-                    android:background="@drawable/editbgm"
-                    android:layout_margin="5dp"
-                    android:layout_width="350dp"
-                    android:layout_height="30dp"/>
 
-                <LinearLayout
-                 android:layout_marginTop="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:background="#74bf94"
-                    android:id="@+id/Add"
+                <TextView
+                    android:id="@+id/tv"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@android:color/white"
+                    android:layout_centerVertical="true"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"/>
+
+                  <LinearLayout
+                    android:id="@+id/mSearch"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toEndOf="@+id/tv"
+                    android:layout_toRightOf="@+id/tv"
                     android:padding="5dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/smallbutton"
+                    android:layout_centerVertical="true"
+
                     android:layout_width="wrap_content"
-                    android:layout_height="28dp">
+                    android:layout_height="wrap_content">
 
                     <TextView
-                        android:gravity="center_vertical"
+
                         android:textSize="12sp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_gravity="center_vertical"
+
+                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@android:color/white"
-                        android:text="Add Category"/>
+                        android:text="Search Product"/>
 
-                    <ImageView
-                        android:src="@drawable/plus"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"/>
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/salesearch"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toEndOf="@+id/mSearch"
+                    android:layout_toRightOf="@+id/mSearch"
+                    android:padding="5dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/smallbutton"
+                    android:layout_centerVertical="true"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+
+                        android:textSize="12sp"
+
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:text="Sale Search"/>
+
+
+                </LinearLayout>
+
+
+
+
 
             </RelativeLayout>
 
@@ -119,7 +150,6 @@
                             android:layout_weight=".6"
 
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
                             android:padding="5dp"
                             android:singleLine="true"
                             android:text="Invoice No"
@@ -131,7 +161,6 @@
                             android:id="@+id/invoiceNo"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
                             android:layout_weight="2"
                             android:background="@drawable/background_edittext"
                             android:inputType="number"
@@ -147,7 +176,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="5dp"
                             android:layout_weight=".8"
                             android:padding="5dp"
                             android:singleLine="true"
@@ -160,7 +188,6 @@
                             android:id="@+id/invoiceDate"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
                             android:layout_weight="2"
                             android:background="@drawable/background_edittext"
                             android:padding="5dp"
@@ -171,69 +198,6 @@
                             />
                     </LinearLayout>
 
-                <LinearLayout
-                    android:gravity="center_vertical"
-                    android:padding="5dp"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-
-                <TextView
-                    android:singleLine="true"
-                    android:padding="5dp"
-                    android:layout_width="0dp"
-                    android:layout_weight=".3"
-                    android:layout_height="wrap_content"
-                    android:text="Customer"
-                    android:textColor="@android:color/black"
-                    android:textSize="10dp"
-                    />
-
-
-
-                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                    android:id="@+id/CustomerName"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".9"
-                    android:background="@drawable/background_edittext"
-                    android:textColor="@android:color/black"
-
-                    />
-
-                    <ImageView
-                        android:layout_marginTop="5dp"
-                        android:tint="@android:color/black"
-                        android:src="@drawable/plus"
-                        android:layout_width="35dp"
-                        android:layout_height="25dp"/>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-
-                        android:layout_weight=".3"
-                        android:padding="5dp"
-                        android:singleLine="true"
-                        android:text="Balance"
-                        android:textColor="@android:color/black"
-                        android:textSize="10dp" />
-
-                    <TextView
-                        android:id="@+id/balance"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/background_edittext"
-                        android:padding="5dp"
-                        android:text="0.00"
-                        android:singleLine="true"
-                        android:textColor="@android:color/black"
-                        android:textSize="12sp"
-
-                        />
-                </LinearLayout>
 
                 </LinearLayout>
 
@@ -317,6 +281,21 @@
 
 
                         />
+
+                    <TextView
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:clickable="true"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Vat"
+                        android:textColor="@android:color/black"
+                        android:layout_weight=".5"
+                        android:textSize="12dp"
+
+
+                        />
+
 
                     <TextView
                         android:gravity="center"
@@ -558,7 +537,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Tax(5%) Amt"
+                            android:text="Vat Amt"
                             android:textColor="@android:color/black"
                             android:textSize="10dp"
                             />

@@ -50,7 +50,7 @@ import java.util.Date;
                 , CompanyMaster.class
                 , TaxModel.class
         }
-        ,version = 1
+        ,version = 2
 )
 @TypeConverters(DateTypeConverter.class)
 
@@ -182,7 +182,6 @@ public abstract class OfflineDb extends RoomDatabase {
             /**
              * Tax Callback
              */
-
             TaxModel tax=new TaxModel("5%",5.00);
             tax_dao.AddTax(tax);
 

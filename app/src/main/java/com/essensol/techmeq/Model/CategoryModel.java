@@ -6,7 +6,7 @@ public class CategoryModel {
     private  int ProductCatId;
 
 
-    private  String ProductCategory;
+    private String ProductCategory;
 
     private String Image;
 

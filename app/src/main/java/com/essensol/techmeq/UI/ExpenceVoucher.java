@@ -1,5 +1,7 @@
 package com.essensol.techmeq.UI;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.Nullable;
@@ -10,20 +12,27 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.essensol.techmeq.Adapters.VoucherListAdapter;
 import com.essensol.techmeq.R;
 import com.essensol.techmeq.Room.Databases.Entity._dbExpenceVouchers;
+import com.essensol.techmeq.Utils;
 import com.essensol.techmeq.ViewModel.VoucherViewModel;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class ExpenceVoucher extends Toolbar {
 
@@ -39,7 +48,18 @@ public class ExpenceVoucher extends Toolbar {
     private VoucherViewModel model;
 
     private LinearLayout save;
+    private BigDecimal SubTotal=BigDecimal.valueOf(0),Tax=BigDecimal.valueOf(0);
 
+    private TextView subtotal,mTax,_Date;
+
+    private long mDate,mYesterday;
+    private DatePickerDialog pickerDialog;
+
+   private final Calendar myCalendar = Calendar.getInstance();
+
+   private Button _view;
+
+   private Date SelectedDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +83,46 @@ public class ExpenceVoucher extends Toolbar {
 
         save=findViewById(R.id.save);
 
+        subtotal=findViewById(R.id.subtotal);
+
+        mTax=findViewById(R.id.totTax);
+
+        _Date=findViewById(R.id.date);
+
+//        _view=findViewById(R.id.view);
+
+        tot.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if(!tot.getText().toString().equalsIgnoreCase("")&&!vat.getText().toString().equalsIgnoreCase("")) {
+
+                    BigDecimal mTax = Utils.round(Float.parseFloat(vat.getText().toString()), 2);
+                    BigDecimal _mPrice = Utils.round(Float.parseFloat(tot.getText().toString()), 2);
+
+                    BigDecimal taxRev = GetReverse(_mPrice, mTax);
+
+                    tax.setText(taxRev.toString());
+                }
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+
+
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -74,27 +134,25 @@ public class ExpenceVoucher extends Toolbar {
         model = ViewModelProviders.of(this).get(VoucherViewModel.class);
 
 
-        vat.addTextChangedListener(new TextWatcher() {
+        SelectedDate = Calendar.getInstance().getTime();
+        mDate =SelectedDate.getTime();
+
+//        Date yesterDay =yesterday(c);
+
+//        mYesterday=yesterDay.getTime();
+
+
+        String myFormat = "dd/MMM/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
+
+        _Date.setText(sdf.format(mDate));
+
+        SetObserver(mDate);
+
+        _Date.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                if(!tax.getText().toString().equalsIgnoreCase(""))
-                {
-                    String total =Integer.toString((Integer.parseInt(tax.getText().toString().trim())) * (Integer.parseInt(vat.getText().toString().trim())));
-
-                    tot.setText(total);
-                }
-
+            public void onClick(View v) {
+                GetDate();
             }
         });
 
@@ -108,19 +166,18 @@ public class ExpenceVoucher extends Toolbar {
             }
         });
 
+//        _view.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Log.e("mDate","OnClick"+mDate);
+//                SetObserver(mDate,mYesterday);
+//            }
+//        });
 
 
 
-        model.GetAllVouchers().observe(this, new Observer<List<_dbExpenceVouchers>>() {
-            @Override
-            public void onChanged(@Nullable List<_dbExpenceVouchers> dbExpenceVouchers) {
 
-                Log.e("OnChanged","" +dbExpenceVouchers.size());
-                if(dbExpenceVouchers.size()>0) {
-                    adapter.SetProducts(dbExpenceVouchers);
-                }
-            }
-        });
 
 
 
@@ -132,20 +189,111 @@ public class ExpenceVoucher extends Toolbar {
     private  void AddVouchers()
     {
 
-        Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-        String formattedDate = df.format(c);
+        Log.e("Dateeeee","AddVouchers()"+SelectedDate);
+
+//        Date c = Calendar.getInstance().getTime();
+//        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+
+        BigDecimal mTax=Utils.round(Float.parseFloat(tax.getText().toString().trim()),2);
+        BigDecimal mVat=Utils.round(Float.parseFloat(vat.getText().toString().trim()),2);
+        BigDecimal mTot=Utils.round(Float.parseFloat(tot.getText().toString().trim()),2);
 
         _dbExpenceVouchers vouchers =new _dbExpenceVouchers(Desc.getText().toString().trim(),
                 Remarks.getText().toString().trim(),
-                tax.getText().toString().trim(),
-                vat.getText().toString().trim(),
-                tot.getText().toString().trim(),
-                formattedDate);
+                mTax,
+                mVat,
+                mTot,
+                SelectedDate);
 
         model.AddVoucher(vouchers);
 
+        Desc.setText("");
+        Remarks.setText("");
+        tax.setText("");
+        vat.setText("");
+        tot.setText("");
+
+
     }
 
+    public static BigDecimal GetReverse(BigDecimal price, BigDecimal taxPerc)
+    {
+        BigDecimal val =price.multiply(BigDecimal.valueOf(10000)).divide (BigDecimal.valueOf(10000).add(taxPerc.multiply(BigDecimal.valueOf(100))),2, RoundingMode.HALF_UP);
+        return val;
+
+    }
+
+    private  void SetObserver(long date)
+    {
+        model.getAllVoucherReportByDate(date).observe(this, new Observer<List<_dbExpenceVouchers>>() {
+            @Override
+            public void onChanged(@Nullable List<_dbExpenceVouchers> dbExpenceVouchers) {
+
+                Log.e("OnChanged","" +dbExpenceVouchers.size());
+                if(dbExpenceVouchers.size()>0) {
+                    adapter.AddVoucher(dbExpenceVouchers);
+
+                    for(int i=0;i<dbExpenceVouchers.size();i++)
+                    {
+                        SubTotal =SubTotal.add(dbExpenceVouchers.get(i).getTaxable());
+                        Tax =Tax.add(dbExpenceVouchers.get(i).getVat());
+
+
+                    }
+                    subtotal.setText(SubTotal.toString());
+                    mTax.setText(Tax.toString());
+                }
+            }
+        });
+
+    }
+
+
+    private void GetDate() {
+
+
+
+
+
+        pickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+            @SuppressLint("SetTextI18n")
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                Calendar newDate = Calendar.getInstance();
+//                newDate.set(year, monthOfYear, dayOfMonth);
+                _Date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                pickerDialog.getDatePicker().setSpinnersShown(true);
+                pickerDialog.getDatePicker().setCalendarViewShown(false);
+
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+
+
+
+                SelectedDate=newDate.getTime();
+
+                mDate=SelectedDate.getTime();
+
+//                mYesterday =yesterday(SelectedDate).getTime();
+
+                Log.e("ToDate",""+mDate);
+            }
+
+        },myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
+
+
+
+        pickerDialog.show();
+    }
+
+
+
+
+    private Date yesterday(Date date) {
+        final Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, -1);
+        return cal.getTime();
+    }
 
 }

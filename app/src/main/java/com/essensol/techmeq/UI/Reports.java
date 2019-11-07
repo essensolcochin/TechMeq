@@ -27,6 +27,7 @@ import com.essensol.techmeq.Room.Databases.Entity.Products;
 import com.essensol.techmeq.Room.Databases.OfflineDb;
 import com.essensol.techmeq.ViewModel.ReportViewModel;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class Reports extends Toolbar {
 
     List<ItemReportModel>mList=new ArrayList<>();
 
-    TextView from,to;
+    TextView from,to,totalSale,mTax;
 
     long  mFromDate,mToDate;
 
@@ -56,6 +57,8 @@ public class Reports extends Toolbar {
     final Calendar myCalendar = Calendar.getInstance();
 
     DatePickerDialog pickerDialog;
+
+    private BigDecimal totalDailySale=BigDecimal.valueOf(0),totalDailyVat=BigDecimal.valueOf(0);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +71,8 @@ public class Reports extends Toolbar {
         from=findViewById(R.id.fromdate);
         to=findViewById(R.id.todate);
         view=findViewById(R.id.view);
-
+        totalSale=findViewById(R.id.totalSale);
+        mTax=findViewById(R.id.totTax);
 
        final DatePickerDialog.OnDateSetListener fromdate = new DatePickerDialog.OnDateSetListener() {
 
@@ -180,6 +184,15 @@ public class Reports extends Toolbar {
                 if(itemReportModels!=null)
                 {
                     adapter.AddReports(itemReportModels);
+
+                    for (int i=0;i<itemReportModels.size();i++)
+                    {
+                        totalDailySale=totalDailySale.add(itemReportModels.get(i).getGrandTotal());
+                        totalDailyVat=totalDailyVat.add(itemReportModels.get(i).getTaxAmt());
+                    }
+
+                    totalSale.setText(totalDailySale.toString());
+                    mTax.setText(totalDailyVat.toString());
                 }
             }
         });

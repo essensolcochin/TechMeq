@@ -39,37 +39,75 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-            <TextView
-                android:layout_centerVertical="true"
-                android:textStyle="bold"
-                android:layout_marginLeft="5dp"
-                android:layout_marginStart="5dp"
-                android:layout_toRightOf="@+id/companyname"
-                android:text="2019"
-                android:id="@+id/financialyear"
-                android:textColor="@android:color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+<!--            <TextView-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_marginLeft="5dp"-->
+<!--                android:layout_marginStart="5dp"-->
+<!--                android:layout_toRightOf="@+id/companyname"-->
+<!--                android:text="2019"-->
+<!--                android:id="@+id/financialyear"-->
+<!--                android:textColor="@android:color/white"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"/>-->
 
             <RelativeLayout
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
+
+
+
+
+
                 <ImageView
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
                     android:layout_marginEnd="20dp"
-                    android:layout_toStartOf="@+id/user"
-                    android:layout_toLeftOf="@+id/user"
+                    android:layout_toStartOf="@+id/Add"
+                    android:layout_toLeftOf="@+id/Add"
                     android:id="@+id/bluetooth"
                     android:src="@drawable/bluetooth"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     />
 
-                <LinearLayout
-                    android:background="#74bf94"
 
+                <LinearLayout
+                    android:layout_margin="5dp"
+                    android:gravity="center"
+                    android:background="@drawable/smallbutton"
+                    android:id="@+id/Add"
+                    android:padding="5dp"
+                    android:layout_toStartOf="@+id/user"
+                    android:layout_toLeftOf="@+id/user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp">
+
+                    <TextView
+                        android:gravity="center_vertical"
+                        android:textSize="12sp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:text="Add Category"/>
+
+                    <ImageView
+                        android:src="@drawable/plus"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:background="@drawable/smallbutton"
+                    android:layout_centerVertical="true"
                     android:id="@+id/user"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
@@ -79,9 +117,9 @@
                     <TextView
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
-                        android:textSize="16sp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginEnd="10dp"
+                        android:textSize="12sp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginEnd="8dp"
                         android:layout_gravity="center_vertical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

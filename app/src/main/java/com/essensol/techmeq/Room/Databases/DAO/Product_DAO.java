@@ -32,9 +32,10 @@ public interface Product_DAO {
     List<ProductModel>alreadyinserted(String name);
 
 
+    @Query("SELECT * FROM Product_Master")
+    LiveData<List<Products>>AllProductForSale();
 
-
-    @Query("SELECT  Product_Master.Product_Id , Product_Master.ProductName," +
+    @Query("SELECT  Product_Master.Product_Id,Product_Master.ProductCatId , Product_Master.ProductName," +
             "SM.ProductCategory ,Product_Master.Sales_Price," +
             "Product_Master.TaxPercent FROM Product_Master " +
             "INNER JOIN Sales_Master AS SM " +

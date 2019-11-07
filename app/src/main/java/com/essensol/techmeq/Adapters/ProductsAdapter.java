@@ -2,18 +2,23 @@ package com.essensol.techmeq.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.essensol.techmeq.DialogFragments._AddProductDetailsDailog;
 import com.essensol.techmeq.Model.CategoryModel;
 import com.essensol.techmeq.R;
@@ -21,13 +26,17 @@ import com.essensol.techmeq.Room.Databases.Entity.Products;
 import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
 
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
-public  class ProductsAdapter extends  RecyclerView.Adapter<ProductsAdapter.viewHolder> {
+public  class ProductsAdapter extends  RecyclerView.Adapter<ProductsAdapter.viewHolder>  {
 
     private List<CategoryModel>items;
     private Context mContext;
+    private List<CategoryModel> searchList;
 
 
 
@@ -35,6 +44,7 @@ public  class ProductsAdapter extends  RecyclerView.Adapter<ProductsAdapter.view
 
     public ProductsAdapter(List<CategoryModel> items, Context mContext) {
         this.items = items;
+        this.searchList = items;
         this.mContext = mContext;
     }
 
@@ -62,8 +72,16 @@ public  class ProductsAdapter extends  RecyclerView.Adapter<ProductsAdapter.view
 
         holder.proName.setText(items.get(position).getProductCategory());
 
-//        holder.category.setText(items.get(position).getProduct_Category());
+        Log.e("Products Adapter"," "+items.get(position).getImage());
 
+        if(!items.get(position).getImage().equalsIgnoreCase("Image Path"))
+        {
+            Glide.with(mContext).load(Uri.fromFile(new File(items.get(position).getImage()))).into(holder.imageid);
+        }
+        else {
+            Glide.with(mContext).load(R.drawable.placeholder).into(holder.imageid);
+
+        }
 
 
 
@@ -92,11 +110,44 @@ public  class ProductsAdapter extends  RecyclerView.Adapter<ProductsAdapter.view
         notifyDataSetChanged();
     }
 
+    public void filter(String charText){
+
+        charText = charText.toLowerCase(Locale.getDefault());
+//        items.clear();
+        if (charText.length() == 0) {
+            searchList.addAll(items);
+        } else {
+            for (CategoryModel model : searchList) {
+                if (model.getProductCategory().toLowerCase(Locale.getDefault())
+                        .contains(charText)) {
+                    Log.e("Contains",""+model.getProductCategory());
+
+                    items.add(model);
+                }
+//                else if (model.getProductCategory().toLowerCase(Locale.getDefault())
+//                        .contains(charText)) {
+//                    friendList.add(model);
+//                }
+            }
+        }
+        notifyDataSetChanged();
+
+    }
+
+
+
 
     @Override
     public int getItemCount() {
-        return items.size();
+
+
+            return items.size();
+
+
     }
+
+
+
 
     public class viewHolder extends RecyclerView.ViewHolder{
         LinearLayout lay;

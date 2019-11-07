@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 
 import com.essensol.techmeq.Model.ItemReportModel;
 
+import com.essensol.techmeq.Room.Databases.Entity._dbExpenceVouchers;
 import com.essensol.techmeq.Room.Repository.mRepo;
 
 import java.util.Date;
@@ -30,4 +31,7 @@ public class ReportViewModel extends AndroidViewModel {
     {
         return product_repo.getAllSalesReport(d,d2);
     }
+
+
+
 }

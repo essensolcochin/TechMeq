@@ -6,15 +6,18 @@ import android.os.AsyncTask;
 
 import com.essensol.techmeq.Model.CustomerSpinnerModel;
 import com.essensol.techmeq.Model.ItemReportModel;
+import com.essensol.techmeq.Model.LoginModel;
 import com.essensol.techmeq.Model.ProductModel;
 import com.essensol.techmeq.Room.Databases.DAO.Customer_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.ProductCategory_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Product_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Sale_Item_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Sales_Header_DAO;
+import com.essensol.techmeq.Room.Databases.DAO.User_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Voucher_DAO;
 import com.essensol.techmeq.Room.Databases.Entity.SalesItem;
 import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
+import com.essensol.techmeq.Room.Databases.Entity.Users;
 import com.essensol.techmeq.Room.Databases.OfflineDb;
 import com.essensol.techmeq.Room.Databases.Entity.Products;
 import com.essensol.techmeq.Room.Databases.Entity._dbExpenceVouchers;
@@ -31,7 +34,7 @@ public class mRepo {
     private Customer_DAO customer_dao;
     private LiveData<List<CustomerSpinnerModel>> GetCustNameAndId;
 
-
+    private LiveData<List<Products>> AllProductForSale;
 
 
 
@@ -46,7 +49,9 @@ public class mRepo {
 
     private Sales_Header_DAO sales_header_dao;
     private LiveData<Integer>GetInvoiceId;
-    private LiveData<List<ItemReportModel>>GetSaleReports;
+
+    private User_DAO user_dao;
+    private List<LoginModel>GetLoginresult;
 
     public mRepo(Application application) {
 
@@ -57,14 +62,15 @@ public class mRepo {
         sale_item_dao=db.sale_item_dao();
         customer_dao=db.customer_dao();
         sales_header_dao=db.sales_header_dao();
+        user_dao=db.user_dao();
 
         AllVouchers=voucher_dao.GetAllVouchers();
         AllProducts=product_dao.GetAllProduct();
         AllCategories=productCategory_dao.GetProductCategory();
         GetCustNameAndId=customer_dao.GetCustNameAndId();
         GetInvoiceId =sales_header_dao.getId();
-
-
+        AllProductForSale=product_dao.AllProductForSale();
+//        GetLoginresult=user_dao.CheckLogin();
 
     }
 
@@ -75,6 +81,27 @@ public class mRepo {
 
         return product_dao.getDuplicateIfExist(name);
     }
+
+
+    public  LiveData<List<Products>>getAllProductForSale()
+    {
+
+        return AllProductForSale;
+    }
+
+//    public  List<LoginModel>VerifyLogin()
+//    {
+//
+//        return GetLoginresult;
+//    }
+
+    public  List<Users>CheckLoginValidation(String uname,String pword)
+    {
+
+        return user_dao.CheckLogin(uname,pword);
+    }
+
+
 
 
 
@@ -135,6 +162,10 @@ public class mRepo {
     }
 
 
+    public  LiveData<List<_dbExpenceVouchers>> getAllVoucherReport(long date)
+    {
+        return voucher_dao.GetAllVouchers(date);
+    }
 
 
 

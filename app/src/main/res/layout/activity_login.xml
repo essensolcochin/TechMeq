@@ -72,10 +72,10 @@
         <android.support.design.widget.TextInputLayout
             android:padding="5dp"
             android:layout_gravity="center"
-            android:theme="@style/TextLabel"
-            style="@style/LoginTextInputLayoutStyle"
+            app:errorEnabled="true"
             android:textColorHint="@android:color/darker_gray"
             android:layout_width="wrap_content"
+            android:id="@+id/userHint"
             android:layout_height="wrap_content">
 
 
@@ -98,8 +98,6 @@
         <android.support.design.widget.TextInputLayout
             android:padding="5dp"
             android:layout_gravity="center"
-            android:theme="@style/TextLabel"
-            style="@style/LoginTextInputLayoutStyle"
             android:textColorHint="@android:color/darker_gray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">

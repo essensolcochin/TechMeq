@@ -3,26 +3,29 @@
 
 
     <item
-        android:icon="@mipmap/ic_launcher"
+        android:iconTint="@android:color/black"
+        android:icon="@drawable/invoice"
         android:id="@+id/newInvoice"
         android:title="New Invoice" />
 
 
 
     <item
-        android:icon="@mipmap/ic_launcher"
+        android:iconTint="@android:color/black"
+        android:icon="@drawable/voucher"
         android:id="@+id/voucher"
         android:title="Expense Voucher" />
 
 
 
-    <item
-        android:icon="@mipmap/ic_launcher"
-        android:id="@+id/tax"
-        android:title="Tax Management" />
+<!--    <item-->
+<!--        android:icon="@mipmap/ic_launcher"-->
+<!--        android:id="@+id/tax"-->
+<!--        android:title="Tax Management" />-->
 
     <item
-        android:icon="@mipmap/ic_launcher"
+        android:iconTint="@android:color/black"
+        android:icon="@drawable/reports"
         android:id="@+id/reports"
         android:title="Reports" />
 
@@ -30,9 +33,9 @@
         android:id="@+id/sales"
         android:title="Sales Summary" />
 
-    <item
-        android:id="@+id/salesDetail"
-        android:title="Sales Details" />
+<!--    <item-->
+<!--        android:id="@+id/salesDetail"-->
+<!--        android:title="Sales Details" />-->
 
     <item
         android:id="@+id/taxreport"
@@ -41,7 +44,8 @@
 
 
     <item
-        android:icon="@mipmap/ic_launcher"
+        android:iconTint="@android:color/black"
+        android:icon="@drawable/logout"
         android:id="@+id/logout"
         android:title="Logout"
         />

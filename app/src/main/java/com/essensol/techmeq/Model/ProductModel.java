@@ -14,6 +14,8 @@ public class ProductModel {
 
     private int Product_Id;
 
+    private int ProductCatId;
+
     private  String ProductName;
 
     private String ProductCategory;
@@ -27,8 +29,9 @@ public class ProductModel {
     public ProductModel() {
     }
 
-    public ProductModel(int product_Id, String productName, String productCategory, BigDecimal sales_Price, BigDecimal taxPercent) {
+    public ProductModel(int product_Id, int productCatId, String productName, String productCategory, BigDecimal sales_Price, BigDecimal taxPercent) {
         Product_Id = product_Id;
+        ProductCatId = productCatId;
         ProductName = productName;
         ProductCategory = productCategory;
         Sales_Price = sales_Price;
@@ -41,6 +44,14 @@ public class ProductModel {
 
     public void setProduct_Id(int product_Id) {
         Product_Id = product_Id;
+    }
+
+    public int getProductCatId() {
+        return ProductCatId;
+    }
+
+    public void setProductCatId(int productCatId) {
+        ProductCatId = productCatId;
     }
 
     public String getProductName() {
