@@ -26,7 +26,7 @@ public interface User_DAO {
     @Query("SELECT * FROM User_Master ORDER BY UserId DESC")
     List<Users>GetAllUsers();
 
-    @Query("SELECT  UM.UserId , UM.UserName,UM.CompId,CM.CompName" +
+    @Query("SELECT  UM.UserId , UM.UserName,UM.CompId,CM.CompName,CM.CompBuilding,CM.TRN,CM.MobileNo" +
             " FROM User_Master AS UM " +
             "INNER JOIN COMPANY_MASTER CM " +
             "ON UM.CompId=CM.CompId ")

@@ -17,24 +17,19 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.essensol.techmeq.Adapters.AllProductListAdapter;
-import com.essensol.techmeq.Adapters.ProductsAdapter;
 import com.essensol.techmeq.Model.ProductModel;
-import com.essensol.techmeq.ProductItemClickListener;
+import com.essensol.techmeq.Callbacks.ProductItemClickListener;
 import com.essensol.techmeq.R;
 import com.essensol.techmeq.Room.Databases.DAO.Product_DAO;
 import com.essensol.techmeq.Room.Databases.Entity.Products;
@@ -45,7 +40,6 @@ import com.essensol.techmeq.ViewModel.ProductViewModel;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -77,7 +71,7 @@ public class AddProduct_fragment extends DialogFragment implements ProductItemCl
 
     private boolean withoutTax =false;
 
-    private Button mAddProduct;
+    private Button mAddProduct,delete;
 
     private int ProductId;
 
@@ -106,6 +100,9 @@ public class AddProduct_fragment extends DialogFragment implements ProductItemCl
         dismiss= Rootview.findViewById(R.id.dismiss);
         products = Rootview.findViewById(R.id.products);
         pricewithtax =Rootview.findViewById(R.id.pricewithtax);
+
+        delete=Rootview.findViewById(R.id.delete);
+
 
         progressDialog =new ProgressDialog(getContext());
         progressDialog.setTitle("Adding Product");
@@ -175,31 +172,39 @@ public class AddProduct_fragment extends DialogFragment implements ProductItemCl
         });
 
 
-
-
-
-        mPrice.addTextChangedListener(new TextWatcher() {
+        delete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                withTax =true;
-                withoutTax=false;
+            public void onClick(View v) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-
-
-
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
+                DeleteProduct();
             }
         });
+
+
+
+
+//        mPrice.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//                withTax =true;
+//                withoutTax=false;
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//
+//
+//
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
 
 
 
@@ -260,7 +265,7 @@ public class AddProduct_fragment extends DialogFragment implements ProductItemCl
                     mPrice.setError("Field Empty");
                 }
 
-                else if(mAddProduct.getText().toString().equalsIgnoreCase("Update Item"))
+                else if(mAddProduct.getText().toString().equalsIgnoreCase("Update"))
                 {
 
                     Runnable progressRunnable = new Runnable() {
@@ -311,6 +316,42 @@ public class AddProduct_fragment extends DialogFragment implements ProductItemCl
         });
         return Rootview;
     }
+
+    private void DeleteProduct() {
+
+
+
+            float mTax = Float.parseFloat(tax.getText().toString().trim());
+
+            float d = Float.parseFloat(mPrice.getText().toString().trim());
+
+            BigDecimal _salesPrice  = Utils.round(d,2);
+
+            BigDecimal _tax  =Utils.round(mTax,2);
+
+
+            Log.e("_tax",""+_tax);
+            Log.e("_salesPrice",""+_salesPrice);
+
+            Products products =new Products(ProductId,catId,_tax,mProduct_name.getText().toString().trim()
+                    ,_salesPrice
+                    ,true);
+
+            productViewModel.DeleteProduct(products);
+
+
+            delete.setVisibility(View.GONE);
+            mAddProduct.setText("Add Product");
+            mPrice.setText("");
+            mProduct_name.setText("");
+            tax.setText("");
+            mProductCategory.setSelection(0);
+
+
+        }
+
+
+
 
 
 
@@ -452,7 +493,7 @@ public class AddProduct_fragment extends DialogFragment implements ProductItemCl
 
 
     public static BigDecimal GetReverse(BigDecimal price, BigDecimal taxPerc)
-    {
+    {                                                                                                                                                     //RoundingMode.DOWN
         BigDecimal val =price.multiply(BigDecimal.valueOf(10000)).divide (BigDecimal.valueOf(10000).add(taxPerc.multiply(BigDecimal.valueOf(100))),2,RoundingMode.HALF_UP);
         return val;
 
@@ -470,7 +511,9 @@ public class AddProduct_fragment extends DialogFragment implements ProductItemCl
 
         setSpinnerObserver(ProductCatId);
 
-        mAddProduct.setText("Update Item");
+        mAddProduct.setText("Update");
+
+        delete.setVisibility(View.VISIBLE);
 
     }
 

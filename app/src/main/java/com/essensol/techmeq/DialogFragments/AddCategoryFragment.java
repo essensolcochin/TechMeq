@@ -3,9 +3,9 @@ package com.essensol.techmeq.DialogFragments;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
@@ -16,9 +16,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TabLayout;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,15 +31,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.essensol.techmeq.Adapters.AllCategoryListAdapter;
+import com.essensol.techmeq.Callbacks.CategoryItemClickListener;
 import com.essensol.techmeq.R;
 import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
 import com.essensol.techmeq.ViewModel.ProductViewModel;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
-import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import static android.app.Activity.RESULT_OK;
@@ -44,15 +47,23 @@ import static android.app.Activity.RESULT_OK;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AddCategoryFragment extends DialogFragment {
+public class AddCategoryFragment extends DialogFragment implements CategoryItemClickListener {
 
-    EditText CategoryName;
-    TextView Path;
-    Button Add;
-    ProgressDialog progressDialog;
-    ImageView dismiss;
+    private EditText CategoryName;
+    private TextView Path;
+    private Button Add,delete;
+    private ProgressDialog progressDialog;
+    private ImageView dismiss;
+
+    private AllCategoryListAdapter adapter;
+
+    private ArrayList<Sales_Category>mlist=new ArrayList<>();
 
     private ProductViewModel viewModel;
+
+    private RecyclerView categories;
+
+    private int mCategoryId;
 
     public AddCategoryFragment() {
         // Required empty public constructor
@@ -68,16 +79,31 @@ public class AddCategoryFragment extends DialogFragment {
 
         Add=rootview.findViewById(R.id.add);
 
+        delete=rootview.findViewById(R.id.delete);
+
         CategoryName=rootview.findViewById(R.id.category);
 
         Path=rootview.findViewById(R.id.imagepath);
 
         dismiss=rootview.findViewById(R.id.dismiss);
 
+        categories=rootview.findViewById(R.id.categories);
+
         progressDialog =new ProgressDialog(getContext());
         progressDialog.setTitle("Adding Category");
         progressDialog.setMessage("Saving...");
         progressDialog.setCancelable(false);
+
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        categories.setLayoutManager(linearLayoutManager);
+        categories.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+
+
+        adapter =new AllCategoryListAdapter(mlist,this.getActivity(), this);
+
+        categories.setAdapter(adapter);
 
         viewModel= ViewModelProviders.of(this).get(ProductViewModel.class);
 
@@ -100,46 +126,75 @@ public class AddCategoryFragment extends DialogFragment {
             }
         });
 
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DeleteCategory();
+
+
+            }
+        });
+
+
+
+        viewModel.GetAllProductCategory().observe(this, new Observer<List<Sales_Category>>() {
+            @Override
+            public void onChanged(@Nullable List<Sales_Category> sales_categories) {
+
+                adapter.SetCategory(sales_categories);
+
+            }
+        });
+
+
         Add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //&&!Path.getText().toString().equalsIgnoreCase("")
-                if(!CategoryName.getText().toString().equalsIgnoreCase(""))
+                if(!Add.getText().toString().equalsIgnoreCase("Update"))
                 {
+                    //&&!Path.getText().toString().equalsIgnoreCase("")
+
+                    if(!CategoryName.getText().toString().equalsIgnoreCase(""))
+                    {
 
 
-                    Runnable progressRunnable = new Runnable() {
+                        Runnable progressRunnable = new Runnable() {
 
-                        @Override
-                        public void run() {
+                            @Override
+                            public void run() {
 
-                            AddCategory();
+                                AddCategory();
 
+                                progressDialog.cancel();
 
-                            progressDialog.cancel();
-
-                            CategoryName.setText("");
-                            Path.setText("");
-
-
-
-                        }};
+                                CategoryName.setText("");
+                                Path.setText("");
 
 
 
-                    Handler pdCanceller = new Handler();
-                    pdCanceller.postDelayed(progressRunnable, 500);
+                            }};
 
 
-                    dismiss();
 
-//                    TabLayout tab = getActivity().findViewById(R.id.tabMode);
-//
-//                    tab.getTabAt(0).select();
+                        Handler pdCanceller = new Handler();
+                        pdCanceller.postDelayed(progressRunnable, 500);
 
 
+                        dismiss();
+
+
+
+
+                    }
                 }
+                else {
+                    UpdateCategory();
+                }
+
+
             }
         });
 
@@ -152,24 +207,49 @@ public class AddCategoryFragment extends DialogFragment {
         });
 
 
-                    return  rootview;
+        return  rootview;
+    }
+
+    private void DeleteCategory() {
+
+        Sales_Category category =new Sales_Category(mCategoryId,CategoryName.getText().toString(),Path.getText().toString(),true);
+
+        viewModel.DeleteProductCategory(category);
+
+        delete.setVisibility(View.GONE);
+        Add.setText("Add Category");
+        CategoryName.setText("");
+        Path.setText("");
+
+
     }
 
 
-
-    private void AddCategory()
-    {
+    private void AddCategory() {
 
 
 
-        Sales_Category category =new Sales_Category(CategoryName.getText().toString(),Path.getText().toString(),true);
+        Sales_Category category =new Sales_Category(0,CategoryName.getText().toString(),Path.getText().toString(),true);
 
         viewModel.AddProductCategory(category);
 
     }
 
 
+    private void UpdateCategory() {
 
+
+
+        Sales_Category category =new Sales_Category(mCategoryId,CategoryName.getText().toString(),Path.getText().toString(),true);
+
+        viewModel.UpdateProductCategory(category);
+
+        Add.setText("Add Category");
+        CategoryName.setText("");
+        Path.setText("");
+
+
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -277,6 +357,15 @@ public class AddCategoryFragment extends DialogFragment {
     }
 
 
+    @Override
+    public void getCategoryDetailsForEdit(int ProductCatId, String ProductCategory, String Image, boolean Status) {
+
+        mCategoryId=ProductCatId;
+        CategoryName.setText(ProductCategory);
+        Path.setText(Image);
+        Add.setText("Update");
+        delete.setVisibility(View.VISIBLE);
 
 
+    }
 }

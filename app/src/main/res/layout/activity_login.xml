@@ -116,6 +116,8 @@
         </android.support.design.widget.TextInputLayout>
 
         <LinearLayout
+            android:clickable="true"
+            android:focusable="true"
             android:id="@+id/login"
             android:background="@drawable/button"
             android:layout_marginLeft="50dp"

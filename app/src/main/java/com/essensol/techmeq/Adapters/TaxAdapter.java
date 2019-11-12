@@ -12,13 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.essensol.techmeq.Model.ItemReportModel;
-import com.essensol.techmeq.Model.mProductModel;
-import com.essensol.techmeq.OnSelectedListener;
 import com.essensol.techmeq.R;
-import com.essensol.techmeq.Room.Databases.Entity.Products;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 

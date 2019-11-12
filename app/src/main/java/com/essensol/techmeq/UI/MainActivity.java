@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -19,6 +20,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,11 +43,15 @@ import android.widget.Toast;
 import com.essensol.techmeq.Adapters.ProductsAdapter;
 import com.essensol.techmeq.DialogFragments.AddCategoryFragment;
 import com.essensol.techmeq.DialogFragments.AddCustomer;
+import com.essensol.techmeq.DialogFragments.ExitDialog;
+import com.essensol.techmeq.DialogFragments.PrintDialog;
+import com.essensol.techmeq.DialogFragments.SalesSearch;
 import com.essensol.techmeq.DialogFragments._AddProductDetailsDailog;
 import com.essensol.techmeq.Adapters.HomeTabAdapter_;
 import com.essensol.techmeq.Adapters.PurchaseListAdapter;
 import com.essensol.techmeq.Model.CategoryModel;
 import com.essensol.techmeq.Model.CustomerSpinnerModel;
+import com.essensol.techmeq.Model.EditSaleModel;
 import com.essensol.techmeq.Model.PurchaseModel;
 
 import com.essensol.techmeq.POS_Printer_Util.PrinterConnectDialog;
@@ -85,7 +91,7 @@ import java.util.concurrent.ExecutionException;
 
 
 
-public class MainActivity extends Toolbar implements _AddProductDetailsDailog.OnCompleteListener  {
+public class MainActivity extends Toolbar implements _AddProductDetailsDailog.OnCompleteListener, PrintDialog.OnPrintListener, SalesSearch.GetSaleId {
 
     public static final String CONNECT_STATUS = "connect.status";
 
@@ -99,13 +105,13 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
     private ProductViewModel model;
 
-    LinearLayout add;
+    LinearLayout add,salesearch;
 
     ArrayAdapter<CustomerSpinnerModel> CustomerAdapter;
 
     List<CustomerSpinnerModel>customerSpinnerList=new ArrayList<>();
 
-
+    private String CurrentIncoiceNum ;
 
     GridLayoutManager layoutManager;
     RecyclerView products,purchase;
@@ -123,16 +129,18 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
     private static   int SaleId,InvoiceNo=1;
 
-    TextView tot,vat,taxable,invoiceNo,invoiceDate;
+    TextView tot,vat,taxable,invoiceNo,invoiceDate,cash;
 
      ArrayList<PurchaseModel> puchase = new ArrayList<>();
-    List<SalesItem> addSaleList =new ArrayList<>();
+     List<SalesItem> addSaleList =new ArrayList<>();
+
+    private static List<EditSaleModel> SalelistforEdit =new ArrayList<>();
 
 
     int CustId;
 
     HomeTabAdapter_ adapter_;
-    String mName,mQty,mPrice;
+    String mName,mQty,mPrice,InvoiceNumber;
 
     private android.support.v7.widget.SearchView searchView;
 
@@ -142,7 +150,12 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
     private  BigDecimal mTaxPercent;
 
-    private LinearLayout search;
+    private LinearLayout search,plus,subtract;
+
+    private EditText round_off;
+
+    private int mSaleId,mSaleItemId;
+
 
 
     /**
@@ -156,6 +169,96 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
     private static final int MAIN_QUERY_PRINTER_STATUS = 0xfe;
     private static final int REQUEST_PRINT_LABEL = 0xfd;
     private static final int REQUEST_PRINT_RECEIPT = 0xfc;
+
+    @Override
+    public void getResponse(boolean response) {
+        if(response)
+        {
+          printReceiptClicked();
+
+        }
+        else {
+            puchase.clear();
+            addSaleList.clear();
+            tot.setText("");
+            vat.setText("");
+            taxable.setText("");
+            purchaseListAdapter.notifyDataSetChanged();
+
+        }
+
+    }
+
+    @Override
+    public void getSaleIdForEdit(int Id) {
+
+        Toast.makeText(MainActivity.this,Integer.toString(Id),Toast.LENGTH_LONG).show();
+
+
+        SalelistforEdit.clear();
+        mSaleId =Id;
+
+        try {
+            String result =new GetSaleEditAsync(OfflineDb.getInstance(MainActivity.this).sale_item_dao()).execute(Id).get();
+
+            if(result.equalsIgnoreCase("Completed"))
+            {
+                puchase.clear();
+
+                cash.setText("Update");
+
+                BigDecimal mTaxable =BigDecimal.valueOf(0);
+
+                for(int i=0;i<SalelistforEdit.size();i++)
+                {
+
+                    EditSaleModel item =SalelistforEdit.get(i);
+
+
+                    mSaleItemId =item.getSaleItemId();
+
+                    Log.e("getSaleIdForEdit"," "+puchase.size());
+
+//                    SalesItem model=new SalesItem(0,SaleId,items.getProductId(),items.getQty(),items.getRate(),Total
+//                            ,mTaxPercent,TaxAmt,items.getLinetot());
+
+//    public SalesItem(int saleItemId, int saleId, int productId, BigDecimal qty, BigDecimal price, BigDecimal total, BigDecimal taxPercent, BigDecimal taxAmt, BigDecimal lineTotal) {
+
+//                    PurchaseModel model =new PurchaseModel(ProductName,Product_Id,rate,netAmnt,lineTot,TaxPercent,Qty,TaxAmnt);
+
+
+                    mTaxable =mTaxable.add(item.getPrice());
+
+                    PurchaseModel model = new PurchaseModel(item.getProductName(),item.getProductId(),
+                    item.getPrice(),item.getPrice(),item.getLineTotal(),item.getTaxPercent(),item.getQty(),item.getTaxAmt());
+                    puchase.add(model);
+
+                    taxable.setText(mTaxable.toString());
+                    vat.setText(item.getTaxAmt().toString());
+                    tot.setText(item.getTotal().toString());
+                }
+
+                Log.e("getSaleIdForEdit"," "+puchase.size());
+
+                Log.e("getSaleIdForEdit","SaleId "+mSaleId);
+
+                purchaseListAdapter =new PurchaseListAdapter(puchase,MainActivity.this);
+                purchase.setAdapter(purchaseListAdapter);
+                purchaseListAdapter.notifyDataSetChanged();
+
+//                Calc();
+            }
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
 
     class PrinterServiceConnection implements ServiceConnection {
         @Override
@@ -222,14 +325,19 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
                     if (status == PrinterCom.STATE_NO_ERR) {
                         sendLabel();
                     } else {
-                        Toast.makeText(MainActivity.this, "query printer status error", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, "query printer status error", Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(MainActivity.this, "Printer not Connected", Toast.LENGTH_SHORT).show();
+
                     }
                 } else if (requestCode == REQUEST_PRINT_RECEIPT) {
                     int status = intent.getIntExtra(PrinterCom.EXTRA_PRINTER_REAL_STATUS, 16);
                     if (status == PrinterCom.STATE_NO_ERR) {
                         sendReceipt();
                     } else {
-                        Toast.makeText(MainActivity.this, "query printer status error", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, "query printer status error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Printer not Connected", Toast.LENGTH_SHORT).show();
+
                     }
                 }
             } else if (action.equals(PrinterCom.ACTION_RECEIPT_RESPONSE)) {
@@ -278,6 +386,16 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
         tot=findViewById(R.id.tot);
 
+        cash=findViewById(R.id.cash);
+
+        round_off=findViewById(R.id.round_off);
+
+        plus=findViewById(R.id.add);
+
+        subtract=findViewById(R.id.subtract);
+
+        salesearch=findViewById(R.id.salesearch);
+
         invoiceNo =findViewById(R.id.invoiceNo);
 
         taxable=findViewById(R.id.taxable);
@@ -298,8 +416,9 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
         invoiceDate.setText(formattedDate);
 
+        long different = c.getTime() - c.getTime();
 
-
+        Log.e("Difference","time"+different);
 
         connection();
 
@@ -325,8 +444,6 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
             @Override
             public void onClick(View v) {
 
-
-
                 FragmentManager fm =getSupportFragmentManager();
 
 
@@ -335,11 +452,63 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
                 dialog.show(fm,"TAG");
 
 
+           }
+        });
 
 
 
-//                Intent intent = new Intent(MainActivity.this, PortConfigurationActivity.class);
-//                startActivityForResult(intent, INTENT_PORT_SETTINGS);
+        salesearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentManager fm =getSupportFragmentManager();
+
+
+                final SalesSearch dialog= new SalesSearch();
+
+                dialog.show(fm,"TAG");
+
+
+            }
+        });
+
+        /**
+         * Click listener for Subtracting rounding  value
+         */
+        subtract.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!round_off.getText().toString().equalsIgnoreCase(""))
+                {
+                    BigDecimal total =Utils.round(Float.parseFloat(tot.getText().toString()),2);
+                    BigDecimal subRoundoff =Utils.round(Float.parseFloat(round_off.getText().toString()),2);
+
+                    BigDecimal TotalRounded =total.subtract(subRoundoff).setScale(2,BigDecimal.ROUND_HALF_UP);
+                    tot.setText(TotalRounded.toString());
+                }
+
+
+            }
+        });
+
+        /**
+         * Click listener for Adding rounding  value
+         */
+
+        plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!round_off.getText().toString().equalsIgnoreCase(""))
+                {
+                    BigDecimal total =Utils.round(Float.parseFloat(tot.getText().toString()),2);
+                    BigDecimal addRoundoff =Utils.round(Float.parseFloat(round_off.getText().toString()),2);
+
+                    BigDecimal TotalRounded =total.add(addRoundoff).setScale(2,BigDecimal.ROUND_HALF_UP);
+                    tot.setText(TotalRounded.toString());
+                }
+
+
             }
         });
 
@@ -373,30 +542,21 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         products.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
 
-//
-
-
-
-
-
-
         model = ViewModelProviders.of(this).get(ProductViewModel.class);
 
-
-
-        model.GetInvoiceandSaleId().observe(this, new Observer<Integer>() {
+        model.GetInvoiceandSaleId().observe(this, new Observer<SalesHeader>() {
             @Override
-            public void onChanged(@Nullable Integer integer) {
-                if(integer!=null)
+            public void onChanged(@Nullable SalesHeader header) {
+                if(header!=null)
                 {
-                    SaleId = integer;
+                    SaleId = header.getSaleId();
 
-                    InvoiceNo =integer+1;
+                    InvoiceNo =header.getSaleId()+1;
 
 
                     Log.e("SaleId","GetInvoiceandSaleId() "+SaleId);
 
-                    invoiceNo.setText(Integer.toString(integer + 1));
+                    invoiceNo.setText(Integer.toString(header.getSaleId() + 1));
                 }
 
             }
@@ -486,10 +646,17 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
             @Override
             public void onClick(View v) {
 
-                if(puchase.size()>0)
+                if(cash.getText().toString().equalsIgnoreCase("Update"))
                 {
-                    AddSale();
+                    DeleteSaleItem();
                 }
+                else {
+                    if(puchase.size()>0)
+                    {
+                        AddSale();
+                    }
+                }
+
 
             }
         });
@@ -517,7 +684,11 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
 
+
+
     private  void AddSale() {
+
+        CurrentIncoiceNum =invoiceNo.getText().toString();
 
 
         dialog =new ProgressDialog(this);
@@ -539,7 +710,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
         new GetFinancialAsync(OfflineDb.getInstance(this).financialYear_dao()).execute();
 
-        SalesHeader header =new SalesHeader(1,FinYearId,Integer.toString(InvoiceNo),c,1
+        SalesHeader header =new SalesHeader(1,FinYearId,0,Integer.toString(InvoiceNo),c,1
                 ,Total,TaxAmt,Discount,grandTot,grandTot);
 
         try {
@@ -549,7 +720,27 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
             if(result.equalsIgnoreCase("Completed"))
             {
-                AddSaleItem();
+
+                Runnable progressRunnable = new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        Log.e("SaleId","res  "+SaleId);
+
+                        AddSaleItem();
+
+                    }};
+
+                Handler pdCanceller = new Handler();
+                pdCanceller.postDelayed(progressRunnable, 500);
+
+
+
+
+
+
+
             }
 
         } catch (ExecutionException e) {
@@ -569,7 +760,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
             BigDecimal Total = Utils.round(Float.parseFloat(tot.getText().toString().trim()),2);
-//            BigDecimal TaxPercent = BigDecimal.valueOf(5.00);
+
             BigDecimal TaxAmt = Utils.round(Float.parseFloat(vat.getText().toString().trim()),2);
 
 
@@ -578,8 +769,8 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
             Log.e("SaleId"," "+SaleId);
 
-            SalesItem model=new SalesItem(SaleId,items.getProductId(),items.getQty(),items.getRate(),Total
-                                            ,mTaxPercent,TaxAmt,items.getLinetot());
+            SalesItem model=new SalesItem(0,SaleId,items.getProductId(),items.getQty(),items.getRate(),Total
+                                            ,mTaxPercent,items.getTaxAmnt(),items.getLinetot());
 
             addSaleList.add(model);
 
@@ -593,8 +784,17 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
                 dialog.dismiss();
                 Toast.makeText(MainActivity.this,"Saved",Toast.LENGTH_SHORT).show();
 
-                printReceiptClicked();
-//                new GetInvoiceNoAsync(OfflineDb.getInstance(this).sales_header_dao()).execute();
+                //Dialog show
+
+                FragmentManager fm =getSupportFragmentManager();
+
+
+                final PrintDialog dialog= new PrintDialog();
+
+                dialog.show(fm,"TAG");
+
+
+
             }
 
         } catch (ExecutionException e) {
@@ -605,10 +805,109 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
     }
 
+
+
+
+
+
+
+
+    private void  DeleteSaleItem()
+    {
+
+
+        dialog =new ProgressDialog(this);
+        dialog.setTitle("Updating Sale Record.");
+        dialog.setMessage("Saving....");
+        dialog.setCancelable(false);
+        dialog.show();
+
+        /**
+         * @mSaleId is the Id Received from Callback interface which is taken from table
+         */
+
+        Log.e("DeleteSaleItem"," "+mSaleId);
+
+        try {
+          String DeleteResult =  new DeleteSaleItemAsync(OfflineDb.getInstance(MainActivity.this).sale_item_dao()).execute(mSaleId).get();
+
+            if(DeleteResult.equalsIgnoreCase("Completed"))
+            {
+                UpdateSaleItem();
+            }
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void UpdateSaleItem() {
+
+        Log.e("UpdateSaleItem"," "+puchase.size());
+
+            for (int i=0;i<puchase.size();i++)
+            {
+
+
+                BigDecimal Total = Utils.round(Float.parseFloat(tot.getText().toString().trim()),2);
+
+                BigDecimal TaxAmt = Utils.round(Float.parseFloat(vat.getText().toString().trim()),2);
+
+
+
+                PurchaseModel items =puchase.get(i);
+
+                Log.e("Getter Sale Id","UpdateSaleItem  "+mSaleId);
+
+                Log.e("Getter SaleItem Id","UpdateSaleItem  "+mSaleItemId);
+
+                SalesItem model=new SalesItem(0,mSaleId,items.getProductId(),items.getQty(),items.getRate(),Total
+                        ,mTaxPercent,items.getTaxAmnt(),items.getLinetot());
+
+                addSaleList.add(model);
+
+                Log.e("addSaleList","UpdateSaleItem  "+addSaleList.size());
+
+            }
+
+            try {
+                String result = new UpdateSaleItemAsync(OfflineDb.getInstance(this).sale_item_dao()).execute(addSaleList).get();
+
+                if(result.equalsIgnoreCase("Completed"))
+                {
+                    dialog.dismiss();
+                    Toast.makeText(MainActivity.this,"Saved",Toast.LENGTH_SHORT).show();
+
+                    //Dialog show
+
+                    FragmentManager fm =getSupportFragmentManager();
+
+
+                    final PrintDialog dialog= new PrintDialog();
+
+                    dialog.show(fm,"TAG");
+
+                    cash.setText("Cash");
+
+                }
+
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
+
+
+    }
+
+
     @Override
     public void getProductListItem(BigDecimal Qty, int Product_Id, int ProductCatId, BigDecimal TaxPercent,BigDecimal TaxAmnt, String ProductName, BigDecimal Sales_Price, BigDecimal rate) {
-
-
 
         mTaxPercent =TaxPercent;
 
@@ -623,6 +922,8 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         purchaseListAdapter = new PurchaseListAdapter(puchase, MainActivity.this);
 
         purchase.setAdapter(purchaseListAdapter);
+        purchase.addItemDecoration(new DividerItemDecoration(MainActivity.this,DividerItemDecoration.VERTICAL));
+
         purchaseListAdapter.notifyDataSetChanged();
 
 
@@ -689,17 +990,13 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
 
-
-
-
-
             }
 
             BigDecimal subtotal =Utils.round(Float.parseFloat(taxable.getText().toString()),2);
             BigDecimal Vat =Utils.round(Float.parseFloat(vat.getText().toString()),2);
             total =subtotal.add(Vat);
 
-            BigDecimal netTotal = Utils.round(total.floatValue(),2);
+            BigDecimal netTotal = total.setScale(2,BigDecimal.ROUND_DOWN);
 
             tot.setText(netTotal.toString());
 
@@ -736,7 +1033,6 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 //            SaleId = header_dao.getId();
 
-//            Log.e("LastAdded","Id _--> "+SaleId );
 
 
 
@@ -747,6 +1043,94 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
             return "Completed";
         }
     }
+
+
+
+
+
+    private static class DeleteSaleItemAsync extends AsyncTask<Integer,Void,String> {
+
+        private Sale_Item_DAO item_dao;
+
+        public DeleteSaleItemAsync(Sale_Item_DAO salesItem) {
+            this.item_dao = salesItem;
+        }
+
+        @Override
+        protected String doInBackground(Integer... integers) {
+
+            Log.e("DeleteSaleItemAsync","Id --> "+integers[0] );
+
+
+            item_dao.DeleteSalesItem(integers[0]);
+
+
+            String result="Completed";
+
+            return result;
+        }
+    }
+
+
+
+
+    private static class UpdateSalesHeaderAsync extends AsyncTask<SalesHeader,Void,String> {
+
+        private Sales_Header_DAO item_dao;
+
+        public UpdateSalesHeaderAsync(Sales_Header_DAO salesHeaderDao) {
+            this.item_dao = salesHeaderDao;
+        }
+
+        @Override
+        protected String doInBackground(SalesHeader... items) {
+
+
+
+                item_dao.UpdateSalesHeader(items[0]);
+
+
+            String result="Completed";
+
+            return result;
+        }
+    }
+
+    private static  class UpdateSaleItemAsync extends AsyncTask<List<SalesItem>,Void,String> {
+
+        private Sale_Item_DAO item_dao;
+
+        public UpdateSaleItemAsync(Sale_Item_DAO Saleitemdao) {
+            this.item_dao = Saleitemdao;
+        }
+
+        @Override
+        protected String doInBackground(List<SalesItem>... items) {
+
+
+            List<SalesItem>check =items[0];
+
+            Log.e("doInBackground","AddSalesItem _--> "+check.size());
+
+            for (int i=0;i<check.size();i++)
+            {
+                SalesItem values =check.get(i);
+
+
+                SalesItem item =new SalesItem(0,values.getSaleId(),values.getProductId(),values.getQty(),values.getPrice(),
+                        values.getTotal(),values.getTaxPercent(),values.getTaxAmt(),values.getLineTotal());
+
+                item_dao.AddSalesItem(item);
+
+            }
+
+
+            String result="Completed";
+
+            return result;
+        }
+    }
+
 
 
     private  static class AddSaleItemAsync extends AsyncTask<List<SalesItem>,Void,String> {
@@ -762,16 +1146,30 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
 
+            List<SalesItem> check =items[0];
 
-           item_dao.AddSalesItem(items[0]);
-
-
-
-//            Log.e("GetAllSales","Id _--> "+item_dao.GetAllSales().size() );
+            Log.e("doInBackground","AddSalesItem _--> "+check.size());
 
 
+            for (int i=0;i<check.size();i++)
+            {
+                SalesItem values =check.get(i);
+
+                Log.e("doInBackground","getSaleItemId  "+values.getSaleItemId());
+
+                Log.e("doInBackground","getSaleId  "+values.getSaleId());
+
+                Log.e("doInBackground","getPrice  "+values.getPrice());
+
+                Log.e("doInBackground","getSaleId  "+values.getPrice());
 
 
+                SalesItem item =new SalesItem(values.getSaleItemId(),values.getSaleId(),values.getProductId(),values.getQty(),values.getPrice(),
+                        values.getTotal(),values.getTaxPercent(),values.getTaxAmt(),values.getLineTotal());
+
+                item_dao.AddSalesItem(item);
+
+            }
 
 
 
@@ -931,42 +1329,71 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
     void sendReceipt() {
 
+        SharedPreferences sp =getSharedPreferences("LogDetails",MODE_PRIVATE);
+
+        String Address =sp.getString("Address","");
+        String Phn =sp.getString("Phn","");
+        String TRN =sp.getString("TRN","");
+        String CompanyName =sp.getString("compname","");
+
+
+
         EscCommand esc = new EscCommand();
         esc.addInitializePrinter();
         esc.addPrintAndFeedLines((byte) 3);
         esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
-        esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.ON, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF);// 设置为倍高倍宽
-        esc.addText("***** TecMeq ******\n");
-        esc.addTurnUnderlineModeOnOrOff(EscCommand.UNDERLINE_MODE.UNDERLINE_1DOT);
+        esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF);// 设置为倍高倍宽
+        esc.addText(CompanyName+"\n");
 //        esc.addSetKanjiUnderLine(EscCommand.UNDERLINE_MODE.UNDERLINE_1DOT);
         esc.addPrintAndLineFeed();
+        esc.addText(Address+"\n");
+        esc.addPrintAndLineFeed();
+        esc.addText("PH: "+Phn+"\n");
+        esc.addText("TRN: "+TRN+"\n");
+
+        esc.addPrintAndLineFeed();
+
+
+        esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);// 取消倍高倍宽
+        esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
+
+        esc.addText("Tax Invoice \n");
+
+        esc.addText("---------------------------------------------\n");
 
 
 
 
         esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);// 取消倍高倍宽
         esc.addSelectJustification(EscCommand.JUSTIFICATION.LEFT);
-//        esc.addText("Print text\n");
-//        esc.addText("Welcome to use  printer!\n");
-//
-//
-//        esc.addPrintAndLineFeed();
 
-//
-//        esc.addText("Printer");
-//        esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
-//        esc.addSetAbsolutePrintPosition((short) 6);
-//        esc.addText("Printer");
-//        esc.addSetAbsolutePrintPosition((short) 10);
-//        esc.addText("Printer");
-//        esc.addPrintAndLineFeed();
+        esc.addText("Bill no:");
+        esc.addSetRelativePrintPositon((short) 2);
+        esc.addText(CurrentIncoiceNum+"\t");
 
-        esc.addText("Product     ");
+
+        esc.addSelectJustification(EscCommand.JUSTIFICATION.RIGHT);
+
+        esc.addText("Date:");
+        esc.addSetRelativePrintPositon((short) 2);
+        esc.addText(invoiceDate.getText().toString()+"\n");
+
+        esc.addSelectJustification(EscCommand.JUSTIFICATION.LEFT);
+
+
+
+        esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
+        esc.addText("---------------------------------------------\n");
+
+        esc.addSelectJustification(EscCommand.JUSTIFICATION.LEFT);
+        esc.addPrintAndLineFeed();
+
+        esc.addText("Product\t");
         esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
-        esc.addSetAbsolutePrintPosition((short) 6);
-        esc.addText("Quantity     ");
+        esc.addSetRelativePrintPositon((short) 6);
+        esc.addText("Quantity\t");
         esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
-        esc.addSetAbsolutePrintPosition((short)25);
+//        esc.addSetAbsolutePrintPosition((short)25);
         esc.addText("Rate\n");
         esc.addPrintAndLineFeed();
 
@@ -974,45 +1401,46 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         for (int i=0;i<puchase.size();i++)
         {
 
-            esc.addText(puchase.get(i).getName()+"     ");
+            esc.addText(puchase.get(i).getName());
             esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
-            esc.addSetAbsolutePrintPosition((short) 6);
-            esc.addText(puchase.get(i).getQty()+"     ");
+            esc.addSetRelativePrintPositon((short) 2);
+            esc.addText(puchase.get(i).getQty().toString());
             esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
-            esc.addSetAbsolutePrintPosition((short)25);
+            esc.addSetRelativePrintPositon((short) 2);
             esc.addText(puchase.get(i).getRate()+"\n");
             esc.addPrintAndLineFeed();
 
-//            esc.addText(puchase.get(i).getName());
-//            esc.addSetAbsolutePrintPosition((short) 10);
-//            esc.addText(Integer.toString(puchase.get(i).getQty()));
-//            esc.addSetAbsolutePrintPosition((short) 10);
-//            esc.addText(Double.toString(puchase.get(i).getRate())+"\n");
-//            esc.addSetAbsolutePrintPosition((short) 10);
         }
 
-        esc.addText("-----------------------------");
+        esc.addText("---------------------------------------------\n");
         esc.addPrintAndLineFeed();
 
-        esc.addText("SubTotal       :");
+
+        esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF);// 设置为倍高倍宽
+
+
+        esc.addText("SubTotal :");
         esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
-        esc.addSetAbsolutePrintPosition((short)25);
+        esc.addSetRelativePrintPositon((short) 2);
 
 
         esc.addText(taxable.getText().toString()+"\n");
         esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
         esc.addSetAbsolutePrintPosition((short)25);
 
-        esc.addText("Tax            :");
+        esc.addText("Tax :");
         esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
-        esc.addSetAbsolutePrintPosition((short)25);
-
+        esc.addSetRelativePrintPositon((short) 2);
 
         esc.addText(vat.getText().toString()+"\n");
         esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
-        esc.addSetAbsolutePrintPosition((short)25);
 
-        esc.addText("-----------------------------");
+        esc.addPrintAndLineFeed();
+
+        esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);// 取消倍高倍宽
+
+
+        esc.addText("---------------------------------------------\n");
         esc.addPrintAndLineFeed();
 
         esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.ON, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF);// 设置为倍高倍宽
@@ -1020,7 +1448,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
         esc.addText("Grand Total :");
         esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
-        esc.addSetAbsolutePrintPosition((short)25);
+        esc.addSetRelativePrintPositon((short) 2);
 
 
         esc.addText(tot.getText().toString()+"\n");
@@ -1031,6 +1459,9 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);// 取消倍高倍宽
 
         esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
+
+        esc.addPrintAndLineFeed();
+
         esc.addText("--- Thank you for shopping ---\r\n");
 
         esc.addGeneratePlus(LabelCommand.FOOT.F5, (byte) 255, (byte) 255);
@@ -1313,5 +1744,44 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
 
+    private static class GetSaleEditAsync extends AsyncTask<Integer,Void,String>
+    {
+
+        Sale_Item_DAO sale_item_dao;
+
+        public GetSaleEditAsync(Sale_Item_DAO sale_item_dao) {
+            this.sale_item_dao = sale_item_dao;
+        }
+
+        @Override
+        protected String doInBackground(Integer... integers) {
+
+            SalelistforEdit = sale_item_dao.GetAllSales(integers[0]);
+
+
+
+            return "Completed";
+        }
+
+
+    }
+
+    private static void getArraylist(List<EditSaleModel> models) {
+
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        FragmentManager fm =getSupportFragmentManager();
+
+
+        final ExitDialog dialog= new ExitDialog();
+
+        dialog.show(fm,"TAG");
+
+    }
 }
 

@@ -43,7 +43,7 @@ public class ExpenceVoucher extends Toolbar {
     private List<_dbExpenceVouchers>vouchers=new ArrayList<>();
 
 
-    private  EditText Desc,Remarks,tax,vat,tot;
+    private  EditText Desc,Remarks,taxable,vat,tot;
 
     private VoucherViewModel model;
 
@@ -75,7 +75,7 @@ public class ExpenceVoucher extends Toolbar {
 
         Remarks=findViewById(R.id.remark);
 
-        tax=findViewById(R.id.tax);
+        taxable=findViewById(R.id.taxable);
 
         vat=findViewById(R.id.vat);
 
@@ -108,7 +108,7 @@ public class ExpenceVoucher extends Toolbar {
 
                     BigDecimal taxRev = GetReverse(_mPrice, mTax);
 
-                    tax.setText(taxRev.toString());
+                    taxable.setText(taxRev.toString());
                 }
 
 
@@ -162,7 +162,39 @@ public class ExpenceVoucher extends Toolbar {
             @Override
             public void onClick(View v) {
 
-                AddVouchers();
+
+                if(Desc.getText().toString().equalsIgnoreCase(""))
+                {
+                    Desc.setError("Field Required");
+                    Desc.requestFocus();
+                }
+                else if(Remarks.getText().toString().equalsIgnoreCase(""))
+                {
+                    Remarks.setError("Field Required");
+                    Remarks.requestFocus();
+                }
+                else if(vat.getText().toString().equalsIgnoreCase(""))
+                {
+                    vat.setError("Field Required");
+                    vat.requestFocus();
+                }
+                else if(taxable.getText().toString().equalsIgnoreCase(""))
+                {
+                    taxable.setError("Field Required");
+                    taxable.requestFocus();
+                }
+                else if(tot.getText().toString().equalsIgnoreCase(""))
+                {
+                    tot.setError("Field Required");
+                    tot.requestFocus();
+                }
+                else {
+                    AddVouchers();
+                }
+
+
+
+
             }
         });
 
@@ -194,7 +226,7 @@ public class ExpenceVoucher extends Toolbar {
 //        Date c = Calendar.getInstance().getTime();
 //        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
 
-        BigDecimal mTax=Utils.round(Float.parseFloat(tax.getText().toString().trim()),2);
+        BigDecimal mTax=Utils.round(Float.parseFloat(taxable.getText().toString().trim()),2);
         BigDecimal mVat=Utils.round(Float.parseFloat(vat.getText().toString().trim()),2);
         BigDecimal mTot=Utils.round(Float.parseFloat(tot.getText().toString().trim()),2);
 
@@ -209,7 +241,7 @@ public class ExpenceVoucher extends Toolbar {
 
         Desc.setText("");
         Remarks.setText("");
-        tax.setText("");
+        taxable.setText("");
         vat.setText("");
         tot.setText("");
 

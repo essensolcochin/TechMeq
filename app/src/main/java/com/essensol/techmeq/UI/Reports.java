@@ -74,34 +74,37 @@ public class Reports extends Toolbar {
         totalSale=findViewById(R.id.totalSale);
         mTax=findViewById(R.id.totTax);
 
-       final DatePickerDialog.OnDateSetListener fromdate = new DatePickerDialog.OnDateSetListener() {
+//       final DatePickerDialog.OnDateSetListener fromdate = new DatePickerDialog.OnDateSetListener() {
+//
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int monthOfYear,
+//                                  int dayOfMonth) {
+//                // TODO Auto-generated method stub
+//                myCalendar.set(Calendar.YEAR, year);
+//                myCalendar.set(Calendar.MONTH, monthOfYear);
+//                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//
+//            }
+//
+//        };
+//
+//
+//        final DatePickerDialog.OnDateSetListener todate = new DatePickerDialog.OnDateSetListener() {
+//
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int monthOfYear,
+//                                  int dayOfMonth) {
+//                // TODO Auto-generated method stub
+//                myCalendar.set(Calendar.YEAR, year);
+//                myCalendar.set(Calendar.MONTH, monthOfYear);
+//                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//
+//            }
+//
+//        };
 
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-            }
-
-        };
 
 
-        final DatePickerDialog.OnDateSetListener todate = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-            }
-
-        };
 
 
 
@@ -111,16 +114,6 @@ public class Reports extends Toolbar {
 
                 setfromDate();
 
-//                new DatePickerDialog(Reports.this, fromdate, myCalendar
-//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-//                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-//                String myFormat = "MM/dd/yyyy"; //In which you need put here
-//                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-//                from.setText(sdf.format(myCalendar.getTime()));
-//
-//                Date d=myCalendar.getTime();
-//
-//                mFromDate =d.getTime();
             }
         });
 
@@ -130,17 +123,6 @@ public class Reports extends Toolbar {
 
                 setToDate();
 
-//                new DatePickerDialog(Reports.this, todate, myCalendar
-//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-//                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-//                String myFormat = "dd/MMM/yyyy"; //In which you need put here
-//                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
-//                to.setText(sdf.format(myCalendar.getTime()));
-//                Log.e("format"," "+myCalendar.getTime());
-//
-//                Date to=myCalendar.getTime();
-//
-//                mToDate=to.getTime();
 
 
             }
@@ -166,6 +148,22 @@ public class Reports extends Toolbar {
 
         model= ViewModelProviders.of(this).get(ReportViewModel.class);
 
+
+        Date yesterday =yesterday(Calendar.getInstance().getTime());
+
+        long mYesterday =yesterday.getTime();
+
+        Date today =Calendar.getInstance().getTime();
+        long mToday =today.getTime();
+
+        setObserver(mYesterday,mToday);
+
+        String myFormat = "dd/MM/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
+
+        from.setText(sdf.format(yesterday));
+
+        to.setText(sdf.format(mToday));
 
 
         adapter=new ReportsAdapter(mList,this);
@@ -221,9 +219,6 @@ public class Reports extends Toolbar {
 
 
     private void setfromDate() {
-
-
-
 
 
         pickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
@@ -289,6 +284,12 @@ public class Reports extends Toolbar {
     }
 
 
+    private Date yesterday(Date date) {
+        final Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, -1);
+        return cal.getTime();
+    }
 
 
 

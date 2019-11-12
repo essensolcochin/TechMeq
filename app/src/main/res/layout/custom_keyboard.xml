@@ -487,6 +487,36 @@
             >
 
             <LinearLayout
+                android:background="@android:color/holo_green_light"
+                android:id="@+id/addItem"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:padding="5dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:text="Add More"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
+
+
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
                 android:background="@android:color/holo_red_light"
                 android:id="@+id/done"
                 android:layout_margin="5dp"
@@ -508,11 +538,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
-
-
-
-
             </LinearLayout>
+
+
 
         </LinearLayout>
 

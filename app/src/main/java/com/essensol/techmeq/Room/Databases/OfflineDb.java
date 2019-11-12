@@ -146,7 +146,7 @@ public abstract class OfflineDb extends RoomDatabase {
 
             companyMaster_dao.AddCompany(master);
 
-            Sales_Category model =new Sales_Category("Select","null",false);
+            Sales_Category model =new Sales_Category(0,"Select","null",false);
 
             dao.AddProductCategory(model);
 

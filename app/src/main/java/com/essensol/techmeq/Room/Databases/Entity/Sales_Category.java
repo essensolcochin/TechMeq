@@ -22,12 +22,12 @@ public class Sales_Category {
     public Sales_Category() {
     }
 
-    public Sales_Category(String productCategory, String image, boolean status) {
+    public Sales_Category(int productCatId, String productCategory, String image, boolean status) {
+        ProductCatId = productCatId;
         ProductCategory = productCategory;
         Image = image;
         Status = status;
     }
-
 
     public int getProductCatId() {
         return ProductCatId;
@@ -60,7 +60,6 @@ public class Sales_Category {
     public void setStatus(boolean status) {
         Status = status;
     }
-
 
     @NonNull
     @Override

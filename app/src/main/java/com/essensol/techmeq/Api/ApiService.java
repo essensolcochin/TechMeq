@@ -22,7 +22,16 @@ public interface ApiService {
                                    @Field("ProductType") String ProductType,
                                    @Field("ProductName") String ProductName,
                                    @Field("MachineID") String MachineID,
-                                   @Field("Status") boolean Status);
+                                   @Field("Status") boolean Status,
+                                   @Field("UserName")String UserName,
+                                   @Field("UserPassword")String UserPassword);
+
+
+    @POST("CommonApi/CheckLogin")
+    @FormUrlEncoded
+    Call<LoginResponse>Login(@Field("UserName") String Username,
+                             @Field("Password") String Password);
+
 
 
 }

@@ -1,9 +1,8 @@
-package com.essensol.techmeq;
+package com.essensol.techmeq.Callbacks;
 
-import com.essensol.techmeq.Model.mProductModel;
+
 
 import java.math.BigDecimal;
-import java.util.List;
 
 public interface OnSelectedListener {
 

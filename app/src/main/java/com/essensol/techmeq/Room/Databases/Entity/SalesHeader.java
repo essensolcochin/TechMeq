@@ -49,9 +49,10 @@ public class SalesHeader {
     public SalesHeader() {
     }
 
-    public SalesHeader(int compId, int finYearId, String saleNo, Date saleDate, int custId, BigDecimal subTotal, BigDecimal taxAmt, BigDecimal discount, BigDecimal grandTotal, BigDecimal paidAmt) {
+    public SalesHeader(int compId, int finYearId, int saleId, String saleNo, Date saleDate, int custId, BigDecimal subTotal, BigDecimal taxAmt, BigDecimal discount, BigDecimal grandTotal, BigDecimal paidAmt) {
         CompId = compId;
         FinYearId = finYearId;
+        SaleId = saleId;
         SaleNo = saleNo;
         SaleDate = saleDate;
         CustId = custId;
@@ -60,8 +61,6 @@ public class SalesHeader {
         Discount = discount;
         GrandTotal = grandTotal;
         PaidAmt = paidAmt;
-
-
     }
 
 

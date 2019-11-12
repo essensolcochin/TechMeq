@@ -13,10 +13,12 @@ import com.essensol.techmeq.Room.DecimalConverter;
 
 import java.math.BigDecimal;
 
+import static android.arch.persistence.room.ForeignKey.CASCADE;
+
 @Entity(tableName="Sales_Item"
 , indices = @Index(value = {"ProductId", "SaleId"}),
-foreignKeys = {@ForeignKey(entity = Products.class, parentColumns = "Product_Id", childColumns = "ProductId"),
-@ForeignKey(entity = SalesHeader.class, parentColumns = "SaleId", childColumns = "SaleId")}
+foreignKeys = {@ForeignKey(entity = Products.class, parentColumns = "Product_Id", childColumns = "ProductId",onDelete = CASCADE),
+@ForeignKey(entity = SalesHeader.class, parentColumns = "SaleId", childColumns = "SaleId",onDelete = CASCADE)}
 )
 
 public class SalesItem {
@@ -51,7 +53,8 @@ public class SalesItem {
     public SalesItem() {
     }
 
-    public SalesItem(int saleId, int productId, BigDecimal qty, BigDecimal price, BigDecimal total, BigDecimal taxPercent, BigDecimal taxAmt, BigDecimal lineTotal) {
+    public SalesItem(int saleItemId, int saleId, int productId, BigDecimal qty, BigDecimal price, BigDecimal total, BigDecimal taxPercent, BigDecimal taxAmt, BigDecimal lineTotal) {
+        SaleItemId = saleItemId;
         SaleId = saleId;
         ProductId = productId;
         Qty = qty;
@@ -61,7 +64,6 @@ public class SalesItem {
         TaxAmt = taxAmt;
         LineTotal = lineTotal;
     }
-
 
     public int getSaleItemId() {
         return SaleItemId;

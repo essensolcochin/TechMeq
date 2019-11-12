@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
 import com.essensol.techmeq.Model.CustomerSpinnerModel;
+import com.essensol.techmeq.Model.EditSaleModel;
 import com.essensol.techmeq.Model.ItemReportModel;
 import com.essensol.techmeq.Model.LoginModel;
 import com.essensol.techmeq.Model.ProductModel;
@@ -15,6 +16,7 @@ import com.essensol.techmeq.Room.Databases.DAO.Sale_Item_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Sales_Header_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.User_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Voucher_DAO;
+import com.essensol.techmeq.Room.Databases.Entity.SalesHeader;
 import com.essensol.techmeq.Room.Databases.Entity.SalesItem;
 import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
 import com.essensol.techmeq.Room.Databases.Entity.Users;
@@ -39,7 +41,7 @@ public class mRepo {
 
 
     private Sale_Item_DAO sale_item_dao;
-    private LiveData<List<SalesItem>> AllSales;
+//    private List<SalesItem> AllSales;
 
     private ProductCategory_DAO productCategory_dao;
     private LiveData<List<Sales_Category>> AllCategories;
@@ -48,7 +50,7 @@ public class mRepo {
     private LiveData<List<ProductModel>>AllProducts;
 
     private Sales_Header_DAO sales_header_dao;
-    private LiveData<Integer>GetInvoiceId;
+    private LiveData<SalesHeader>GetInvoiceId;
 
     private User_DAO user_dao;
     private List<LoginModel>GetLoginresult;
@@ -68,9 +70,9 @@ public class mRepo {
         AllProducts=product_dao.GetAllProduct();
         AllCategories=productCategory_dao.GetProductCategory();
         GetCustNameAndId=customer_dao.GetCustNameAndId();
-        GetInvoiceId =sales_header_dao.getId();
+        GetInvoiceId =sales_header_dao.getLastProductLive();
         AllProductForSale=product_dao.AllProductForSale();
-//        GetLoginresult=user_dao.CheckLogin();
+//        AllSales=sale_item_dao.();
 
     }
 
@@ -151,7 +153,7 @@ public class mRepo {
         return product_dao.alreadyinserted(name);
     }
 
-    public  LiveData<Integer> getInvoiceAndSaleID()
+    public  LiveData<SalesHeader> getInvoiceAndSaleID()
     {
         return GetInvoiceId;
     }
@@ -236,9 +238,9 @@ public class mRepo {
     // SaleItem
 
 
-    public  LiveData<List<SalesItem>>getAllSales()
+    public  List<EditSaleModel>getAllSales(int SaleId)
     {
-        return AllSales;
+        return sale_item_dao.GetAllSales(SaleId);
     }
 
 

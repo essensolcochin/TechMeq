@@ -83,7 +83,6 @@ public  class PurchaseListAdapter extends  RecyclerView.Adapter<PurchaseListAdap
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, items.size());
         ((MainActivity)mContext).Calc();
-//        mContext
     }
 
 }

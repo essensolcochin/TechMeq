@@ -11,10 +11,12 @@ import com.essensol.techmeq.Room.DecimalConverter;
 
 import java.math.BigDecimal;
 
+import static android.arch.persistence.room.ForeignKey.CASCADE;
+
 
 @Entity (tableName = "Product_Master"
         , indices = @Index(value = {"ProductCatId", "ProductCatId"}),
-        foreignKeys = {@ForeignKey(entity = Sales_Category.class, parentColumns = "ProductCatId", childColumns = "ProductCatId")}
+        foreignKeys = {@ForeignKey(entity = Sales_Category.class, parentColumns = "ProductCatId", childColumns = "ProductCatId",onDelete = CASCADE)}
 )
 public class Products {
 

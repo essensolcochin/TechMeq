@@ -7,18 +7,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.essensol.techmeq.Model.ProductModel;
-import com.essensol.techmeq.Model.mProductModel;
-import com.essensol.techmeq.OnSelectedListener;
-import com.essensol.techmeq.ProductItemClickListener;
+import com.essensol.techmeq.Callbacks.ProductItemClickListener;
 import com.essensol.techmeq.R;
-import com.essensol.techmeq.Room.Databases.Entity.Products;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AllProductListAdapter  extends  RecyclerView.Adapter<AllProductListAdapter.viewHolder> {

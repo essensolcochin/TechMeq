@@ -2,17 +2,13 @@ package com.essensol.techmeq.DialogFragments;
 
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -20,15 +16,15 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -37,19 +33,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.essensol.techmeq.Adapters.ProductListAdapter;
 import com.essensol.techmeq.Adapters.SelectedListAdapter;
-import com.essensol.techmeq.Model.mProductModel;
-import com.essensol.techmeq.OnSelectedListener;
+import com.essensol.techmeq.Callbacks.OnSelectedListener;
 import com.essensol.techmeq.R;
 import com.essensol.techmeq.Room.Databases.Entity.Products;
 import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
 import com.essensol.techmeq.Utils;
 import com.essensol.techmeq.ViewModel.ProductViewModel;
-
-import org.w3c.dom.Text;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -77,7 +69,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
     }
     private OnCompleteListener mListner;
 
-    LinearLayout[] btn = new LinearLayout[16];
+    LinearLayout[] btn = new LinearLayout[17];
 
     TextView qty,mRate,mPrice,title,vat;
 
@@ -87,7 +79,9 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
     LinearLayout rateclick;
 
-    boolean isFocused=false;
+    boolean isFocused=false,isFirstQty=false,isFirstRate=false;
+
+
 
     boolean isRate=false;
 
@@ -118,7 +112,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
     BigDecimal Sales_Price;
     boolean Status;
 
-    SearchView search;
+    EditText search;
 
 
 //    @Override
@@ -192,6 +186,9 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
         mPrice=RootView.findViewById(R.id.total);
 
         search=RootView.findViewById(R.id.search);
+
+        search.requestFocus();
+
         vat=RootView.findViewById(R.id.vat);
 
         selectedItems=RootView.findViewById(R.id.selected);
@@ -235,6 +232,8 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
                 @Override
                 public void onClick(View v) {
 
+                    qty.setText("");
+
                     final int sdk = android.os.Build.VERSION.SDK_INT;
                     if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
                         qty.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm) );
@@ -255,6 +254,8 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
             mRate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    isFirstRate =true;
 
                     isRate=true;
                     isFocused=false;
@@ -360,11 +361,12 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
         btn[13] = RootView.findViewById(R.id.back);
         btn[14] = RootView.findViewById(R.id.Zero);
         btn[15] = RootView.findViewById(R.id.next);
+        btn[16] = RootView.findViewById(R.id.addItem);
 
 
 //        qty.requestFocus();
 
-        for(int i =0;i<16;i++){
+        for(int i =0;i<17;i++){
             btn[i].setOnClickListener(this);
         }
 
@@ -402,11 +404,20 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
                                BigDecimal Qty = Utils.round(Float.parseFloat(qty.getText().toString()),2);
 
-                               BigDecimal Total = rate.multiply(Qty).setScale(2,BigDecimal.ROUND_HALF_UP);
+                               BigDecimal netAmnt =rate.multiply(Qty);
 
-                               Log.e("CAlC", "Total " + Total);
+                               BigDecimal TaxAmnt = netAmnt.multiply(TaxPercent.divide(BigDecimal.valueOf(100),2,BigDecimal.ROUND_UP)).setScale(3,BigDecimal.ROUND_DOWN);
+
+                               BigDecimal taxRounded = Utils.getRounded(TaxAmnt);
+
+                               BigDecimal Total = rate.multiply(Qty).add(taxRounded).setScale(2,BigDecimal.ROUND_HALF_UP);
+
+                               Log.e("CAlC", "taxRounded " + taxRounded);
+
+                               vat.setText(taxRounded.toString());
 
                                mPrice.setText(Total.toString());
+
                            }
                         }
 
@@ -423,11 +434,18 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
                                 BigDecimal Qty = Utils.round(Float.parseFloat(qty.getText().toString()),2);
 
-                                BigDecimal Total = rate.multiply(Qty).setScale(2,BigDecimal.ROUND_HALF_UP);
+                                BigDecimal netAmnt =rate.multiply(Qty);
 
-                                Log.e("CAlC", "Total " + Total);
+                                BigDecimal TaxAmnt = netAmnt.multiply(TaxPercent.divide(BigDecimal.valueOf(100),2,BigDecimal.ROUND_UP)).setScale(3,BigDecimal.ROUND_DOWN);
+
+                                BigDecimal taxRounded = Utils.getRounded(TaxAmnt);
+
+                                BigDecimal Total = rate.multiply(Qty).add(taxRounded).setScale(2,BigDecimal.ROUND_HALF_UP);
+
+                                Log.e("CAlC", "taxRounded " + taxRounded);
 
                                 mPrice.setText(Total.toString());
+                                vat.setText(taxRounded.toString());
                             }
                         }
                     }
@@ -457,7 +475,7 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
                 if(isFocused) {
 
-                    if (!qty.getText().toString().equals("") && !mRate.getText().toString().equals(""))
+                    if (!qty.getText().toString().equals("") && !mRate.getText().toString().equals("")&&!vat.getText().toString().equals(""))
                     {
 
                         if(qty.getText()!=null&& mRate.getText()!=null)
@@ -466,15 +484,39 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
                             Log.e("CAlC", "qty" + qty.getText().toString().trim());
 
-                            BigDecimal rate = Utils.round(Float.parseFloat(mRate.getText().toString().trim()),2);
 
-                            BigDecimal Qty = Utils.round(Float.parseFloat(qty.getText().toString()),2);
 
-                            BigDecimal Total = rate.multiply(Qty);
+                            NumberFormat format = NumberFormat.getInstance(Locale.GERMAN);
+                            float value=0;
 
-                            Log.e("CAlC", "Total " + Total);
+                            try {
+                                value = format.parse(mRate.getText().toString().trim()).floatValue();
 
-                            mPrice.setText(Total.setScale(2,BigDecimal.ROUND_HALF_UP).toString());
+
+                                BigDecimal rate = Utils.round(value,2);
+
+                                BigDecimal Qty = Utils.round(Float.parseFloat(qty.getText().toString()),2);
+
+                                BigDecimal netAmnt =rate.multiply(Qty);
+
+                                BigDecimal TaxAmnt = netAmnt.multiply(TaxPercent.divide(BigDecimal.valueOf(100),2,BigDecimal.ROUND_UP)).setScale(3,BigDecimal.ROUND_DOWN);
+
+                                BigDecimal taxRounded =Utils.getRounded(TaxAmnt);
+//
+                                BigDecimal Total = rate.multiply(Qty).add(taxRounded).setScale(2,BigDecimal.ROUND_HALF_UP);
+//
+                                Log.e("CAlC", "taxRounded " + taxRounded);
+
+                                mPrice.setText(Total.toString());
+                                vat.setText(taxRounded.toString());
+
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+
+//
+
                         }
                     }
 
@@ -499,10 +541,17 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
                             BigDecimal Qty = Utils.round(Float.parseFloat(qty.getText().toString()),2);
 
-                            BigDecimal Total = rate.multiply(Qty).setScale(2,BigDecimal.ROUND_HALF_UP);
+                            BigDecimal netAmnt =rate.multiply(Qty);
 
-                            Log.e("CAlC", "Total " + Total);
+                            BigDecimal TaxAmnt = netAmnt.multiply(TaxPercent.divide(BigDecimal.valueOf(100),2,BigDecimal.ROUND_UP)).setScale(3,BigDecimal.ROUND_DOWN);
+//
+                            BigDecimal taxRounded =Utils.getRounded(TaxAmnt);
 
+                            BigDecimal Total = rate.multiply(Qty).add(taxRounded).setScale(2,BigDecimal.ROUND_HALF_UP);
+//
+                            Log.e("CAlC", "taxRounded " + taxRounded);
+
+                            vat.setText(taxRounded.toString());
                             mPrice.setText(Total.toString());
                         }
                     }
@@ -515,7 +564,8 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
         });
 
 
-
+        InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
 
 
@@ -534,8 +584,14 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
         model.GetProduct_By_CategoryId(CategoryId).observe(this, new Observer<List<Products>>() {
             @Override
             public void onChanged(@Nullable List<Products> products) {
-                Log.e("Onchanged","list Size -- "+products.size());
-                adapter.SetProducts(products);
+                if(products !=null)
+                {
+                    list=products;
+
+                    adapter.SetProducts(products);
+                }
+                SearchFilter();
+
             }
         });
     }
@@ -609,12 +665,12 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
                     final int sdk = android.os.Build.VERSION.SDK_INT;
                     if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                        mRate.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm) );
-                        qty.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.selected) );
+                        mRate.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.selected) );
+                        qty.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm) );
 
                     } else {
-                        mRate.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm));
-                        qty.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selected));
+                        mRate.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selected));
+                        qty.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm));
                     }
 
                 }
@@ -626,13 +682,13 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
                     final int sdk = android.os.Build.VERSION.SDK_INT;
                     if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN)
                     {
-                        qty.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm) );
-                        mRate.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.selected) );
+                        qty.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.selected) );
+                        mRate.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm) );
 
                     }
                     else {
-                        qty.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm));
-                        mRate.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selected));
+                        qty.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selected));
+                        mRate.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm));
                     }
 
                 }
@@ -668,15 +724,51 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
             case R.id.done:
 
 
+                isFirstRate=false;
+                isFirstQty=false;
+
 
                 Input();
+
+                getDialog().dismiss();
+
+                break;
+
+
+            case R.id.addItem:
+
+                InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
+
+                isFirstRate=false;
+                isFirstQty=false;
+
+
+                Input();
+
 
                 break;
 
         }
     }
     private void addtoarray(String numbers){
-        if(isFocused)
+
+        if(isFirstQty&&isFocused){
+
+            qty.setText(numbers);
+
+            isFirstQty =false;
+        }
+
+        else if(isFirstRate&&isRate){
+
+            mRate.setText(numbers);
+
+            isFirstRate =false;
+        }
+
+        else if(isFocused)
         {
             qty.append(numbers);
         }
@@ -695,8 +787,13 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
         Log.e("Input()","Called"+qty.getHint());
 
 
-         if(!mRate.getText().equals("")&&!qty.getText().equals("")&&!mPrice.getText().toString().trim().equals(""))
+
+
+         if(!qty.getText().toString().equalsIgnoreCase("0")&&!mRate.getText().equals("")&&!qty.getText().equals("")&&!mPrice.getText().toString().trim().equals("")&&!mRate.getText().toString().equalsIgnoreCase("0"))
         {
+
+
+
               BigDecimal rate =Utils.round(Float.parseFloat(mRate.getText().toString()),2);
 
               BigDecimal quantity =Utils.round(Float.parseFloat(qty.getText().toString()),2);
@@ -704,8 +801,9 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
               BigDecimal netAmnt = rate.multiply(quantity);
 
               BigDecimal TaxAmt =netAmnt.multiply(TaxPercent.divide(BigDecimal.valueOf(100),2,BigDecimal.ROUND_HALF_UP))
-                      .setScale(2,BigDecimal.ROUND_HALF_UP);
-//
+                      .setScale(3,BigDecimal.ROUND_DOWN);
+
+            BigDecimal taxRounded =Utils.getRounded(TaxAmt);
 //
 
               /**
@@ -713,8 +811,14 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
                */
 
             assert mListner != null;
-            mListner.getProductListItem(quantity,Product_Id,ProductCatId,TaxPercent,TaxAmt,title.getText().toString(),rate,rate);
-            getDialog().dismiss();
+            mListner.getProductListItem(quantity,Product_Id,ProductCatId,TaxPercent,taxRounded,title.getText().toString(),rate,rate);
+
+            qty.setText("");
+            mPrice.setText("");
+            mRate.setText("");
+            vat.setText("");
+            title.setText("");
+            search.setText("");
 
         }
 
@@ -807,32 +911,72 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
             Log.e("Search", "else "+list.size() );
 
-            search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            search.addTextChangedListener(new TextWatcher() {
                 @Override
-                public boolean onQueryTextSubmit(String query) {
-                    if (list.contains(query)) {
-                        adapter.getFilter().filter(query);
-                    } else {
-                        Toast.makeText(getContext(), "No Match found", Toast.LENGTH_LONG).show();
-                    }
-                    return false;
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
                 }
 
                 @Override
-                public boolean onQueryTextChange(String newText) {
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                    adapter.getFilter().filter(newText);
+                    adapter.getFilter().filter(s);
 
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+
+
+            search.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+
+
+                        InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                        return true;
+                    }
                     return false;
                 }
             });
 
-        }
-        EditText searchEditText = (EditText) search.findViewById(android.support.v7.appcompat.R.id.search_src_text);
 
-        searchEditText.setTextColor(Color.DKGRAY);
-        searchEditText.setHintTextColor(Color.DKGRAY);
+//
+//            search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//                @Override
+//                public boolean onQueryTextSubmit(String query) {
+//
+//
+////                    } else {
+//////                        Toast.makeText(getContext(), "No Match found", Toast.LENGTH_LONG).show();
+////                    }
+//                    return false;
+//
+//                }
+//
+//                @Override
+//                public boolean onQueryTextChange(String newText) {
+//
+//                    adapter.getFilter().filter(newText);
+//
+//                    return false;
+//                }
+//
+//
+//
+//            });
+
+        }
+//        EditText searchEditText = (EditText) search.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+//
+//        searchEditText.setTextColor(Color.DKGRAY);
+//        searchEditText.setHintTextColor(Color.DKGRAY);
 
 
     }
@@ -845,21 +989,22 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
 
         isFocused=true;
+        isFirstQty =true;
+
 
         final int sdk = android.os.Build.VERSION.SDK_INT;
         if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-            qty.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm) );
-            mRate.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.selected) );
+            qty.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.selected) );
+            mRate.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm) );
 
         } else {
-            qty.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm));
-            mRate.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selected));
+            qty.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selected));
+            mRate.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm));
         }
 
 
 
-        title.setText(ProductName);
-
+      title.setText(ProductName);
       this.Product_Id=Product_Id;
       this.ProductCatId=ProductCatId;
       this.TaxPercent=TaxPercent;
@@ -873,17 +1018,23 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
         BigDecimal Total =Utils.round(Float.parseFloat(qty.getText().toString()),2).multiply(Sales_Price);
 
+        BigDecimal TaxAmount =Total.multiply(TaxPercent.divide(BigDecimal.valueOf(100),2,BigDecimal.ROUND_DOWN)).setScale(3,BigDecimal.ROUND_DOWN);
 
+        BigDecimal taxRounded =Utils.getRounded(TaxAmount);
 
-        BigDecimal TaxAmount =Total.multiply(TaxPercent.divide(BigDecimal.valueOf(100),2,BigDecimal.ROUND_HALF_UP)).setScale(2,BigDecimal.ROUND_HALF_UP);
-
-        BigDecimal SubTotal = Total.add(TaxAmount).setScale(2,BigDecimal.ROUND_HALF_UP);
+        BigDecimal SubTotal = Total.add(taxRounded).setScale(2,BigDecimal.ROUND_HALF_UP);
 
         mRate.setText(Sales_Price.toString());
 
-        vat.setText(TaxAmount.toString());
+        vat.setText(taxRounded.toString());
+
+
+
+        Log.e("subtotalRounded", " "+SubTotal);
 
         mPrice.setText(SubTotal.toString());
+
+
 
     }
 

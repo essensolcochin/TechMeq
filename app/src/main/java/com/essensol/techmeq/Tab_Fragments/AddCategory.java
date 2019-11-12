@@ -148,7 +148,7 @@ public class AddCategory extends Fragment {
 
     private void AddCategory()
     {
-        Sales_Category category =new Sales_Category(CategoryName.getText().toString(),"Path",true);
+        Sales_Category category =new Sales_Category(0,CategoryName.getText().toString(),"Path",true);
 
         viewModel.AddProductCategory(category);
 

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class RegisterResponse {
 
+
     @SerializedName("responseCode")
     @Expose
     private String Code;

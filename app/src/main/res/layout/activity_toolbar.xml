@@ -19,8 +19,14 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
+
+        android:paddingLeft="0dp"
+        android:paddingStart="0dp"
+        android:paddingRight="0dp"
+        android:paddingEnd="0dp"
+        app:contentInsetStartWithNavigation= "0dp"
+        android:minHeight="?attr/actionBarSize"
         android:id="@+id/toolbar"
-        android:elevation="5dp"
         android:background="@drawable/gradienttoolbar"
         android:layout_width="match_parent"
         android:layout_height="40dp">
@@ -32,10 +38,9 @@
 
             <TextView
                 android:layout_centerVertical="true"
-                android:textStyle="bold"
                 android:text="Essensol"
                 android:id="@+id/companyname"
-                android:textColor="@android:color/white"
+                android:textColor="#4E4E4E"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -62,6 +67,7 @@
 
 
                 <ImageView
+                    android:tint="@android:color/black"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
                     android:layout_marginEnd="20dp"
@@ -75,64 +81,71 @@
 
 
                 <LinearLayout
-                    android:layout_margin="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:gravity="center"
-                    android:background="@drawable/smallbutton"
                     android:id="@+id/Add"
                     android:padding="5dp"
+                    android:background="@color/blue"
                     android:layout_toStartOf="@+id/user"
                     android:layout_toLeftOf="@+id/user"
                     android:layout_width="wrap_content"
-                    android:layout_height="28dp">
+                    android:layout_height="match_parent">
 
                     <TextView
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:drawableTint="@android:color/white"
+                        android:drawableLeft="@drawable/plus"
+                        android:drawableStart="@drawable/plus"
                         android:gravity="center_vertical"
                         android:textSize="12sp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginEnd="8dp"
+
                         android:layout_gravity="center_vertical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@android:color/white"
-                        android:text="Add Category"/>
+                        android:text="ADD CATEGORY"/>
 
-                    <ImageView
-                        android:src="@drawable/plus"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"/>
+<!--                    <ImageView-->
+<!--                        android:src="@drawable/plus"-->
+<!--                        android:layout_width="25dp"-->
+<!--                        android:layout_height="25dp"/>-->
 
                 </LinearLayout>
 
 
                 <LinearLayout
+                    android:padding="5dp"
                     android:gravity="center_vertical"
-                    android:background="@drawable/smallbutton"
+                    android:background="@color/green"
                     android:layout_centerVertical="true"
                     android:id="@+id/user"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
 
                     <TextView
-                        android:layout_marginStart="10dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:gravity="center"
+                        android:drawableLeft="@drawable/plus"
+                        android:drawableStart="@drawable/plus"
                         android:textSize="12sp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginEnd="8dp"
                         android:layout_gravity="center_vertical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@android:color/white"
-                        android:text="Add Product"/>
+                        android:text="ADD PRODUCT"/>
 
-                    <ImageView
+<!--                    <ImageView-->
 
-                        android:id="@+id/addItem"
-                        android:src="@drawable/plus"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                       />
+<!--                        android:id="@+id/addItem"-->
+<!--                        android:src="@drawable/plus"-->
+<!--                        android:layout_width="25dp"-->
+<!--                        android:layout_height="25dp"-->
+<!--                       />-->
 
                 </LinearLayout>
 

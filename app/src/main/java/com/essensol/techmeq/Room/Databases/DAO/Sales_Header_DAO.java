@@ -31,6 +31,10 @@ public interface Sales_Header_DAO {
     List<SalesHeader> GetSalesHeader();
 
 
+    @Query("SELECT * FROM sales_header ORDER BY SaleId DESC LIMIT 1")
+    LiveData<SalesHeader> getLastProductLive();
+
+
     @Query("SELECT MAX(SaleId) FROM sales_header ")
     LiveData<Integer> getId();
 
@@ -42,8 +46,8 @@ public interface Sales_Header_DAO {
 
 
     @Query("SELECT  SaleId , SaleNo,SaleDate,SubTotal,TaxAmt,GrandTotal,PaidAmt,GrandTotal-PaidAmt AS Credit FROM sales_header " +
-            "WHERE SaleDate BETWEEN :FromDate AND :toDate")
-    LiveData<List<ItemReportModel>> getSalesitemReport(long FromDate,long toDate);
+            "WHERE SaleDate >= :FromDate AND SaleDate <= :toDate")
+     LiveData<List<ItemReportModel>> getSalesitemReport(long FromDate,long toDate);
 
 //    @Query("SELECT  SaleId , SaleNo,SaleDate,SubTotal,TaxAmt,GrandTotal,PaidAmt,GrandTotal-PaidAmt AS Credit FROM sales_header ")
 //    LiveData<List<ItemReportModel>> getSalesitemReport();

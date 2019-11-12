@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#dadada"
+    android:background="#f5f6fa"
     tools:context=".UI.MainActivity">
 
     <LinearLayout
         android:padding="30dp"
-        android:background="#86d2ab"
+        android:background="#f5f6fa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -31,29 +31,32 @@
             android:layout_width="0dp"
             android:layout_height="match_parent">
             <RelativeLayout
-
+                android:padding="5dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/background"
                 android:layout_width="match_parent"
-                android:layout_height="36dp">
+                android:layout_height="wrap_content">
 
 
                 <TextView
+                    android:padding="2dp"
                     android:id="@+id/tv"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
-                    android:background="@android:color/white"
+                    android:background="@drawable/edittextbgm"
                     android:layout_centerVertical="true"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"/>
 
                 <LinearLayout
+                    android:layout_toStartOf="@+id/salesearch"
+                    android:layout_toLeftOf="@+id/salesearch"
                     android:id="@+id/mSearch"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_toEndOf="@+id/tv"
-                    android:layout_toRightOf="@+id/tv"
-                    android:padding="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:padding="10dp"
                     android:gravity="center_vertical"
                     android:background="@drawable/smallbutton"
                     android:layout_centerVertical="true"
@@ -63,8 +66,8 @@
 
                     <TextView
 
+                        android:gravity="center"
                         android:textSize="12sp"
-
                         android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -76,27 +79,27 @@
 
                 <LinearLayout
                     android:id="@+id/salesearch"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toEndOf="@+id/mSearch"
-                    android:layout_toRightOf="@+id/mSearch"
-                    android:padding="5dp"
+
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:padding="10dp"
                     android:gravity="center_vertical"
-                    android:background="@drawable/smallbutton"
+                    android:background="@drawable/bluebutton"
                     android:layout_centerVertical="true"
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
                     <TextView
-
+                        android:gravity="center"
                         android:textSize="12sp"
-
                         android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@android:color/white"
-                        android:text="Sale Search"/>
+                        android:text="Search Sales"/>
 
 
                 </LinearLayout>
@@ -115,7 +118,7 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:layout_above="@+id/invoicelay"
-                    android:background="@android:color/white"
+                    android:background="#f5f6fa"
                     android:padding="10dp"
                     android:id="@+id/products"
                     android:layout_width="match_parent"
@@ -131,14 +134,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <LinearLayout
-                        android:background="@android:color/darker_gray"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp">
+                    <!--                    <LinearLayout-->
+                    <!--                        android:background="@android:color/darker_gray"-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="1dp">-->
 
-                    </LinearLayout>
+                    <!--                    </LinearLayout>-->
 
                     <LinearLayout
+                        android:background="@android:color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
@@ -234,10 +238,10 @@
                 <LinearLayout
                     android:gravity="center_vertical"
                     android:padding="8dp"
-                    android:background="@drawable/background"
+                    android:background="@drawable/backgroundgrey"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp">
+                    android:layout_height="wrap_content">
 
 
                     <TextView
@@ -413,6 +417,8 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:id="@+id/line"
                 android:background="@android:color/darker_gray"
                 android:layout_above="@+id/frame"
@@ -446,24 +452,24 @@
                         <TextView
                             android:singleLine="true"
 
-                            android:layout_weight="1.5"
+                            android:layout_weight="1"
                             android:padding="5dp"
                             android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="SubTotal"
-                            android:textColor="@android:color/black"
+                            android:text="Taxable"
+                            android:textColor="@android:color/darker_gray"
                             android:textSize="10dp"
                             />
 
 
 
                         <TextView
-                            android:background="@drawable/background_edittext"
+                            android:background="@android:color/transparent"
                             android:text="0.00"
                             android:id="@+id/taxable"
                             android:singleLine="true"
-                            android:gravity="right"
+                            android:gravity="left"
                             android:padding="5dp"
                             android:layout_marginTop="5dp"
                             android:layout_width="0dp"
@@ -478,13 +484,13 @@
                         <TextView
                             android:singleLine="true"
 
-                            android:layout_weight="1.5"
+                            android:layout_weight=".5"
                             android:padding="5dp"
                             android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Discount"
-                            android:textColor="@android:color/black"
+                            android:textColor="@android:color/darker_gray"
                             android:textSize="10dp"
                             />
 
@@ -493,18 +499,19 @@
                         <EditText
                             android:hint="0.00"
                             android:inputType="number"
-                            android:background="@drawable/background_edittext"
+                            android:background="@android:color/transparent"
                             android:singleLine="true"
                             android:padding="5dp"
                             android:clickable="true"
 
-                            android:gravity="right"
+                            android:gravity="left"
                             android:id="@+id/discount"
                             android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textSize="12sp"
+                            android:textColorHint="@android:color/black"
                             android:textColor="@android:color/black"
 
                             />
@@ -532,13 +539,13 @@
 
                         <TextView
                             android:singleLine="true"
-                            android:layout_weight="1.5"
+                            android:layout_weight="1"
                             android:padding="5dp"
                             android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Vat Amt"
-                            android:textColor="@android:color/black"
+                            android:textColor="@android:color/darker_gray"
                             android:textSize="10dp"
                             />
 
@@ -546,11 +553,11 @@
 
                         <TextView
                             android:singleLine="true"
-                            android:background="@drawable/background_edittext"
+                            android:background="@android:color/transparent"
                             android:text="0.00"
                             android:padding="5dp"
                             android:clickable="true"
-                            android:gravity="right"
+                            android:gravity="left"
                             android:id="@+id/vat"
                             android:layout_marginTop="5dp"
                             android:layout_width="0dp"
@@ -562,43 +569,98 @@
 
                         <TextView
                             android:singleLine="true"
-                            android:layout_weight="1.5"
+                            android:layout_weight=".5"
                             android:padding="5dp"
                             android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Round Off"
-                            android:textColor="@android:color/black"
+                            android:textColor="@android:color/darker_gray"
                             android:textSize="10dp"
                             />
 
-
-
-                        <EditText
-
-                            android:hint="0.00"
-                            android:inputType="number"
-                            android:background="@drawable/background_edittext"
-                            android:singleLine="true"
-                            android:padding="5dp"
-                            android:clickable="true"
-                            android:gravity="right"
-                            android:id="@+id/round_off"
+                        <LinearLayout
+                            android:gravity="center"
                             android:layout_marginTop="5dp"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
                             android:layout_weight="1"
-                            android:textSize="12sp"
-                            android:textColor="@android:color/black"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
 
-                            />
+                            <LinearLayout
+                                android:id="@+id/subtract"
+                                android:gravity="center"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content">
+
+                                <LinearLayout
+                                    android:background="@drawable/roundbutton"
+                                    android:gravity="center"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp">
+
+                                    <ImageView
+                                        android:src="@drawable/minus"
+                                        android:layout_width="15dp"
+                                        android:layout_height="15dp"/>
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                            <EditText
+
+                                android:hint="0.00"
+                                android:inputType="numberDecimal"
+                                android:background="@android:color/transparent"
+                                android:singleLine="true"
+                                android:padding="5dp"
+                                android:gravity="center"
+                                android:id="@+id/round_off"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:textColorHint="@android:color/black"
+
+                                android:textColor="@android:color/black"
+
+                                />
+
+                            <LinearLayout
+                                android:id="@+id/add"
+                                android:gravity="center"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content">
+
+                                <LinearLayout
+                                    android:background="@drawable/roundbutton"
+                                    android:gravity="center"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp">
+
+                                    <ImageView
+                                        android:src="@drawable/plus"
+                                        android:layout_width="15dp"
+                                        android:layout_height="15dp"/>
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="#e1e1e1"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="1dp">
 
 
 
@@ -606,7 +668,8 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:background="#dadada"
+                        android:gravity="center_vertical"
+                        android:background="@android:color/white"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -614,12 +677,11 @@
 
                         <TextView
                             android:singleLine="true"
-                            android:layout_margin="5dp"
-                            android:layout_weight="1.5"
+                            android:layout_weight="1"
                             android:padding="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Net Amount"
+                            android:text="Grand Total"
                             android:textColor="@android:color/black"
                             android:textSize="14sp"
                             />
@@ -630,57 +692,59 @@
 
 
                         <TextView
+                            android:text="0.00"
                             android:id="@+id/tot"
                             android:singleLine="true"
-                            android:layout_margin="5dp"
                             android:padding="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight=".8"
                             android:textSize="15sp"
-                            android:textColor="@android:color/holo_green_dark"
+                            android:textColor="@android:color/black"
                             android:textStyle="bold"
                             />
 
                         <LinearLayout
                             android:id="@+id/pay"
                             android:layout_weight="1"
-                            android:layout_margin="10dp"
+                            android:layout_margin="5dp"
                             android:gravity="center"
-                            android:background="@drawable/button"
+                            android:background="@drawable/yellowbutton"
                             android:padding="5dp"
                             android:orientation="horizontal"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content">
 
                             <TextView
-
-                                android:textStyle="bold"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginEnd="5dp"
+                                android:drawableStart="@drawable/plus"
+                                android:drawableLeft="@drawable/plus"
                                 android:textSize="16sp"
                                 android:textColor="@android:color/white"
                                 android:text="Cash"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
 
-
-
                         </LinearLayout>
 
                         <LinearLayout
 
                             android:layout_weight="1"
-                            android:layout_margin="10dp"
+                            android:layout_margin="5dp"
                             android:id="@+id/credit"
                             android:gravity="center"
-                            android:background="@drawable/credit"
+                            android:background="@drawable/bluebutton"
                             android:padding="5dp"
                             android:orientation="horizontal"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content">
 
                             <TextView
-
-                                android:textStyle="bold"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginEnd="5dp"
+                                android:drawableLeft="@drawable/plus"
+                                android:drawableStart="@drawable/plus"
                                 android:textSize="16sp"
                                 android:textColor="@android:color/white"
                                 android:text="Credit"

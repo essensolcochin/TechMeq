@@ -2,13 +2,16 @@ package com.essensol.techmeq.UI;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -25,7 +28,13 @@ import com.essensol.techmeq.Room.Databases.Entity.Users;
 import com.essensol.techmeq.Room.Databases.OfflineDb;
 import com.lidroid.xutils.db.annotation.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 import retrofit2.Call;
@@ -122,10 +131,12 @@ public class Registration extends AppCompatActivity {
                     pwordHint.setError("Field Required");
                 }
                 else {
-
-                    mDialog.show();
+//
+//                    Log.e("Else part","");
 
                     OnlineRegistration();
+
+          mDialog.show();
 
                 }
 
@@ -162,13 +173,24 @@ public class Registration extends AppCompatActivity {
             String status = new RegAsync(OfflineDb.getInstance(this).companyMaster_dao()).execute(master).get();
 
             if (status.equalsIgnoreCase("Completed")) {
-                Users users = new Users(CompId, username.getText().toString().trim(), pword.getText().toString().trim());
+
+                Date curdate = Calendar.getInstance().getTime();
+                SimpleDateFormat sf =new SimpleDateFormat("dd/MMM/yyyy", Locale.ENGLISH);
+
+                Users users = new Users(CompId,0, username.getText().toString().trim(), pword.getText().toString().trim(),curdate,false);
 
                 String stat = new RegAsync.AddUserAsync(OfflineDb.getInstance(this).user_dao()).execute(users).get();
 
                 if (stat.equalsIgnoreCase("Completed")) {
 
                     mDialog.dismiss();
+
+                    SharedPreferences paidStatus=getSharedPreferences("PaidStatus",MODE_PRIVATE);
+                    SharedPreferences.Editor editor =paidStatus.edit();
+                    editor.putString("RegDate",sf.format(curdate));
+                    editor.putBoolean("PaidSatus",false);
+                    editor.apply();
+
 
                     Toast.makeText(Registration.this,"Registration Successful",Toast.LENGTH_SHORT).show();
 
@@ -237,11 +259,12 @@ public class Registration extends AppCompatActivity {
 
 
     private void OnlineRegistration(){
+
         Log.e("Checking Call","");
 
         apiService.Register(0,Cname.getText().toString(),cperson.getText().toString(),address.getText().toString()
         ,mob.getText().toString(),mob.getText().toString(),mob.getText().toString(),email.getText().toString(),"0","Android App",
-        "Billing App","1234",true).enqueue(new Callback<RegisterResponse>() {
+        "Billing App","1234",true,username.getText().toString(),pword.getText().toString()).enqueue(new Callback<RegisterResponse>() {
             @Override
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
 
@@ -268,6 +291,8 @@ public class Registration extends AppCompatActivity {
                     }
                 }
                 else {
+                    mDialog.dismiss();
+
                     Log.d("ErrorCodeeee","Registration.java "+response.code());
                 }
 
@@ -282,4 +307,13 @@ public class Registration extends AppCompatActivity {
             }
         });
     }
+
+
+
+
+
+
+
+
+
 }

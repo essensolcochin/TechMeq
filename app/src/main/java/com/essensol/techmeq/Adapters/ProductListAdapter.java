@@ -1,25 +1,22 @@
 package com.essensol.techmeq.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.essensol.techmeq.DialogFragments._AddProductDetailsDailog;
-import com.essensol.techmeq.Model.PurchaseModel;
-import com.essensol.techmeq.Model.mProductModel;
-import com.essensol.techmeq.OnSelectedListener;
+import com.essensol.techmeq.Callbacks.OnSelectedListener;
 import com.essensol.techmeq.R;
 import com.essensol.techmeq.Room.Databases.Entity.Products;
+import com.essensol.techmeq.Utils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -61,20 +58,30 @@ public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapte
 
         holder.name.setText(products.getProductName());
 
-        BigDecimal TaxPer =products.getSales_Price()
-                .multiply(products.getTaxPercent().divide(BigDecimal.valueOf(100),2,BigDecimal.ROUND_HALF_UP)).setScale(2,BigDecimal.ROUND_HALF_UP);
+        BigDecimal TaxAmnt =products.getSales_Price()
+                .multiply(products.getTaxPercent().divide(BigDecimal.valueOf(100),3,BigDecimal.ROUND_HALF_UP)).setScale(3,BigDecimal.ROUND_DOWN);
 
-        BigDecimal priceWithTax =products.getSales_Price().add(TaxPer)
+        BigDecimal roundedTax= Utils.getRounded(TaxAmnt);
+
+        BigDecimal priceWithTax =products.getSales_Price().add(roundedTax)
                 .setScale(2,BigDecimal.ROUND_HALF_UP);
 
         holder.rate.setText(priceWithTax.toString());
+
+
 
         holder.lay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+
+
                 if(mListner!=null)
                 {
+
+                    InputMethodManager imm = (InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
                     mListner.getProductDetails(products.getProduct_Id(),products.getProductCatId()
                             ,products.getTaxPercent(),products.getProductName()
                             ,products.getSales_Price(),products.isStatus());
@@ -90,6 +97,9 @@ public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapte
 
                 if(mListner!=null)
                 {
+                    InputMethodManager imm = (InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
                     mListner.getProductDetails(products.getProduct_Id(),products.getProductCatId()
                             ,products.getTaxPercent(),products.getProductName()
                             ,products.getSales_Price(),products.isStatus());
@@ -106,6 +116,9 @@ public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapte
 
                 if(mListner!=null)
                 {
+                    InputMethodManager imm = (InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
                     mListner.getProductDetails(products.getProduct_Id(),products.getProductCatId()
                             ,products.getTaxPercent(),products.getProductName()
                             ,products.getSales_Price(),products.isStatus());
@@ -121,6 +134,9 @@ public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapte
         {
             if(mListner!=null)
             {
+                InputMethodManager imm = (InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
                 mListner.getProductDetails(products.getProduct_Id(),products.getProductCatId()
                         ,products.getTaxPercent(),products.getProductName()
                         ,products.getSales_Price(),products.isStatus());

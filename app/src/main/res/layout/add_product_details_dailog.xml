@@ -54,40 +54,67 @@
             <LinearLayout
                 android:background="@android:color/white"
                 android:orientation="vertical"
-                android:layout_weight=".7"
+                android:layout_weight=".8"
                 android:layout_width="0dp"
                 android:layout_height="match_parent">
 
                 <LinearLayout
+                    android:background="#e1e1e1"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:layout_gravity="center_horizontal"
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <TextView
-                        android:layout_marginLeft="10sp"
-                        android:layout_marginStart="10sp"
-                        android:layout_marginTop="30sp"
-                        android:textSize="16sp"
-                        android:textColor="@android:color/black"
-                        android:text="Product Category"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+<!--                    <TextView-->
+<!--                        android:layout_weight=".4"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="10dp"-->
+<!--                        android:layout_marginLeft="10dp"-->
+<!--                        android:text="Category"-->
+<!--                        android:textColor="@android:color/black"-->
+<!--                        android:textSize="14sp" />-->
 
                     <LinearLayout
-                        android:background="@drawable/edittextbgm"
-                        android:layout_margin="10sp"
-                        android:layout_width="300dp"
-                        android:layout_height="wrap_content">
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/editbgm"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp">
 
                         <Spinner
                             android:id="@+id/category"
-
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
 
 
                     </LinearLayout>
+
+
+
+                    <EditText
+                        android:layout_weight="1"
+                        android:inputType="text"
+                        android:drawableLeft="@drawable/search"
+                        android:drawableStart="@drawable/search"
+                        android:drawableTint="@android:color/black"
+                        android:id="@+id/search"
+                        android:imeOptions="flagNoExtractUi|actionSearch"
+                        android:hint="Search items"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@android:color/white"
+
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"/>
+
+
 
                 </LinearLayout>
 
@@ -96,17 +123,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <android.support.v7.widget.SearchView
-                        android:id="@+id/search"
-                        android:imeOptions="flagNoExtractUi"
-                        app:queryHint="Search items"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@android:color/white"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"/>
+
 
                 </LinearLayout>
 
@@ -114,7 +131,6 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:orientation="vertical"
-                    android:padding="10dp"
                     android:id="@+id/products"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
@@ -147,7 +163,8 @@
                     android:padding="10dp">
 
                     <TextView
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"
@@ -206,19 +223,22 @@
 
 
                         <TextView
+                            android:maxLines="1"
                             android:id="@+id/qty"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:hint="0"
                             android:background="@drawable/selector"
                             android:gravity="center"
-                            android:padding="8dp" />
+                            android:padding="10dp" />
 
 
                         <TextView
+                            android:maxLines="1"
                             android:layout_marginStart="5dp"
                             android:layout_marginLeft="5dp"
-                            android:padding="8dp"
+                            android:padding="10dp"
                             android:background="@drawable/selector"
                             android:id="@+id/rate"
                             android:layout_width="0dp"
@@ -229,9 +249,10 @@
                             />
 
                         <TextView
+                            android:maxLines="1"
                             android:layout_marginStart="5dp"
                             android:layout_marginLeft="5dp"
-                            android:padding="8dp"
+                            android:padding="10dp"
                             android:background="@drawable/selector"
                             android:id="@+id/vat"
                             android:layout_width="0dp"
@@ -243,9 +264,10 @@
 
 
                         <TextView
+                            android:maxLines="1"
                             android:layout_marginStart="5dp"
                             android:layout_marginLeft="5dp"
-                            android:padding="8dp"
+                            android:padding="10dp"
                             android:background="@drawable/selector"
                             android:id="@+id/total"
                             android:layout_width="0dp"

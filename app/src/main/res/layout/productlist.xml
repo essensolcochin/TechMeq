@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_margin="5dp"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="10dp"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="3dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -20,7 +20,7 @@
 
 
         <LinearLayout
-            android:paddingBottom="20dp"
+            android:paddingBottom="15dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -28,8 +28,9 @@
 
 
             <ImageView
+                android:adjustViewBounds="true"
                 android:id="@+id/imageid"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
@@ -59,14 +60,16 @@
 
 
             <TextView
-                android:layout_marginTop="10dp"
-                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="start"
+                android:textStyle="bold"
                 android:singleLine="true"
                 android:id="@+id/name"
                 android:textSize="12sp"
                 android:text="Diet Coke"
-                android:textColor="@android:color/black"
-                android:textStyle="bold"
+                android:textColor="#504F4F"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

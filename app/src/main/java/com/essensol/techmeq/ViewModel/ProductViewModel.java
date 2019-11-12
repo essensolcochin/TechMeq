@@ -9,8 +9,11 @@ import android.support.annotation.NonNull;
 
 
 import com.essensol.techmeq.Model.CustomerSpinnerModel;
+import com.essensol.techmeq.Model.EditSaleModel;
 import com.essensol.techmeq.Model.ProductModel;
 import com.essensol.techmeq.Room.Databases.Entity.Products;
+import com.essensol.techmeq.Room.Databases.Entity.SalesHeader;
+import com.essensol.techmeq.Room.Databases.Entity.SalesItem;
 import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
 import com.essensol.techmeq.Room.Repository.mRepo;
 
@@ -25,7 +28,7 @@ public class ProductViewModel extends AndroidViewModel {
 
     private LiveData<List<Products>>allProductsForSale;
 
-    private LiveData<Integer>getInvoiceId;
+    private LiveData<SalesHeader>getInvoiceId;
 
     private LiveData<List<Sales_Category>> allCategories;
 
@@ -102,9 +105,14 @@ public class ProductViewModel extends AndroidViewModel {
         return  product_repo.getAllProduct_By_Category(Id);
     }
 
-    public LiveData<Integer> GetInvoiceandSaleId()
+    public LiveData<SalesHeader> GetInvoiceandSaleId()
     {
         return  getInvoiceId;
+    }
+
+    public  List<EditSaleModel>getAllSalesById(int SaleId)
+    {
+     return product_repo.getAllSales(SaleId);
     }
 
 
