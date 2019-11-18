@@ -230,6 +230,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
                 puchase.clear();
 
                 cash.setText("Update");
+                credit.setVisibility(View.GONE);
 
                 BigDecimal mTaxable =BigDecimal.valueOf(0);
 
@@ -1079,7 +1080,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
                 if(result.equalsIgnoreCase("Completed"))
                 {
                     dialog.dismiss();
-                    Toast.makeText(MainActivity.this,"Saved",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MainActivity.this,"Saved",Toast.LENGTH_SHORT).show();
 
                     //Dialog show
 
@@ -1093,6 +1094,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
                     cash.setText("Cash");
                     invoiceNo.setText(Integer.toString(InvoiceNo));
                     invoiceDate.setText(sf.format(CurrentDate));
+                    credit.setVisibility(View.VISIBLE);
 
                 }
 

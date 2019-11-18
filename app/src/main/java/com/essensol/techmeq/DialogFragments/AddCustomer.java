@@ -240,9 +240,8 @@ public class AddCustomer extends DialogFragment {
         protected Integer doInBackground(Void... voids) {
 
 
-            int Id =customer_dao.GetCustId();
 
-            return Id;
+            return customer_dao.GetCustId();
         }
     }
 

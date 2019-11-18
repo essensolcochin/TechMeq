@@ -71,7 +71,7 @@ public class PrintDialog extends DialogFragment {
     public void onStart() {
         super.onStart();
 
-        getDialog().getWindow().setLayout(500, 300);
+        getDialog().getWindow().setLayout(600, 300);
     }
 
 }
