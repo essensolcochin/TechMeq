@@ -113,6 +113,18 @@ public class AddProduct_fragment extends DialogFragment implements ProductItemCl
         delete=Rootview.findViewById(R.id.delete);
         reset=Rootview.findViewById(R.id.reset);
 
+
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mProduct_name.setText("");
+                mProductCategory.setSelection(0);
+                tax.setText("");
+                mPrice.setText("");
+                pricewithtax.setText("");
+            }
+        });
+
         progressDialog =new ProgressDialog(getContext());
         progressDialog.setTitle("Adding Product");
         progressDialog.setMessage("Saving...");

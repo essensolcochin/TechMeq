@@ -227,6 +227,16 @@ public class AddCategoryFragment extends DialogFragment implements CategoryItemC
             }
         });
 
+
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                CategoryName.setText("");
+                Path.setText("");
+            }
+        });
+
         dismiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

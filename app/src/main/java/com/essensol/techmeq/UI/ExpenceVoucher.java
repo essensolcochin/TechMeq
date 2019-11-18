@@ -48,7 +48,7 @@ public class ExpenceVoucher extends Toolbar {
 
     private VoucherViewModel model;
 
-    private LinearLayout save;
+    private LinearLayout save,reset;
     private BigDecimal SubTotal=BigDecimal.valueOf(0),Tax=BigDecimal.valueOf(0);
 
     private TextView subtotal,mTax,_Date;
@@ -90,7 +90,21 @@ public class ExpenceVoucher extends Toolbar {
 
         _Date=findViewById(R.id.date);
 
-//        _view=findViewById(R.id.view);
+        reset=findViewById(R.id.reset);
+
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Desc.setText("");
+
+                Remarks.setText("");
+                taxable.setText("");
+                vat.setText("");
+                tot.setText("");
+
+            }
+        });
+
 
         tot.addTextChangedListener(new TextWatcher() {
             @Override

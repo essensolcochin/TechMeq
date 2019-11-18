@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import com.essensol.techmeq.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * A simple {@link DialogFragment} subclass.
  */
 public class PrintDialog extends DialogFragment {
 
