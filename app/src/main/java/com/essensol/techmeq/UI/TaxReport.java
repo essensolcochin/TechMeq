@@ -134,6 +134,22 @@ public class TaxReport extends Toolbar {
 
         model= ViewModelProviders.of(this).get(ReportViewModel.class);
 
+        Date yesterday =yesterday(Calendar.getInstance().getTime());
+
+        long mYesterday =yesterday.getTime();
+
+        Date today =Calendar.getInstance().getTime();
+        long mToday =today.getTime();
+
+        setObserver(mYesterday,mToday);
+
+        String myFormat = "dd/MM/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
+
+        from.setText(sdf.format(yesterday));
+
+        to.setText(sdf.format(mToday));
+
 
 
         adapter=new TaxAdapter(mList,this);
@@ -227,6 +243,12 @@ public class TaxReport extends Toolbar {
         pickerDialog.show();
     }
 
+    private Date yesterday(Date date) {
+        final Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, -1);
+        return cal.getTime();
+    }
 
 
 }

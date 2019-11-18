@@ -16,10 +16,8 @@
         <TextView
             android:gravity="start"
             android:singleLine="true"
-            android:layout_margin="8dp"
             android:id="@+id/categoryName"
             android:padding="5dp"
-            android:layout_marginTop="8dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"

@@ -5,6 +5,7 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
+import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -30,10 +31,13 @@ import com.essensol.techmeq.Room.Databases.Entity.TaxModel;
 import com.essensol.techmeq.Room.Databases.Entity.Users;
 import com.essensol.techmeq.Room.Databases.Entity._dbExpenceVouchers;
 import com.essensol.techmeq.Room.DateTypeConverter;
+import com.essensol.techmeq.Room.DecimalConverter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static android.graphics.PorterDuff.Mode.ADD;
 
 
 @Database
@@ -50,11 +54,15 @@ import java.util.Date;
                 , CompanyMaster.class
                 , TaxModel.class
         }
-        ,version = 2
+        ,version = 3
 )
-@TypeConverters(DateTypeConverter.class)
+@TypeConverters({DateTypeConverter.class, DecimalConverter.class})
+
 
 public abstract class OfflineDb extends RoomDatabase {
+
+
+
 
     private  static OfflineDb Instance;
 
@@ -86,7 +94,8 @@ public abstract class OfflineDb extends RoomDatabase {
         if(Instance==null)
         {
             Instance= Room.databaseBuilder(context.getApplicationContext(), OfflineDb.class,"offline db")
-                    .fallbackToDestructiveMigration()
+//                    .fallbackToDestructiveMigration()
+                    .addMigrations(FROM_2_TO_3)
                     .addCallback(rdc)
                     .build();
 
@@ -142,9 +151,9 @@ public abstract class OfflineDb extends RoomDatabase {
         protected Void doInBackground(Void... voids) {
 
 
-            CompanyMaster master= new CompanyMaster("123","Def","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A",true);
-
-            companyMaster_dao.AddCompany(master);
+//            CompanyMaster master= new CompanyMaster("123","Def","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A","N/A",true);
+//
+//            companyMaster_dao.AddCompany(master);
 
             Sales_Category model =new Sales_Category(0,"Select","null",false);
 
@@ -186,14 +195,24 @@ public abstract class OfflineDb extends RoomDatabase {
             tax_dao.AddTax(tax);
 
 
-            Customers customers=new Customers(1,"CashCustomer","Nill","N/A",true);
-            customer_dao.AddCustomers(customers);
+//            Customers customers=new Customers(0,"CashCustomer","Nill","N/A",true);
+//            customer_dao.AddCustomers(customers);
 
 
 
             return null;
         }
     }
+
+
+
+    private static final Migration FROM_2_TO_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(final SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE Sales_Header "
+                    + " ADD COLUMN Rounded INTEGER ");
+        }
+    };
 
 
 }

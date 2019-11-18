@@ -58,6 +58,11 @@ public class RegisterResponse {
         @Expose
         private String msg;
 
+        @SerializedName("ClientCode")
+        @Expose
+        private String ClientCode;
+
+
         public String getResult() {
             return result;
         }
@@ -80,6 +85,10 @@ public class RegisterResponse {
 
         public void setMsg(String msg) {
             this.msg = msg;
+        }
+
+        public String getClientCode() {
+            return ClientCode;
         }
     }
 }

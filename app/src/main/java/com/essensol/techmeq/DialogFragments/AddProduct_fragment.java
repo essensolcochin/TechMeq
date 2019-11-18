@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,19 +13,25 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.essensol.techmeq.Adapters.AllProductListAdapter;
@@ -71,10 +78,12 @@ public class AddProduct_fragment extends DialogFragment implements ProductItemCl
 
     private boolean withoutTax =false;
 
-    private Button mAddProduct,delete;
+    private Button mAddProduct,delete,reset;
 
     private int ProductId;
+    private EditText search;
 
+    private List<ProductModel>mlist=new ArrayList<>();
 
     public AddProduct_fragment() {
         // Required empty public constructor
@@ -100,20 +109,34 @@ public class AddProduct_fragment extends DialogFragment implements ProductItemCl
         dismiss= Rootview.findViewById(R.id.dismiss);
         products = Rootview.findViewById(R.id.products);
         pricewithtax =Rootview.findViewById(R.id.pricewithtax);
-
+        search=Rootview.findViewById(R.id.search);
         delete=Rootview.findViewById(R.id.delete);
-
+        reset=Rootview.findViewById(R.id.reset);
 
         progressDialog =new ProgressDialog(getContext());
         progressDialog.setTitle("Adding Product");
         progressDialog.setMessage("Saving...");
         progressDialog.setCancelable(false);
 
+        mProduct_name.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+
+                    tax.requestFocus();
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
 
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         products.setLayoutManager(linearLayoutManager);
+        products.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
 
 
         adapter = new AllProductListAdapter(mList,getContext(), (ProductItemClickListener) AddProduct_fragment.this);
@@ -131,23 +154,32 @@ public class AddProduct_fragment extends DialogFragment implements ProductItemCl
         productViewModel.GetAllProduct().observe(this, new Observer<List<ProductModel>>() {
             @Override
             public void onChanged(@Nullable List<ProductModel> products) {
-
-                if(products.size()!=0)
+                if(products!=null)
                 {
-                    for(int i=0;i<products.size();i++)
+                    mlist =products;
+
+                    if(products.size()!=0)
                     {
-                        Log.e("Name"," "+products.get(i).getProductName());
-                        Log.e("Category"," "+products.get(i).getProductCategory());
-                        Log.e("Tax"," "+products.get(i).getTaxPercent());
+                        for(int i=0;i<products.size();i++)
+                        {
+                            Log.e("Name"," "+products.get(i).getProductName());
+                            Log.e("Category"," "+products.get(i).getProductCategory());
+                            Log.e("Tax"," "+products.get(i).getTaxPercent());
+                            Log.e("Sales Price"," "+products.get(i).getSales_Price());
+                        }
+
+
+                        adapter.SetProducts(products);
                     }
-
-
-                 adapter.SetProducts(products);
                 }
+
+                SearchFilter();
 
 
             }
         });
+
+
 
 
 
@@ -162,6 +194,7 @@ public class AddProduct_fragment extends DialogFragment implements ProductItemCl
                 if(catId!=1)
                 {
                     tax.setError(null);
+                    tax.setText("5");
                 }
             }
 
@@ -183,28 +216,7 @@ public class AddProduct_fragment extends DialogFragment implements ProductItemCl
 
 
 
-//        mPrice.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//                withTax =true;
-//                withoutTax=false;
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//
-//
-//
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
+
 
 
 
@@ -247,20 +259,38 @@ public class AddProduct_fragment extends DialogFragment implements ProductItemCl
             public void onClick(View v) {
 
 
-                if (mProduct_name.getText().equals("")){
+                if (mProduct_name.getText().toString().equalsIgnoreCase("")){
+
+                    tax.setError(null);
+
+                    mPrice.setError(null);
 
                     mProduct_name.setError("Field Empty");
                 }
                 else if(catId==1)
                 {
+                    mProduct_name.setError(null);
+
+                    mPrice.setError(null);
+
+
                     tax.setError("Select A Category");
                 }
 
-                else if(tax.getText().equals("")){
+                else if(tax.getText().toString().equalsIgnoreCase("")){
+
+                    mProduct_name.setError(null);
+
+                    mPrice.setError(null);
 
                     tax.setError("Field Empty");
                 }
-                else if(mPrice.getText().equals("")){
+                else if(mPrice.getText().toString().equalsIgnoreCase("")){
+
+                    mProduct_name.setError(null);
+
+                    tax.setError(null);
+
 
                     mPrice.setError("Field Empty");
                 }
@@ -282,8 +312,11 @@ public class AddProduct_fragment extends DialogFragment implements ProductItemCl
                             tax.setText("");
                             mPrice.setText("");
                             pricewithtax.setText("");
-
-
+                            mAddProduct.setText("Save");
+                            delete.setVisibility(View.GONE);
+                            mProduct_name.requestFocus();
+                            mProductCategory.setSelection(0);
+                            reset.setVisibility(View.VISIBLE);
 
                         }};
 
@@ -341,14 +374,16 @@ public class AddProduct_fragment extends DialogFragment implements ProductItemCl
 
 
             delete.setVisibility(View.GONE);
-            mAddProduct.setText("Add Product");
+            mAddProduct.setText("Save");
             mPrice.setText("");
             mProduct_name.setText("");
             tax.setText("");
             mProductCategory.setSelection(0);
+            mProduct_name.requestFocus();
+            reset.setVisibility(View.VISIBLE);
 
 
-        }
+    }
 
 
 
@@ -379,11 +414,12 @@ public class AddProduct_fragment extends DialogFragment implements ProductItemCl
 
 
                             progressDialog.cancel();
-
+                            mProduct_name.requestFocus();
                             mProduct_name.setText("");
                             tax.setText("");
                             mPrice.setText("");
                             pricewithtax.setText("");
+                            mProductCategory.setSelection(0);
 
 
 
@@ -502,9 +538,20 @@ public class AddProduct_fragment extends DialogFragment implements ProductItemCl
     @Override
     public void getProductDetailsForEdit(int Product_Id, int ProductCatId, BigDecimal TaxPercent, String ProductName, BigDecimal Sales_Price, boolean Status) {
 
+
+        mProduct_name.requestFocus();
         mProduct_name.setText(ProductName);
         tax.setText(TaxPercent.toString());
         mPrice.setText(Sales_Price.toString());
+
+
+
+        BigDecimal TaxAmnt =Sales_Price
+                .multiply(TaxPercent.divide(BigDecimal.valueOf(100),3,BigDecimal.ROUND_HALF_UP)).setScale(3,BigDecimal.ROUND_DOWN);
+
+        BigDecimal roundedTax= Utils.getRounded(TaxAmnt);
+
+        pricewithtax.setText(Sales_Price.add(roundedTax).setScale(2,BigDecimal.ROUND_HALF_UP).toString());
 
         this.ProductId =Product_Id;
 
@@ -514,6 +561,8 @@ public class AddProduct_fragment extends DialogFragment implements ProductItemCl
         mAddProduct.setText("Update");
 
         delete.setVisibility(View.VISIBLE);
+
+        reset.setVisibility(View.GONE);
 
     }
 
@@ -585,6 +634,55 @@ public class AddProduct_fragment extends DialogFragment implements ProductItemCl
         }
 
 
+    }
+
+
+    private  void SearchFilter() {
+        if (mlist.isEmpty()) {
+
+            Log.e("Arraylist", "" + mlist.size());
+
+        } else {
+
+            Log.e("Search", "else " + mlist.size());
+
+
+            search.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    adapter.getFilter().filter(s);
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+
+
+            search.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+
+
+                        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                        return true;
+                    }
+                    return false;
+                }
+            });
+
+
+        }
     }
 
 

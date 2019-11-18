@@ -45,11 +45,14 @@ public class SalesHeader {
     @TypeConverters ({DecimalConverter.class})
     private BigDecimal PaidAmt;
 
+    @TypeConverters ({DecimalConverter.class})
+    private BigDecimal Rounded;
+
 
     public SalesHeader() {
     }
 
-    public SalesHeader(int compId, int finYearId, int saleId, String saleNo, Date saleDate, int custId, BigDecimal subTotal, BigDecimal taxAmt, BigDecimal discount, BigDecimal grandTotal, BigDecimal paidAmt) {
+    public SalesHeader(int compId, int finYearId, int saleId, String saleNo, Date saleDate, int custId, BigDecimal subTotal, BigDecimal taxAmt, BigDecimal discount, BigDecimal grandTotal, BigDecimal paidAmt, BigDecimal rounded) {
         CompId = compId;
         FinYearId = finYearId;
         SaleId = saleId;
@@ -61,8 +64,8 @@ public class SalesHeader {
         Discount = discount;
         GrandTotal = grandTotal;
         PaidAmt = paidAmt;
+        Rounded = rounded;
     }
-
 
     public int getCompId() {
         return CompId;
@@ -150,5 +153,13 @@ public class SalesHeader {
 
     public void setPaidAmt(BigDecimal paidAmt) {
         PaidAmt = paidAmt;
+    }
+
+    public BigDecimal getRounded() {
+        return Rounded;
+    }
+
+    public void setRounded(BigDecimal rounded) {
+        Rounded = rounded;
     }
 }

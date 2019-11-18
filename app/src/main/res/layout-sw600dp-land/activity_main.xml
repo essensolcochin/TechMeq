@@ -35,18 +35,28 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/background"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="40dp">
 
-
-                <TextView
-                    android:padding="2dp"
-                    android:id="@+id/tv"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:background="@drawable/edittextbgm"
+                <ImageView
                     android:layout_centerVertical="true"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:tint="@android:color/darker_gray"
+                    android:src="@drawable/search"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"/>
+
+
+<!--                <TextView-->
+
+<!--                    android:padding="5dp"-->
+<!--                    android:id="@+id/tv"-->
+<!--                    android:layout_marginStart="20dp"-->
+<!--                    android:layout_marginLeft="20dp"-->
+<!--                    android:background="@drawable/edittextbgm"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:layout_width="300dp"-->
+<!--                    android:layout_height="wrap_content"/>-->
 
                   <LinearLayout
                     android:layout_toStartOf="@+id/salesearch"
@@ -56,13 +66,12 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="10dp"
-                    android:padding="10dp"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:background="@drawable/smallbutton"
                     android:layout_centerVertical="true"
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_width="150dp"
+                    android:layout_height="30dp">
 
                     <TextView
 
@@ -72,7 +81,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@android:color/white"
-                        android:text="Search Product"/>
+                        android:text="Add Product"/>
 
 
                 </LinearLayout>
@@ -84,13 +93,12 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
                     android:layout_marginEnd="10dp"
-                    android:padding="10dp"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:background="@drawable/bluebutton"
                     android:layout_centerVertical="true"
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_width="150dp"
+                    android:layout_height="30dp">
 
                     <TextView
                         android:gravity="center"
@@ -99,7 +107,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@android:color/white"
-                        android:text="Search Sales"/>
+                        android:text="Generated Invoice"/>
 
 
                 </LinearLayout>
@@ -405,12 +413,11 @@
 
 
                 <android.support.v7.widget.RecyclerView
+                    android:layout_marginTop="5dp"
                     android:id="@+id/purchase"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/white"
-                    android:clipToPadding="false"
-                    android:padding="5dp"
                     tools:listitem="@layout/purchaselist" />
 
 
@@ -452,14 +459,14 @@
                         <TextView
                             android:singleLine="true"
 
-                            android:layout_weight="1"
+                            android:layout_weight=".8"
                             android:padding="5dp"
                             android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Taxable"
                             android:textColor="@android:color/darker_gray"
-                            android:textSize="10dp"
+                            android:textSize="12sp"
                             />
 
 
@@ -474,7 +481,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight=".8"
                             android:textSize="12sp"
                             android:textColor="@android:color/black"
 
@@ -491,7 +498,7 @@
                             android:layout_height="wrap_content"
                             android:text="Discount"
                             android:textColor="@android:color/darker_gray"
-                            android:textSize="10dp"
+                            android:textSize="12sp"
                             />
 
 
@@ -539,14 +546,14 @@
 
                         <TextView
                             android:singleLine="true"
-                            android:layout_weight="1"
+                            android:layout_weight=".8"
                             android:padding="5dp"
                             android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Vat Amt"
                             android:textColor="@android:color/darker_gray"
-                            android:textSize="10dp"
+                            android:textSize="12sp"
                             />
 
 
@@ -562,7 +569,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight=".8"
                             android:textSize="12sp"
                             android:textColor="@android:color/black"
                             />
@@ -576,7 +583,7 @@
                             android:layout_height="wrap_content"
                             android:text="Round Off"
                             android:textColor="@android:color/darker_gray"
-                            android:textSize="10dp"
+                            android:textSize="11sp"
                             />
 
                         <LinearLayout
@@ -621,7 +628,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="12sp"
-                                android:textColorHint="@android:color/black"
+                                android:textColorHint="@android:color/darker_gray"
 
                                 android:textColor="@android:color/black"
 
@@ -700,7 +707,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight=".8"
                             android:textSize="15sp"
-                            android:textColor="@android:color/black"
+                            android:textColor="@color/textcolor"
                             android:textStyle="bold"
                             />
 
@@ -719,9 +726,9 @@
                                 android:id="@+id/cash"
                                 android:layout_marginRight="5dp"
                                 android:layout_marginEnd="5dp"
-                                android:drawableStart="@drawable/plus"
-                                android:drawableLeft="@drawable/plus"
-                                android:textSize="16sp"
+                                android:drawableStart="@drawable/money"
+                                android:drawableLeft="@drawable/money"
+                                android:textSize="14sp"
                                 android:textColor="@android:color/white"
                                 android:text="Cash"
                                 android:layout_width="wrap_content"
@@ -742,11 +749,12 @@
                             android:layout_height="wrap_content">
 
                             <TextView
+                                android:gravity="center"
                                 android:layout_marginRight="5dp"
                                 android:layout_marginEnd="5dp"
-                                android:drawableLeft="@drawable/plus"
-                                android:drawableStart="@drawable/plus"
-                                android:textSize="16sp"
+                                android:drawableLeft="@drawable/walleticon"
+                                android:drawableStart="@drawable/walleticon"
+                                android:textSize="14sp"
                                 android:textColor="@android:color/white"
                                 android:text="Credit"
                                 android:layout_width="wrap_content"

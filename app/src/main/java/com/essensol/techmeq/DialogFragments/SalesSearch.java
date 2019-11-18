@@ -64,7 +64,7 @@ public class SalesSearch extends DialogFragment implements SaleReportItemClickLi
 
     public  interface GetSaleId
     {
-        void getSaleIdForEdit(int Id);
+        void getSaleIdForEdit(int Id,String SaleNo,Date InvoiceDate);
     }
 
     GetSaleId getSaleId;
@@ -84,8 +84,8 @@ public class SalesSearch extends DialogFragment implements SaleReportItemClickLi
         from=rootview.findViewById(R.id.fromdate);
         to=rootview.findViewById(R.id.todate);
         view=rootview.findViewById(R.id.view);
-        totalSale=rootview.findViewById(R.id.totalSale);
-        mTax=rootview.findViewById(R.id.totTax);
+//        totalSale=rootview.findViewById(R.id.totalSale);
+//        mTax=rootview.findViewById(R.id.totTax);
 
 
 
@@ -169,8 +169,8 @@ public class SalesSearch extends DialogFragment implements SaleReportItemClickLi
                         totalDailyVat=totalDailyVat.add(itemReportModels.get(i).getTaxAmt());
                     }
 
-                    totalSale.setText(totalDailySale.toString());
-                    mTax.setText(totalDailyVat.toString());
+//                    totalSale.setText(totalDailySale.toString());
+//                    mTax.setText(totalDailyVat.toString());
                 }
             }
         });
@@ -258,12 +258,12 @@ public class SalesSearch extends DialogFragment implements SaleReportItemClickLi
     }
 
     @Override
-    public void getSaleId(int SaleId) {
+    public void getSaleId(int SaleId,String SaleNo,Date InvoiceDate) {
 
         getSaleId=(GetSaleId)getContext();
         if(getSaleId!=null)
         {
-            getSaleId.getSaleIdForEdit(SaleId);
+            getSaleId.getSaleIdForEdit(SaleId,SaleNo,InvoiceDate);
         }
         this.getDialog().dismiss();
     }

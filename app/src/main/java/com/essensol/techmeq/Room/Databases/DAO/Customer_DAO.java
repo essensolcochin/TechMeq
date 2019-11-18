@@ -25,7 +25,7 @@ public interface Customer_DAO {
 
 
      @Query("SELECT * FROM Customer_master ORDER BY CustId DESC")
-     List<Customers> GetAllCustomers();
+     LiveData<List<Customers> >GetAllCustomers();
 
     @Query("SELECT MAX(CustId) FROM Customer_master")
     int GetCustId();

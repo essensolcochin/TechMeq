@@ -24,7 +24,10 @@ public class Users {
     private  int CompId;
     @PrimaryKey(autoGenerate = true)
     private  int UserId;
+
     private  String UserName;
+
+
 
     private  String Password;
 

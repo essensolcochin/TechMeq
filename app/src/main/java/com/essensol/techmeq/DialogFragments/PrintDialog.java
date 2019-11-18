@@ -35,12 +35,12 @@ public class PrintDialog extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View Rootview = inflater.inflate(R.layout.fragment_print_dialog, container, false);
         yes=Rootview.findViewById(R.id.yes);
         no=Rootview.findViewById(R.id.no);
 
-        getDialog().setCancelable(false);
+        setCancelable(false);
 
 
         yes.setOnClickListener(new View.OnClickListener() {

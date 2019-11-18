@@ -3,6 +3,7 @@ package com.essensol.techmeq.Adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,8 @@ public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapte
         this.mContext = mContext;
         this.mListner = mListner;
         this.searchedItems=items;
+
+//        CheckList();
     }
 
     @NonNull
@@ -48,6 +51,10 @@ public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapte
     public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.products, parent, false);
 
+//
+//        CheckList();
+//
+//        Log.e("onCreateViewHolder","");
 
         return new viewHolder(view);
     }
@@ -68,6 +75,7 @@ public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapte
 
         holder.rate.setText(priceWithTax.toString());
 
+//        Log.d("ViewHolder","");
 
 
         holder.lay.setOnClickListener(new View.OnClickListener() {
@@ -79,8 +87,8 @@ public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapte
                 if(mListner!=null)
                 {
 
-                    InputMethodManager imm = (InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+//                    InputMethodManager imm = (InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+//                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
                     mListner.getProductDetails(products.getProduct_Id(),products.getProductCatId()
                             ,products.getTaxPercent(),products.getProductName()
@@ -97,8 +105,8 @@ public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapte
 
                 if(mListner!=null)
                 {
-                    InputMethodManager imm = (InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+//                    InputMethodManager imm = (InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+//                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
                     mListner.getProductDetails(products.getProduct_Id(),products.getProductCatId()
                             ,products.getTaxPercent(),products.getProductName()
@@ -116,8 +124,8 @@ public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapte
 
                 if(mListner!=null)
                 {
-                    InputMethodManager imm = (InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+//                    InputMethodManager imm = (InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+//                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
                     mListner.getProductDetails(products.getProduct_Id(),products.getProductCatId()
                             ,products.getTaxPercent(),products.getProductName()
@@ -128,20 +136,21 @@ public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapte
             }
         });
 
-
-
         if(items.size()==1)
         {
             if(mListner!=null)
             {
-                InputMethodManager imm = (InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
-                mListner.getProductDetails(products.getProduct_Id(),products.getProductCatId()
-                        ,products.getTaxPercent(),products.getProductName()
-                        ,products.getSales_Price(),products.isStatus());
+
+                    mListner.getProductDetails(products.getProduct_Id(),products.getProductCatId()
+                            ,products.getTaxPercent(),products.getProductName()
+                            ,products.getSales_Price(),products.isStatus());
+
+
+
             }
         }
+
 
 
     }
@@ -201,6 +210,8 @@ public  class ProductListAdapter extends  RecyclerView.Adapter<ProductListAdapte
             }
         };
     }
+
+
 
 
     public class viewHolder extends RecyclerView.ViewHolder{

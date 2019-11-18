@@ -27,8 +27,9 @@ public class Customers {
     public Customers() {
     }
 
-    public Customers(int compId, String custName, String address, String mobileNo, boolean status) {
+    public Customers(int compId, int custId, String custName, String address, String mobileNo, boolean status) {
         CompId = compId;
+        CustId = custId;
         CustName = custName;
         Address = address;
         MobileNo = mobileNo;

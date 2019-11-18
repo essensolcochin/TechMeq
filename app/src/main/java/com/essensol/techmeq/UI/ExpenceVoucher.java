@@ -6,6 +6,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -127,6 +128,8 @@ public class ExpenceVoucher extends Toolbar {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         voucher.setLayoutManager(linearLayoutManager);
+        voucher.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
+
 
         adapter=new VoucherListAdapter(vouchers,this);
 

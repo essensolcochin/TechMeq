@@ -36,11 +36,14 @@ public class ItemReportModel {
     @TypeConverters ({DecimalConverter.class})
     private BigDecimal Credit;
 
+    @TypeConverters ({DecimalConverter.class})
+    private BigDecimal Rounded;
+
 
     public ItemReportModel() {
     }
 
-    public ItemReportModel(int saleId, String saleNo, Date saleDate, BigDecimal subTotal, BigDecimal taxAmt, BigDecimal grandTotal, BigDecimal paidAmt, BigDecimal credit) {
+    public ItemReportModel(int saleId, String saleNo, Date saleDate, BigDecimal subTotal, BigDecimal taxAmt, BigDecimal grandTotal, BigDecimal paidAmt, BigDecimal credit, BigDecimal rounded) {
         SaleId = saleId;
         SaleNo = saleNo;
         SaleDate = saleDate;
@@ -49,6 +52,7 @@ public class ItemReportModel {
         GrandTotal = grandTotal;
         PaidAmt = paidAmt;
         Credit = credit;
+        Rounded = rounded;
     }
 
     public int getSaleId() {
@@ -113,5 +117,13 @@ public class ItemReportModel {
 
     public void setCredit(BigDecimal credit) {
         Credit = credit;
+    }
+
+    public BigDecimal getRounded() {
+        return Rounded;
+    }
+
+    public void setRounded(BigDecimal rounded) {
+        Rounded = rounded;
     }
 }

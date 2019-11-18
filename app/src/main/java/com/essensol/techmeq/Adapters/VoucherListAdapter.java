@@ -49,6 +49,9 @@ public  class VoucherListAdapter extends  RecyclerView.Adapter<VoucherListAdapte
 
         holder.date.setText(sdf.format(items.get(position).getCreated_On()));
 
+
+        holder.grandtotal.setText(items.get(position).getTotal().toString());
+
     }
 
 
@@ -71,7 +74,7 @@ public  class VoucherListAdapter extends  RecyclerView.Adapter<VoucherListAdapte
 
     public class viewHolder extends RecyclerView.ViewHolder{
 
-        TextView desc,remark,tax,vat,date;
+        TextView desc,remark,tax,vat,grandtotal,date;
 
         private viewHolder(@NonNull View itemView) {
             super(itemView);
@@ -80,6 +83,7 @@ public  class VoucherListAdapter extends  RecyclerView.Adapter<VoucherListAdapte
             tax=itemView.findViewById(R.id.tax);
             vat=itemView.findViewById(R.id.vat);
             date=itemView.findViewById(R.id.date);
+            grandtotal=itemView.findViewById(R.id.grandtotal);
 
         }
     }

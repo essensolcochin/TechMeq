@@ -33,5 +33,10 @@ public interface ApiService {
                              @Field("Password") String Password);
 
 
+    @POST("CheckUserNameExistingApi/UserNameAlreadyExistingChecking")
+    @FormUrlEncoded
+    Call<CheckUsernameResponse>checkexisting(@Field("UserName") String Username);
+
+
 
 }

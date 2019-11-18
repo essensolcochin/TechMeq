@@ -29,7 +29,8 @@ public interface ProductCategory_DAO {
     @Query("SELECT * FROM Sales_Master ORDER BY ProductCatId ASC")
     LiveData<List<Sales_Category>> GetProductCategory();
 
-
+    @Query("SELECT * FROM Sales_Master WHERE ProductCategory LIKE '%' || :name  || '%'")
+    List<Sales_Category>getDuplicateIfExist(String name);
 
 
 }

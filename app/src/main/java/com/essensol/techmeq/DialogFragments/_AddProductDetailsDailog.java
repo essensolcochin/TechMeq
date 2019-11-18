@@ -33,6 +33,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.essensol.techmeq.Adapters.ProductListAdapter;
 import com.essensol.techmeq.Adapters.SelectedListAdapter;
@@ -57,7 +58,7 @@ import java.util.Locale;
 public class _AddProductDetailsDailog extends DialogFragment implements View.OnClickListener, OnSelectedListener {
 
 
-    ProductViewModel model;
+    private ProductViewModel model;
 
     List<Products>list=new ArrayList<>();
 
@@ -236,12 +237,12 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
                     final int sdk = android.os.Build.VERSION.SDK_INT;
                     if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                        qty.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm) );
-                        mRate.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.selected) );
+                        qty.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.selected) );
+                        mRate.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.edittextbg) );
 
                     } else {
-                        qty.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm));
-                        mRate.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selected));
+                        qty.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selected));
+                        mRate.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edittextbg));
                     }
 
 //                    qty.setse(0, editText.getText().length() - 1);
@@ -264,12 +265,12 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
                     final int sdk = android.os.Build.VERSION.SDK_INT;
                     if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                        mRate.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm) );
-                        qty.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.selected) );
+                        mRate.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.selected) );
+                        qty.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.edittextbg) );
 
                     } else {
-                        mRate.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm));
-                        qty.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selected));
+                        mRate.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selected));
+                        qty.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edittextbg));
                     }
 
                 }
@@ -502,9 +503,9 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
                                 BigDecimal TaxAmnt = netAmnt.multiply(TaxPercent.divide(BigDecimal.valueOf(100),2,BigDecimal.ROUND_UP)).setScale(3,BigDecimal.ROUND_DOWN);
 
                                 BigDecimal taxRounded =Utils.getRounded(TaxAmnt);
-//
+
                                 BigDecimal Total = rate.multiply(Qty).add(taxRounded).setScale(2,BigDecimal.ROUND_HALF_UP);
-//
+
                                 Log.e("CAlC", "taxRounded " + taxRounded);
 
                                 mPrice.setText(Total.toString());
@@ -513,9 +514,6 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-
-
-//
 
                         }
                     }
@@ -564,8 +562,8 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
         });
 
 
-        InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+//        InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+//        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
 
 
@@ -666,11 +664,11 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
                     final int sdk = android.os.Build.VERSION.SDK_INT;
                     if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
                         mRate.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.selected) );
-                        qty.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm) );
+                        qty.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.edittextbg) );
 
                     } else {
                         mRate.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selected));
-                        qty.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm));
+                        qty.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edittextbg));
                     }
 
                 }
@@ -683,12 +681,12 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
                     if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN)
                     {
                         qty.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.selected) );
-                        mRate.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm) );
+                        mRate.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.edittextbg) );
 
                     }
                     else {
                         qty.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selected));
-                        mRate.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm));
+                        mRate.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edittextbg));
                     }
 
                 }
@@ -737,8 +735,8 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
             case R.id.addItem:
 
-                InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+//                InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
 
                 isFirstRate=false;
@@ -789,10 +787,10 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 
 
 
-         if(!qty.getText().toString().equalsIgnoreCase("0")&&!mRate.getText().equals("")&&!qty.getText().equals("")&&!mPrice.getText().toString().trim().equals("")&&!mRate.getText().toString().equalsIgnoreCase("0"))
+         if(!qty.getText().toString().equalsIgnoreCase("0")&&!mRate.getText().toString().equalsIgnoreCase("")&&!qty.getText().toString().equalsIgnoreCase("")&&!mPrice.getText().toString().trim().equals("")&&!mRate.getText().toString().equalsIgnoreCase("0"))
         {
 
-
+            Log.e("mrate",""+mRate.getText().toString());
 
               BigDecimal rate =Utils.round(Float.parseFloat(mRate.getText().toString()),2);
 
@@ -807,11 +805,14 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
 //
 
               /**
-               *  rate And Sales Price Are the Same Values
+               *  FYI rate And Sales_Price Are the Same Values
                */
 
             assert mListner != null;
             mListner.getProductListItem(quantity,Product_Id,ProductCatId,TaxPercent,taxRounded,title.getText().toString(),rate,rate);
+
+
+            Toast.makeText(getContext(),"Item Added",Toast.LENGTH_SHORT).show();
 
             qty.setText("");
             mPrice.setText("");
@@ -995,11 +996,11 @@ public class _AddProductDetailsDailog extends DialogFragment implements View.OnC
         final int sdk = android.os.Build.VERSION.SDK_INT;
         if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
             qty.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.selected) );
-            mRate.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm) );
+            mRate.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.edittextbg) );
 
         } else {
             qty.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.selected));
-            mRate.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edittextbgm));
+            mRate.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edittextbg));
         }
 
 

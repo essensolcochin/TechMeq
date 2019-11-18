@@ -16,6 +16,7 @@ import com.essensol.techmeq.Room.Databases.DAO.Sale_Item_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Sales_Header_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.User_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.Voucher_DAO;
+import com.essensol.techmeq.Room.Databases.Entity.Customers;
 import com.essensol.techmeq.Room.Databases.Entity.SalesHeader;
 import com.essensol.techmeq.Room.Databases.Entity.SalesItem;
 import com.essensol.techmeq.Room.Databases.Entity.Sales_Category;
@@ -35,8 +36,11 @@ public class mRepo {
 
     private Customer_DAO customer_dao;
     private LiveData<List<CustomerSpinnerModel>> GetCustNameAndId;
+    private LiveData<List<Customers>>GetAllCustomers;
 
     private LiveData<List<Products>> AllProductForSale;
+
+
 
 
 
@@ -70,6 +74,9 @@ public class mRepo {
         AllProducts=product_dao.GetAllProduct();
         AllCategories=productCategory_dao.GetProductCategory();
         GetCustNameAndId=customer_dao.GetCustNameAndId();
+        GetAllCustomers=customer_dao.GetAllCustomers();
+
+
         GetInvoiceId =sales_header_dao.getLastProductLive();
         AllProductForSale=product_dao.AllProductForSale();
 //        AllSales=sale_item_dao.();
@@ -91,11 +98,11 @@ public class mRepo {
         return AllProductForSale;
     }
 
-//    public  List<LoginModel>VerifyLogin()
-//    {
-//
-//        return GetLoginresult;
-//    }
+    public  LiveData<List<Customers>>getAllCustomers()
+    {
+
+        return GetAllCustomers;
+    }
 
     public  List<Users>CheckLoginValidation(String uname,String pword)
     {
@@ -204,7 +211,18 @@ public class mRepo {
     }
 
 
-      /**
+    /**
+     *Add Customer Async Exec
+     */
+   public void AddCustomer(Customers customers)
+   {
+       new AddCustomerAsync(customer_dao).execute(customers);
+   }
+
+
+
+
+    /**
 
       Sales_Category Table
 
@@ -263,6 +281,7 @@ public class mRepo {
             return null;
         }
     }
+
 
 
     private  static class UpdateVoucherAsync extends AsyncTask<_dbExpenceVouchers,Void,Void> {
@@ -356,6 +375,27 @@ public class mRepo {
         }
     }
 
+
+    /**
+     * Add Customer Asyctask
+     */
+
+    private  static class AddCustomerAsync extends AsyncTask<Customers,Void,Void> {
+
+        private Customer_DAO customer_dao;
+
+        public AddCustomerAsync(Customer_DAO customer_dao) {
+            this.customer_dao = customer_dao;
+        }
+
+        @Override
+        protected Void doInBackground(Customers... vouchers) {
+
+            customer_dao.AddCustomers(vouchers[0]);
+
+            return null;
+        }
+    }
 
 
 

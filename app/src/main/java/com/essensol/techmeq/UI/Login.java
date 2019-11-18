@@ -23,11 +23,15 @@ import com.essensol.techmeq.Api.LoginResponse;
 import com.essensol.techmeq.Model.Credentials;
 import com.essensol.techmeq.Model.LoginModel;
 import com.essensol.techmeq.R;
+import com.essensol.techmeq.Room.Databases.DAO.CompanyMaster_DAO;
 import com.essensol.techmeq.Room.Databases.DAO.User_DAO;
+import com.essensol.techmeq.Room.Databases.Entity.CompanyMaster;
 import com.essensol.techmeq.Room.Databases.Entity.Users;
 import com.essensol.techmeq.Room.Databases.OfflineDb;
 import com.essensol.techmeq.Tab_Fragments.CreditSales;
 import com.essensol.techmeq.ViewModel.LoginViewModel;
+import com.treebo.internetavailabilitychecker.InternetAvailabilityChecker;
+import com.treebo.internetavailabilitychecker.InternetConnectivityListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,7 +45,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Login extends AppCompatActivity {
+public class Login extends AppCompatActivity  {
 
     TextView reg;
 
@@ -58,6 +62,7 @@ public class Login extends AppCompatActivity {
     ApiService apiService;
 
 
+
     private static List<LoginModel>CheckingUser=new ArrayList<>();
 
     @Override
@@ -68,6 +73,8 @@ public class Login extends AppCompatActivity {
         reg=findViewById(R.id.reg);
 
         login=findViewById(R.id.login);
+
+        InternetAvailabilityChecker.init(this);
 
         logoimage=findViewById(R.id.logoimage);
 
@@ -80,8 +87,25 @@ public class Login extends AppCompatActivity {
         login.requestFocus();
 
 
+//        mInternetAvailabilityChecker = InternetAvailabilityChecker.getInstance();
+//        mInternetAvailabilityChecker.addInternetConnectivityListener(this);
 
-//        model= ViewModelProviders.of(this).get(LoginViewModel.class);
+
+        try {
+            String result =new CheckRegAsync(OfflineDb.getInstance(Login.this).companyMaster_dao()).execute().get();
+
+            Log.e("Login Result"," "+result);
+
+            if(!result.equalsIgnoreCase("0"))
+            {
+                reg.setVisibility(View.GONE);
+            }
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
 
         reg.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +124,7 @@ public class Login extends AppCompatActivity {
 
 
 
-               SharedPreferences paidStatus=getSharedPreferences("PaidStatus",MODE_PRIVATE);
+               SharedPreferences paidStatus=getSharedPreferences("LogDetails",MODE_PRIVATE);
 
                String RegDate = paidStatus.getString("RegDate","");
                boolean PaidStatus = paidStatus.getBoolean("PaidSatus",false);
@@ -113,14 +137,15 @@ public class Login extends AppCompatActivity {
 
                 Log.e("PaidStatus",""+PaidStatus);
 
-                if(!PaidStatus )
+                assert RegDate != null;
+                if(!RegDate.equalsIgnoreCase(CurrentDate)&& !PaidStatus)
                 {
                     Log.e("PaidStatus","inIF"+PaidStatus);
 
                     CheckPaidStatus();
                 }
                 else {
-                    Log.e("PaidStatus","CheckLogin"+PaidStatus);
+                    Log.e("PaidStatus","In Else"+PaidStatus);
                     CheckLogin();
 
 
@@ -139,6 +164,8 @@ public class Login extends AppCompatActivity {
 
 
     }
+
+
 
 
     private static class CheckLoginAsync extends AsyncTask<Credentials,Void,Integer> {
@@ -218,10 +245,9 @@ public class Login extends AppCompatActivity {
 
                                     Log.d("Checking Call",""+results.get(i).getPayStatus());
 
-                                    SharedPreferences paidStatus=getSharedPreferences("PaidStatus",MODE_PRIVATE);
+                                    SharedPreferences paidStatus=getSharedPreferences("LogDetails",MODE_PRIVATE);
                                     SharedPreferences.Editor editor =paidStatus.edit();
                                     editor.putBoolean("PaidSatus",true);
-                                    editor.putBoolean("isLogged",true);
                                     editor.apply();
 
 //                                    Intent intent =new Intent(Login.this,MainActivity.class);
@@ -259,8 +285,7 @@ public class Login extends AppCompatActivity {
 
     }
 
-    private void CheckLogin()
-    {
+    private void CheckLogin(){
 
         Log.e("CheckLogin", "Checking" );
 
@@ -309,5 +334,31 @@ public class Login extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+
+    private static class CheckRegAsync extends AsyncTask<Void, Void, String> {
+
+        private CompanyMaster_DAO master_dao;
+
+
+        public CheckRegAsync(CompanyMaster_DAO master_dao) {
+            this.master_dao = master_dao;
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+
+            List<CompanyMaster>masters = master_dao.GetAllCompany();
+
+
+
+            return Integer.toString(masters.size());
+        }
+
+
+
+    }
+
 
 }

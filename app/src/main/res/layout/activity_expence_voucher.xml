@@ -7,6 +7,9 @@
     tools:context=".UI.ExpenceVoucher">
 
     <RelativeLayout
+        android:paddingBottom="5dp"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
         android:layout_weight=".6"
         android:layout_width="0dp"
         android:layout_height="match_parent">
@@ -14,7 +17,7 @@
 
 
         <ScrollView
-            android:layout_above="@+id/save"
+            android:layout_above="@+id/liniear"
             android:fillViewport="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -80,8 +83,8 @@
 
         <EditText
             android:id="@+id/remark"
-            android:imeOptions="flagNoExtractUi|actionNext"
-            android:inputType="textCapSentences"
+            android:imeOptions="flagNoExtractUi|actionDone"
+            android:inputType="textCapSentences|textMultiLine"
             android:layout_marginTop="5dp"
             android:padding="5dp"
             android:layout_width="300sp"
@@ -163,29 +166,64 @@
     </LinearLayout>
 
         </ScrollView>
+<LinearLayout
+    android:id="@+id/liniear"
+    android:orientation="horizontal"
+    android:layout_alignParentBottom="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/save"
-            android:padding="8dp"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/button"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                android:text="Save Voucher"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"
+        android:id="@+id/save"
+        android:padding="5dp"
+        android:layout_weight="1"
+        android:background="@drawable/reset"
+        android:gravity="center"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:text="Save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-        </LinearLayout>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_weight="1"
+        android:id="@+id/reset"
+        android:padding="5dp"
+        android:background="@drawable/credit"
+        android:gravity="center"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:text="Reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
+
+
 
     </RelativeLayout>
 
     <LinearLayout
         android:background="#e1e1e1"
-        android:layout_weight=".01"
+        android:layout_weight=".005"
         android:layout_width="0dp"
         android:layout_height="match_parent"/>
 
@@ -197,58 +235,53 @@
         android:layout_height="match_parent"
         >
 
-<!--        <RelativeLayout-->
-<!--            android:padding="5dp"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content">-->
-
-<!--            <TextView-->
-<!--                android:layout_toLeftOf="@+id/view"-->
-<!--                android:layout_toStartOf="@+id/view"-->
-<!--                android:padding="5dp"-->
-<!--                android:layout_centerVertical="true"-->
-<!--                android:id="@+id/date"-->
-<!--                android:layout_width="200dp"-->
-<!--                android:layout_height="wrap_content"/>-->
-<!--            <Button-->
-<!--                android:layout_alignParentEnd="true"-->
-<!--                android:layout_alignParentRight="true"-->
-<!--                android:layout_centerVertical="true"-->
-<!--                android:id="@+id/view"-->
-<!--                android:layout_marginLeft="20dp"-->
-<!--                android:layout_marginStart="20dp"-->
-
-<!--                android:text="View"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"/>-->
-
-<!--        </RelativeLayout>-->
-
         <LinearLayout
-            android:padding="10sp"
-            android:background="@android:color/black"
+            android:padding="5dp"
+            android:gravity="center"
+            android:background="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:textColor="@android:color/white"
+
+                android:textColor="@color/textcolor"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:text="Expense Voucher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:background="@color/background"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textColor="@color/textcolor"
                 android:gravity="center"
                 android:text="Description"
+                android:textStyle="bold"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
 
 
             <TextView
-                android:textColor="@android:color/white"
+                android:textColor="@color/textcolor"
                 android:gravity="center"
                 android:text="Remarks"
+                android:textStyle="bold"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textColor="@color/textcolor"
                 android:gravity="center"
                 android:text="Taxable"
                 android:layout_weight="1"
@@ -256,7 +289,8 @@
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textColor="@color/textcolor"
                 android:gravity="center"
                 android:text="VAT"
                 android:layout_weight="1"
@@ -264,7 +298,17 @@
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textColor="@color/textcolor"
+                android:gravity="center"
+                android:text="Total"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:textStyle="bold"
+                android:textColor="@color/textcolor"
                 android:gravity="center"
                 android:text="Date"
                 android:layout_weight="1"
@@ -281,6 +325,8 @@
             android:layout_height="match_parent">
 
             <android.support.v7.widget.RecyclerView
+                tools:listitem="@layout/voucherlist"
+                android:background="@android:color/white"
                 android:layout_above="@+id/frame"
                 android:id="@+id/voucher_list"
                 android:layout_width="match_parent"
@@ -308,7 +354,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="SubTotal"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/textcolor"
                         android:textSize="12sp"
                         />
 
@@ -338,7 +384,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Tax amt"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/textcolor"
                         android:textSize="12sp"
                         />
 

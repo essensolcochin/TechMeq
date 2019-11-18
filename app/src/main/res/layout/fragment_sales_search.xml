@@ -42,46 +42,50 @@
             android:layout_height="wrap_content"/>
 
         <Button
+            android:background="@drawable/bluebutton"
             android:id="@+id/view"
+            android:textColor="@android:color/white"
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
-            android:layout_width="200dp"
-            android:textSize="12dp"
+            android:layout_width="150dp"
+            android:textSize="12sp"
             android:text="View"
-            android:layout_height="wrap_content"/>
+            android:layout_height="35dp"/>
 
 
     </LinearLayout>
 
     <LinearLayout
-        android:background="@android:color/black"
+        android:padding="5dp"
+        android:gravity="center_vertical"
+        android:background="@color/header"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
             android:singleLine="true"
-            android:layout_margin="5dp"
-            android:layout_weight=".5"
+            android:layout_weight="1"
             android:text="Sale No"
             android:padding="5dp"
-            android:gravity="center"
+            android:textStyle="bold"
+            android:gravity="start"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
+            android:textColor="@color/textcolor"
             android:textSize="15sp"
             />
 
         <TextView
             android:singleLine="true"
-            android:layout_margin="5dp"
-            android:gravity="center"
+            android:gravity="start"
             android:padding="5dp"
             android:text="Date"
+            android:textStyle="bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@android:color/white"
+            android:textColor="@color/textcolor"
             android:textSize="15sp"
 
 
@@ -90,43 +94,43 @@
         <TextView
             android:id="@+id/price"
             android:singleLine="true"
-            android:layout_margin="5dp"
             android:padding="5dp"
             android:text="Taxable"
-            android:gravity="center"
+            android:textStyle="bold"
+            android:gravity="start"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@android:color/white"
+            android:textColor="@color/textcolor"
             android:textSize="15sp"
             />
 
         <TextView
-            android:gravity="center"
+            android:gravity="start"
             android:singleLine="true"
-            android:layout_margin="5dp"
             android:padding="5dp"
             android:layout_width="0dp"
             android:text="Vat"
+            android:textStyle="bold"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@android:color/white"
+            android:textColor="@color/textcolor"
             android:textSize="15sp"
 
             />
 
 
         <TextView
-            android:gravity="center"
+            android:gravity="start"
             android:id="@+id/date"
             android:singleLine="true"
-            android:layout_margin="5dp"
             android:padding="5dp"
             android:layout_width="0dp"
             android:text="Grand total"
+            android:textStyle="bold"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@android:color/white"
+            android:textColor="@color/textcolor"
             android:textSize="15sp"
 
             />
@@ -134,27 +138,42 @@
         <TextView
             android:gravity="center"
             android:singleLine="true"
-            android:layout_margin="5dp"
             android:padding="5dp"
             android:layout_width="0dp"
             android:text="Paid "
+            android:textStyle="bold"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@android:color/white"
+            android:textColor="@color/textcolor"
             android:textSize="15sp"
 
             />
 
         <TextView
+            android:textStyle="bold"
             android:gravity="center"
             android:singleLine="true"
-            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:layout_width="0dp"
+            android:text="Round Off "
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/textcolor"
+            android:textSize="15sp"
+
+            />
+
+
+        <TextView
+            android:gravity="center"
+            android:singleLine="true"
             android:padding="5dp"
             android:layout_width="0dp"
             android:text="Credit"
+            android:textStyle="bold"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@android:color/white"
+            android:textColor="@color/textcolor"
             android:textSize="15sp"
 
             />
@@ -169,94 +188,93 @@
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:layout_above="@+id/frame"
             tools:listitem="@layout/reportbody"
             android:id="@+id/reports"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <LinearLayout
-            android:id="@+id/frame"
-            android:background="@android:color/white"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/frame"-->
+<!--            android:background="@android:color/white"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
 
-            <LinearLayout
-                android:padding="10dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
-                <TextView
-                    android:singleLine="true"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
-                    android:padding="5dp"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Total Sale"
-                    android:textColor="@android:color/black"
-                    android:textSize="12sp"
-                    />
+<!--            <LinearLayout-->
+<!--                android:padding="10dp"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content">-->
 
 
-
-                <TextView
-                    android:background="@drawable/background_edittext"
-                    android:text="0.00"
-                    android:id="@+id/totalSale"
-                    android:singleLine="true"
-                    android:gravity="right"
-                    android:padding="5dp"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="12sp"
-                    android:textColor="@android:color/black"
-
-                    />
-
-
-                <TextView
-                    android:singleLine="true"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
-                    android:padding="5dp"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Tax amt"
-                    android:textColor="@android:color/black"
-                    android:textSize="12sp"
-                    />
+<!--                <TextView-->
+<!--                    android:singleLine="true"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:padding="5dp"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Total Sale"-->
+<!--                    android:textColor="@android:color/black"-->
+<!--                    android:textSize="12sp"-->
+<!--                    />-->
 
 
 
-                <EditText
-                    android:hint="0.00"
-                    android:inputType="number"
-                    android:background="@drawable/background_edittext"
-                    android:singleLine="true"
-                    android:padding="5dp"
-                    android:clickable="true"
+<!--                <TextView-->
+<!--                    android:background="@drawable/background_edittext"-->
+<!--                    android:text="0.00"-->
+<!--                    android:id="@+id/totalSale"-->
+<!--                    android:singleLine="true"-->
+<!--                    android:gravity="right"-->
+<!--                    android:padding="5dp"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:textSize="12sp"-->
+<!--                    android:textColor="@android:color/black"-->
 
-                    android:gravity="right"
-                    android:id="@+id/totTax"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="12sp"
-                    android:textColor="@android:color/black"
-
-                    />
+<!--                    />-->
 
 
-            </LinearLayout>
+<!--                <TextView-->
+<!--                    android:singleLine="true"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:padding="5dp"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Tax amt"-->
+<!--                    android:textColor="@android:color/black"-->
+<!--                    android:textSize="12sp"-->
+<!--                    />-->
 
 
 
-        </LinearLayout>
+<!--                <EditText-->
+<!--                    android:hint="0.00"-->
+<!--                    android:inputType="number"-->
+<!--                    android:background="@drawable/background_edittext"-->
+<!--                    android:singleLine="true"-->
+<!--                    android:padding="5dp"-->
+<!--                    android:clickable="true"-->
+
+<!--                    android:gravity="right"-->
+<!--                    android:id="@+id/totTax"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:textSize="12sp"-->
+<!--                    android:textColor="@android:color/black"-->
+
+<!--                    />-->
+
+
+<!--            </LinearLayout>-->
+
+
+
+<!--        </LinearLayout>-->
 
 
     </RelativeLayout>

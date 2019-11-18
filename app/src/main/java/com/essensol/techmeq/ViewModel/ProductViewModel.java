@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import com.essensol.techmeq.Model.CustomerSpinnerModel;
 import com.essensol.techmeq.Model.EditSaleModel;
 import com.essensol.techmeq.Model.ProductModel;
+import com.essensol.techmeq.Room.Databases.Entity.Customers;
 import com.essensol.techmeq.Room.Databases.Entity.Products;
 import com.essensol.techmeq.Room.Databases.Entity.SalesHeader;
 import com.essensol.techmeq.Room.Databases.Entity.SalesItem;
@@ -34,6 +35,8 @@ public class ProductViewModel extends AndroidViewModel {
 
     private LiveData<List<CustomerSpinnerModel>> getGetCustNameAndId;
 
+    private LiveData<List<Customers>> GetAllCustomers;
+
     private  String exists;
 
     public ProductViewModel(@NonNull Application application) {
@@ -42,6 +45,7 @@ public class ProductViewModel extends AndroidViewModel {
         product_repo =new mRepo(application);
         allProducts =product_repo.getAllProducts();
         getGetCustNameAndId=product_repo.getGetCustNameAndId();
+        GetAllCustomers=product_repo.getAllCustomers();
         allCategories =product_repo.getAllProductsCategory();
         getInvoiceId =product_repo.getInvoiceAndSaleID();
         allProductsForSale=product_repo.getAllProductForSale();
@@ -77,7 +81,16 @@ public class ProductViewModel extends AndroidViewModel {
         return getGetCustNameAndId;
     }
 
+    public LiveData<List<Customers>> GetAllCustomers()
+    {
+        return GetAllCustomers;
+    }
 
+
+    public void AddCustomer(Customers customers)
+    {
+        product_repo.AddCustomer(customers);
+    }
 
 
     public void AddProductCategory(Sales_Category category)

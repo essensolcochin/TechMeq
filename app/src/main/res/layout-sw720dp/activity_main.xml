@@ -39,7 +39,8 @@
 
 
                 <TextView
-                    android:padding="2dp"
+
+                    android:padding="5dp"
                     android:id="@+id/tv"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
@@ -405,6 +406,7 @@
 
 
                 <android.support.v7.widget.RecyclerView
+                    android:layout_marginTop="5dp"
                     android:id="@+id/purchase"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -716,11 +718,12 @@
                             android:layout_height="wrap_content">
 
                             <TextView
+                                android:id="@+id/cash"
                                 android:layout_marginRight="5dp"
                                 android:layout_marginEnd="5dp"
-                                android:drawableStart="@drawable/plus"
-                                android:drawableLeft="@drawable/plus"
-                                android:textSize="16sp"
+                                android:drawableStart="@drawable/money"
+                                android:drawableLeft="@drawable/money"
+                                android:textSize="14sp"
                                 android:textColor="@android:color/white"
                                 android:text="Cash"
                                 android:layout_width="wrap_content"
@@ -741,11 +744,12 @@
                             android:layout_height="wrap_content">
 
                             <TextView
+                                android:gravity="center"
                                 android:layout_marginRight="5dp"
                                 android:layout_marginEnd="5dp"
-                                android:drawableLeft="@drawable/plus"
-                                android:drawableStart="@drawable/plus"
-                                android:textSize="16sp"
+                                android:drawableLeft="@drawable/walleticon"
+                                android:drawableStart="@drawable/walleticon"
+                                android:textSize="14sp"
                                 android:textColor="@android:color/white"
                                 android:text="Credit"
                                 android:layout_width="wrap_content"

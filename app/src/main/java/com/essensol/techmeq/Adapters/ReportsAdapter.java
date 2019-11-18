@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.essensol.techmeq.Model.ItemReportModel;
 import com.essensol.techmeq.R;
@@ -103,6 +104,10 @@ public  class ReportsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHold
 
         childItemHolder.credit.setText("0");
 
+        childItemHolder.round_off.setText(model.getRounded().toString());
+
+
+//        Toast.makeText(mContext,model.getRounded().toString(),Toast.LENGTH_SHORT).show();
 
 //        childItemHolder.lay.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -151,7 +156,7 @@ public  class ReportsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHold
 
         LinearLayout lay;
 
-        TextView Saleno,grandtotal,price,date,vat,paid,credit;
+        TextView Saleno,grandtotal,price,date,vat,paid,credit,round_off;
 
 
         private MyViewHolderChild(View itemView) {
@@ -169,6 +174,8 @@ public  class ReportsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHold
             vat=itemView.findViewById(R.id.vat);
 
             paid=itemView.findViewById(R.id.paid);
+
+            round_off=itemView.findViewById(R.id.round_off);
 
             credit=itemView.findViewById(R.id.credit);
 

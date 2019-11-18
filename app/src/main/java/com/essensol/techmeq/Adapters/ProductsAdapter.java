@@ -79,7 +79,7 @@ public  class ProductsAdapter extends  RecyclerView.Adapter<ProductsAdapter.view
             Glide.with(mContext).load(Uri.fromFile(new File(items.get(position).getImage()))).into(holder.imageid);
         }
         else {
-            Glide.with(mContext).load(R.drawable.placeholder).into(holder.imageid);
+            Glide.with(mContext).load(R.drawable.ic_placeholder).into(holder.imageid);
 
         }
 

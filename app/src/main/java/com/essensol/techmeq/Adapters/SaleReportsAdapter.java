@@ -15,6 +15,7 @@ import com.essensol.techmeq.Model.ItemReportModel;
 import com.essensol.techmeq.R;
 import com.essensol.techmeq.UI.Login;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
@@ -107,7 +108,14 @@ public  class SaleReportsAdapter extends  RecyclerView.Adapter<RecyclerView.View
 
         childItemHolder.paid.setText(items.get(position).getPaidAmt().toString());
 
-        childItemHolder.credit.setText("0");
+        if(model.getPaidAmt().toString().equalsIgnoreCase("0.00"))
+        {
+            childItemHolder.credit.setText(model.getGrandTotal().toString());
+        }
+        else {
+            childItemHolder.credit.setText("0.00");
+        }
+
 
 
         childItemHolder.lay.setOnClickListener(new View.OnClickListener() {
@@ -118,14 +126,14 @@ public  class SaleReportsAdapter extends  RecyclerView.Adapter<RecyclerView.View
 
             if(mlistener!=null)
             {
-                mlistener.getSaleId(model.getSaleId());
+                mlistener.getSaleId(model.getSaleId(),model.getSaleNo(),model.getSaleDate());
             }
 
 
             }
         });
 
-//        }
+        childItemHolder.round_off.setText(model.getRounded().toString());
 
     }
 
@@ -162,7 +170,7 @@ public  class SaleReportsAdapter extends  RecyclerView.Adapter<RecyclerView.View
 
         LinearLayout lay;
 
-        TextView Saleno,grandtotal,price,date,vat,paid,credit;
+        TextView Saleno,grandtotal,price,date,vat,paid,credit,round_off;
 
 
         private MyViewHolderChild(View itemView) {
@@ -184,6 +192,8 @@ public  class SaleReportsAdapter extends  RecyclerView.Adapter<RecyclerView.View
             lay=itemView.findViewById(R.id.lay);
 
             credit=itemView.findViewById(R.id.credit);
+
+            round_off=itemView.findViewById(R.id.round_off);
 
         }
 

@@ -4,7 +4,6 @@
     android:orientation="horizontal"
     app:cardElevation="0dp"
     app:cardCornerRadius="0dp"
-    android:layout_marginTop="5dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -12,8 +11,8 @@
 
     <LinearLayout
         android:gravity="center"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -99,7 +98,7 @@
             android:id="@+id/remove"
             android:scaleType="fitXY"
             android:layout_margin="5dp"
-            android:tint="@color/blue"
+            android:tint="@android:color/holo_red_light"
             android:src="@drawable/less"
             android:layout_width="25dp"
             android:layout_height="25dp"/>

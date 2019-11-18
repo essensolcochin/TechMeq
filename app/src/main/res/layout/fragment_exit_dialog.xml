@@ -22,6 +22,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/yes"
             android:padding="5dp"
             android:gravity="center"
             android:layout_weight="1"
@@ -40,6 +41,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/no"
             android:padding="5dp"
             android:gravity="center"
             android:layout_weight="1"

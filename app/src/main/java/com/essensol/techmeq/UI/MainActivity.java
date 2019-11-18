@@ -91,7 +91,8 @@ import java.util.concurrent.ExecutionException;
 
 
 
-public class MainActivity extends Toolbar implements _AddProductDetailsDailog.OnCompleteListener, PrintDialog.OnPrintListener, SalesSearch.GetSaleId {
+public class MainActivity extends Toolbar implements _AddProductDetailsDailog.OnCompleteListener, PrintDialog.OnPrintListener, SalesSearch.GetSaleId,
+                                                     ExitDialog.OnExitListener, AddCustomer.getCreditSaleDetails {
 
     public static final String CONNECT_STATUS = "connect.status";
 
@@ -139,8 +140,8 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
     int CustId;
 
-    HomeTabAdapter_ adapter_;
-    String mName,mQty,mPrice,InvoiceNumber;
+//    HomeTabAdapter_ adapter_;
+//    String mName,mQty,mPrice,InvoiceNumber;
 
     private android.support.v7.widget.SearchView searchView;
 
@@ -154,7 +155,22 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
     private EditText round_off;
 
-    private int mSaleId,mSaleItemId;
+
+    private Date CurrentDate= Calendar.getInstance().getTime();
+
+    private   SimpleDateFormat sf =new SimpleDateFormat("dd/MMM/yyy",Locale.ENGLISH);
+
+
+    /**
+     *  Variables for storing Callback values
+     */
+
+    private int mSaleId,mSaleItemId,mCustId;
+
+    private String mSaleNo;
+
+    private Date mInvoiceDate;
+
 
 
 
@@ -190,13 +206,21 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
     }
 
     @Override
-    public void getSaleIdForEdit(int Id) {
+    public void getSaleIdForEdit(int Id,String SaleNo,Date InvoiceDate) {
 
-        Toast.makeText(MainActivity.this,Integer.toString(Id),Toast.LENGTH_LONG).show();
+//        Toast.makeText(MainActivity.this,Integer.toString(Id),Toast.LENGTH_LONG).show();
 
 
         SalelistforEdit.clear();
         mSaleId =Id;
+        mSaleNo =SaleNo;
+        mInvoiceDate =InvoiceDate;
+
+        invoiceNo.setText(mSaleNo);
+
+
+
+        invoiceDate.setText(sf.format(mInvoiceDate));
 
         try {
             String result =new GetSaleEditAsync(OfflineDb.getInstance(MainActivity.this).sale_item_dao()).execute(Id).get();
@@ -219,15 +243,8 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
                     Log.e("getSaleIdForEdit"," "+puchase.size());
 
-//                    SalesItem model=new SalesItem(0,SaleId,items.getProductId(),items.getQty(),items.getRate(),Total
-//                            ,mTaxPercent,TaxAmt,items.getLinetot());
 
-//    public SalesItem(int saleItemId, int saleId, int productId, BigDecimal qty, BigDecimal price, BigDecimal total, BigDecimal taxPercent, BigDecimal taxAmt, BigDecimal lineTotal) {
-
-//                    PurchaseModel model =new PurchaseModel(ProductName,Product_Id,rate,netAmnt,lineTot,TaxPercent,Qty,TaxAmnt);
-
-
-                    mTaxable =mTaxable.add(item.getPrice());
+                    mTaxable =mTaxable.add(item.getPrice()).multiply(item.getQty()).setScale(2,BigDecimal.ROUND_HALF_UP);
 
                     PurchaseModel model = new PurchaseModel(item.getProductName(),item.getProductId(),
                     item.getPrice(),item.getPrice(),item.getLineTotal(),item.getTaxPercent(),item.getQty(),item.getTaxAmt());
@@ -257,6 +274,36 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
 
+
+    }
+
+    @Override
+    public void checkExit(boolean response) {
+        if(response)
+        {
+
+            moveTaskToBack(true);
+        }
+
+    }
+
+    /**
+     * @param ID is Callback Variable from Interface @Interface getCreditSaleDetails
+     */
+
+    @Override
+    public void getCreditSaleDetails(int ID) {
+
+       mCustId =ID;
+
+        if(puchase.size()>0)
+        {
+            AddSale("Credit");
+        }
+
+
+
+       Log.e("getCreditSaleDetails","SaleId "+mCustId);
 
     }
 
@@ -648,18 +695,20 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
                 if(cash.getText().toString().equalsIgnoreCase("Update"))
                 {
-                    DeleteSaleItem();
+                    UpdateSaleHeader();
                 }
                 else {
                     if(puchase.size()>0)
                     {
-                        AddSale();
+                        AddSale("Cash");
                     }
                 }
 
 
             }
         });
+
+
 
 
         //Registering Broadcast receiver
@@ -686,10 +735,18 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
 
-    private  void AddSale() {
+    private  void AddSale(String PayType) {
+
 
         CurrentIncoiceNum =invoiceNo.getText().toString();
 
+        BigDecimal rounded ;
+
+        if(!round_off.getText().toString().equalsIgnoreCase(""))
+        {
+            rounded = new BigDecimal(round_off.getText().toString());
+        }
+        rounded = BigDecimal.valueOf(0);
 
         dialog =new ProgressDialog(this);
         dialog.setTitle("Adding Sale Record.");
@@ -710,44 +767,108 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
         new GetFinancialAsync(OfflineDb.getInstance(this).financialYear_dao()).execute();
 
-        SalesHeader header =new SalesHeader(1,FinYearId,0,Integer.toString(InvoiceNo),c,1
-                ,Total,TaxAmt,Discount,grandTot,grandTot);
+        SalesHeader CashSaleHeader =new SalesHeader(1,FinYearId,0,Integer.toString(InvoiceNo),c,0
+                ,Total,TaxAmt,Discount,grandTot,grandTot,rounded);
 
-        try {
-            String result= new  AddSalesHeaderAsync(OfflineDb.getInstance(this).sales_header_dao()).execute(header).get();
 
-            Log.e("Resulttttttt","res  "+result);
+        SalesHeader CreditSaleHeader =new SalesHeader(1,FinYearId,0,Integer.toString(InvoiceNo),c,mCustId
+                ,Total,TaxAmt,Discount,grandTot,BigDecimal.valueOf(0),rounded);
 
-            if(result.equalsIgnoreCase("Completed"))
+        String result;
+
+        /**
+         * Single Fn for Credit and Cash Sale
+         */
+
+        if(PayType.equalsIgnoreCase("Cash"))
             {
 
-                Runnable progressRunnable = new Runnable() {
+                try {
 
-                    @Override
-                    public void run() {
+                    result= new  AddSalesHeaderAsync(OfflineDb.getInstance(this).sales_header_dao()).execute(CashSaleHeader).get();
 
-                        Log.e("SaleId","res  "+SaleId);
+                    Log.e("Resulttttttt","res  "+result);
 
-                        AddSaleItem();
+                    if(result.equalsIgnoreCase("Completed"))
+                    {
 
-                    }};
+                        Runnable progressRunnable = new Runnable() {
 
-                Handler pdCanceller = new Handler();
-                pdCanceller.postDelayed(progressRunnable, 500);
+                            @Override
+                            public void run() {
+
+                                Log.e("SaleId","res  "+SaleId);
+
+                                AddSaleItem();
+
+                            }};
+
+                        Handler pdCanceller = new Handler();
+                        pdCanceller.postDelayed(progressRunnable, 500);
 
 
 
 
 
+
+
+                    }
+
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
 
             }
 
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        /**
+         * Single Fn for Credit and Cash Sale "Credit Part"
+         */
+
+            else if(PayType.equalsIgnoreCase("Credit")){
+
+                try {
+
+                    result= new  AddSalesHeaderAsync(OfflineDb.getInstance(this).sales_header_dao()).execute(CreditSaleHeader).get();
+
+                    Log.e("Resulttttttt","res  "+result);
+
+                    if(result.equalsIgnoreCase("Completed"))
+                    {
+
+                        Runnable progressRunnable = new Runnable() {
+
+                            @Override
+                            public void run() {
+
+                                Log.e("SaleId","res  "+SaleId);
+
+                                AddSaleItem();
+
+                            }};
+
+                        Handler pdCanceller = new Handler();
+                        pdCanceller.postDelayed(progressRunnable, 500);
+
+
+
+
+
+
+
+                    }
+
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
 
 
 
@@ -807,6 +928,85 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
 
+    private  void UpdateSaleHeader() {
+
+        CurrentIncoiceNum =invoiceNo.getText().toString();
+
+
+        dialog =new ProgressDialog(this);
+        dialog.setTitle("Updating Sale Record.");
+        dialog.setMessage("Saving....");
+        dialog.setCancelable(false);
+        dialog.show();
+
+        BigDecimal Total = Utils.round(Float.parseFloat(taxable.getText().toString()),2);
+        BigDecimal Discount =BigDecimal.valueOf(0);
+        BigDecimal PaidAmnt =BigDecimal.valueOf(0);
+        BigDecimal TaxAmt = Utils.round(Float.parseFloat(vat.getText().toString().trim()),2);
+        BigDecimal rounded=BigDecimal.valueOf(0);
+
+
+
+        if(!round_off.getText().toString().equalsIgnoreCase(""))
+        {
+             rounded = new BigDecimal(round_off.getText().toString());
+        }
+        else rounded=BigDecimal.valueOf(0);
+
+
+        BigDecimal grandTot = Utils.round(Float.valueOf(tot.getText().toString()),2);
+
+
+        new GetFinancialAsync(OfflineDb.getInstance(this).financialYear_dao()).execute();
+
+        /**
+         * @mSaleId is the Id Received from Callback interface which is taken from table
+         */
+
+        Log.e("Getter Sale Id","res  "+mSaleId);
+
+        SalesHeader header =new SalesHeader(1,FinYearId,mSaleId,mSaleNo,mInvoiceDate,1
+                ,Total,TaxAmt,Discount,grandTot,grandTot,rounded);
+
+        try {
+            String result= new  UpdateSalesHeaderAsync(OfflineDb.getInstance(this).sales_header_dao()).execute(header).get();
+
+            Log.e("Resulttttttt","res  "+result);
+
+            if(result.equalsIgnoreCase("Completed"))
+            {
+
+                Runnable progressRunnable = new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        Log.e("SaleId","UpdateSale  "+SaleId);
+
+                        DeleteSaleItem();
+
+                    }};
+
+                Handler pdCanceller = new Handler();
+                pdCanceller.postDelayed(progressRunnable, 500);
+
+
+
+
+
+
+
+            }
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
 
 
 
@@ -815,12 +1015,12 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
     private void  DeleteSaleItem()
     {
 
-
-        dialog =new ProgressDialog(this);
-        dialog.setTitle("Updating Sale Record.");
-        dialog.setMessage("Saving....");
-        dialog.setCancelable(false);
-        dialog.show();
+//
+//        dialog =new ProgressDialog(this);
+//        dialog.setTitle("Updating Sale Record.");
+//        dialog.setMessage("Saving....");
+//        dialog.setCancelable(false);
+//        dialog.show();
 
         /**
          * @mSaleId is the Id Received from Callback interface which is taken from table
@@ -891,6 +1091,8 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
                     dialog.show(fm,"TAG");
 
                     cash.setText("Cash");
+                    invoiceNo.setText(Integer.toString(InvoiceNo));
+                    invoiceDate.setText(sf.format(CurrentDate));
 
                 }
 
@@ -936,8 +1138,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
 
 
-    public   void Calc()
-    {
+    public   void Calc() {
 
         BigDecimal  total =BigDecimal.valueOf(0);
         BigDecimal netAmnt =BigDecimal.valueOf(0);
@@ -1341,9 +1542,14 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         EscCommand esc = new EscCommand();
         esc.addInitializePrinter();
         esc.addPrintAndFeedLines((byte) 3);
+
         esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
         esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF);// 设置为倍高倍宽
         esc.addText(CompanyName+"\n");
+
+        esc.addSelectJustification(EscCommand.JUSTIFICATION.CENTER);
+        esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);// 设置为倍高倍宽
+
 //        esc.addSetKanjiUnderLine(EscCommand.UNDERLINE_MODE.UNDERLINE_1DOT);
         esc.addPrintAndLineFeed();
         esc.addText(Address+"\n");
@@ -1370,9 +1576,6 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         esc.addText("Bill no:");
         esc.addSetRelativePrintPositon((short) 2);
         esc.addText(CurrentIncoiceNum+"\t");
-
-
-        esc.addSelectJustification(EscCommand.JUSTIFICATION.RIGHT);
 
         esc.addText("Date:");
         esc.addSetRelativePrintPositon((short) 2);
@@ -1416,7 +1619,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         esc.addPrintAndLineFeed();
 
 
-        esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF);// 设置为倍高倍宽
+        esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);// 设置为倍高倍宽
 
 
         esc.addText("SubTotal :");
@@ -1426,7 +1629,9 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
 
         esc.addText(taxable.getText().toString()+"\n");
         esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
-        esc.addSetAbsolutePrintPosition((short)25);
+        esc.addSetRelativePrintPositon((short) 2);
+
+        esc.addPrintAndLineFeed();
 
         esc.addText("Tax :");
         esc.addSetHorAndVerMotionUnits((byte) 7, (byte) 0);
@@ -1443,7 +1648,7 @@ public class MainActivity extends Toolbar implements _AddProductDetailsDailog.On
         esc.addText("---------------------------------------------\n");
         esc.addPrintAndLineFeed();
 
-        esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.ON, EscCommand.ENABLE.ON, EscCommand.ENABLE.OFF);// 设置为倍高倍宽
+        esc.addSelectPrintModes(EscCommand.FONT.FONTA, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF, EscCommand.ENABLE.OFF);// 设置为倍高倍宽
 
 
         esc.addText("Grand Total :");

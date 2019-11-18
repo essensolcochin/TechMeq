@@ -4,6 +4,8 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
@@ -47,7 +49,7 @@ public class Toolbar extends AppCompatActivity {
 
     ImageView bluetooth,search;
 
-    private TextView companyname;
+    private TextView companyname,headicon;
 
     private PService mPService = null;
 
@@ -94,6 +96,13 @@ public class Toolbar extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+        navigationView.setItemTextColor(ColorStateList.valueOf(Color.parseColor("#4d606f")));
+
+//        Menu menu = navigationView.getMenu();
+//
+//        MenuItem tools= menu.findItem(R.id.sales);
+//
+//        tools.getTitle().
 
 
         View headerView = navigationView.getHeaderView(0);
@@ -101,11 +110,13 @@ public class Toolbar extends AppCompatActivity {
         TextView uname = (TextView) headerView.findViewById(R.id.UserName);
 
         TextView cpName = (TextView) headerView.findViewById(R.id.CopmanyName);
-
+        headicon = (TextView) headerView.findViewById(R.id.headicon);
 
 
         uname.setText(sp.getString("uname",""));
         cpName.setText(sp.getString("compname",""));
+        String name =sp.getString("compname","");
+        headicon.setText(name.substring(0,1));
 
         addItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,8 +219,19 @@ public class Toolbar extends AppCompatActivity {
 
                     case R.id.logout:
                         drawerLayout.closeDrawers();
+
+                        SharedPreferences paidStatus=getSharedPreferences("LogDetails",MODE_PRIVATE);
+                        SharedPreferences.Editor editor =paidStatus.edit();
+                        editor.putBoolean("PaidSatus",false);
+                        editor.putBoolean("isLogged",false);
+                        editor.apply();
+                        SharedPreferences logged=getSharedPreferences("PaidStatus",MODE_PRIVATE);
+                        boolean log =logged.getBoolean("isLogged",false);
+
+                        Log.e("isLogged","In Toolbar"+log);
                         intent = new Intent(Toolbar.this, Login.class);
                         startActivity(intent);
+                        finish();
 
                         break;
 

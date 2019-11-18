@@ -45,7 +45,7 @@ public interface Sales_Header_DAO {
 //    LiveData<List<ItemReportModel>> getSalesitemReport();
 
 
-    @Query("SELECT  SaleId , SaleNo,SaleDate,SubTotal,TaxAmt,GrandTotal,PaidAmt,GrandTotal-PaidAmt AS Credit FROM sales_header " +
+    @Query("SELECT  SaleId , SaleNo,SaleDate,SubTotal,TaxAmt,GrandTotal,PaidAmt,GrandTotal-PaidAmt AS Credit,Rounded FROM sales_header " +
             "WHERE SaleDate >= :FromDate AND SaleDate <= :toDate")
      LiveData<List<ItemReportModel>> getSalesitemReport(long FromDate,long toDate);
 
