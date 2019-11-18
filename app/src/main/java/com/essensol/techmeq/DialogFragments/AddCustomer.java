@@ -121,6 +121,7 @@ public class AddCustomer extends DialogFragment {
 
                     Log.e("CustId","Credit "+CustId);
                     mob.setText(object.getMobileNo());
+                    address.setText(object.getAddress());
                 }
 
             }
@@ -173,7 +174,9 @@ public class AddCustomer extends DialogFragment {
             public void onClick(View v) {
 
 
-                frame.setVisibility(View.GONE);
+                CustomerName.setText("");
+                address.setText("");
+                mob.setText("");
 
 
             }
